@@ -15,7 +15,7 @@ namespace block {
 // future in case reading map files is ever needed.
 class InventoryBlock {
 public:
-    using ItemMap = std::unordered_map<u8, inventory::Slot>;
+    using ItemMap = std::unordered_map<uint8_t, inventory::Slot>;
 
 private:
     std::wstring m_Lock;

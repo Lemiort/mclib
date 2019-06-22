@@ -31,7 +31,7 @@ class Chunk {
 private:
     std::vector<u32> m_Palette;
     std::vector<u64> m_Data;
-    u8 m_BitsPerBlock;
+    uint8_t m_BitsPerBlock;
 
 public:
     MCLIB_API Chunk();

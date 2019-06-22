@@ -4,9 +4,9 @@ namespace mc {
 namespace core {
 
 constexpr auto FullSkin =
-    (u8)((u8)SkinPart::Cape | (u8)SkinPart::Jacket | (u8)SkinPart::LeftSleeve |
-         (u8)SkinPart::RightSleeve | (u8)SkinPart::LeftPants |
-         (u8)SkinPart::RightPants | (u8)SkinPart::Hat);
+    (uint8_t)((uint8_t)SkinPart::Cape | (uint8_t)SkinPart::Jacket | (uint8_t)SkinPart::LeftSleeve |
+         (uint8_t)SkinPart::RightSleeve | (uint8_t)SkinPart::LeftPants |
+         (uint8_t)SkinPart::RightPants | (uint8_t)SkinPart::Hat);
 
 ClientSettings::ClientSettings()
     : m_Locale(L"en_GB"),
@@ -31,17 +31,17 @@ ClientSettings& ClientSettings::SetMainHand(MainHand main) noexcept {
     return *this;
 }
 
-ClientSettings& ClientSettings::SetViewDistance(u8 distance) noexcept {
+ClientSettings& ClientSettings::SetViewDistance(uint8_t distance) noexcept {
     m_ViewDistance = distance;
     return *this;
 }
 
 ClientSettings& ClientSettings::SetViewDistance(s32 distance) noexcept {
-    this->SetViewDistance((u8)distance);
+    this->SetViewDistance((uint8_t)distance);
     return *this;
 }
 
-ClientSettings& ClientSettings::SetSkinParts(u8 parts) noexcept {
+ClientSettings& ClientSettings::SetSkinParts(uint8_t parts) noexcept {
     m_SkinParts = parts;
     return *this;
 }
@@ -53,9 +53,9 @@ ClientSettings& ClientSettings::SetChatColors(bool chatColors) noexcept {
 ClientSettings& ClientSettings::SetSkinPart(SkinPart part,
                                             bool display) noexcept {
     if (display) {
-        m_SkinParts |= (u8)part;
+        m_SkinParts |= (uint8_t)part;
     } else {
-        m_SkinParts &= ~(u8)part;
+        m_SkinParts &= ~(uint8_t)part;
     }
     return *this;
 }

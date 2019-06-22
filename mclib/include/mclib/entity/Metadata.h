@@ -24,10 +24,10 @@ public:
     };
 
     struct ByteType : public Type {
-        u8 value;
+        uint8_t value;
 
         ByteType() = default;
-        ByteType(u8 value) : value(value) {}
+        ByteType(uint8_t value) : value(value) {}
     };
 
     struct VarIntType : public Type {

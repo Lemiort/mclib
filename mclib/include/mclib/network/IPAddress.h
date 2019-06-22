@@ -26,13 +26,13 @@ public:
     MCLIB_API IPAddress(const std::wstring& str);
 
     /* Initialize by octets */
-    MCLIB_API IPAddress(u8 octet1, u8 octet2, u8 octet3, u8 octet4) noexcept;
+    MCLIB_API IPAddress(uint8_t octet1, uint8_t octet2, uint8_t octet3, uint8_t octet4) noexcept;
 
     /* Get the specific octet. 1-4 */
-    u8 MCLIB_API GetOctet(u8 num) const;
+    uint8_t MCLIB_API GetOctet(uint8_t num) const;
 
     /* Set the specific octet. 1-4 */
-    void MCLIB_API SetOctet(u8 num, u8 value);
+    void MCLIB_API SetOctet(uint8_t num, uint8_t value);
 
     /* Make sure the IP is valid. It will be invalid if the host wasn't found.
      */

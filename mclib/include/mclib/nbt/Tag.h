@@ -217,19 +217,20 @@ public:
 
 class TagByte : public Tag {
 private:
-    u8 m_Value;
+    uint8_t m_Value;
 
     void MCLIB_API Write(DataBuffer& buffer) const;
     void MCLIB_API Read(DataBuffer& buffer);
 
 public:
     MCLIB_API TagByte() : Tag(L""), m_Value(0) {}
-    MCLIB_API TagByte(std::wstring name, u8 value)
+    MCLIB_API TagByte(std::wstring name, uint8_t value)
         : Tag(name), m_Value(value) {}
-    MCLIB_API TagByte(std::string name, u8 value) : Tag(name), m_Value(value) {}
+    MCLIB_API TagByte(std::string name, uint8_t value)
+        : Tag(name), m_Value(value) {}
     TagType MCLIB_API GetType() const noexcept;
 
-    u8 MCLIB_API GetValue() const noexcept { return m_Value; }
+    uint8_t MCLIB_API GetValue() const noexcept { return m_Value; }
     friend MCLIB_API DataBuffer& operator<<(DataBuffer& out, const Tag& tag);
 };
 

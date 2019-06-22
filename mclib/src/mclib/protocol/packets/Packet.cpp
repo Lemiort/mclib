@@ -161,7 +161,7 @@ bool SpawnPaintingPacket::Deserialize(DataBuffer& data,
     VarInt eid;
     MCString title;
     Position position;
-    u8 direction;
+    uint8_t direction;
 
     data >> eid >> m_UUID;
 
@@ -257,7 +257,7 @@ bool AnimationPacket::Deserialize(DataBuffer& data, std::size_t packetLength) {
 
     m_EntityId = eid.GetInt();
 
-    u8 anim;
+    uint8_t anim;
     data >> anim;
 
     m_Animation = (Animation)anim;
@@ -515,7 +515,7 @@ UpdateBlockEntityPacket::UpdateBlockEntityPacket() {}
 bool UpdateBlockEntityPacket::Deserialize(DataBuffer& data,
                                           std::size_t packetLength) {
     Position pos;
-    u8 action;
+    uint8_t action;
 
     data >> pos;
     data >> action;
@@ -682,7 +682,7 @@ ChatPacket::ChatPacket() {}
 
 bool ChatPacket::Deserialize(DataBuffer& data, std::size_t packetLength) {
     MCString chatData;
-    u8 position;
+    uint8_t position;
 
     data >> chatData;
     data >> position;
@@ -710,8 +710,8 @@ bool MultiBlockChangePacket::Deserialize(DataBuffer& data,
     data >> count;
 
     for (s32 i = 0; i < count.GetInt(); ++i) {
-        u8 horizontal;
-        u8 y;
+        uint8_t horizontal;
+        uint8_t y;
         VarInt blockID;
 
         data >> horizontal >> y >> blockID;
@@ -946,7 +946,7 @@ ChangeGameStatePacket::ChangeGameStatePacket() {}
 
 bool ChangeGameStatePacket::Deserialize(DataBuffer& data,
                                         std::size_t packetLength) {
-    u8 reason;
+    uint8_t reason;
     data >> reason;
 
     m_Reason = (Reason)reason;
@@ -1325,7 +1325,7 @@ bool PlayerListItemPacket::Deserialize(DataBuffer& data,
                 for (s32 j = 0; j < numProperties.GetInt(); ++j) {
                     MCString propertyName;
                     MCString propertyValue;
-                    u8 isSigned;
+                    uint8_t isSigned;
                     MCString signature;
 
                     data >> propertyName;
@@ -1341,7 +1341,7 @@ bool PlayerListItemPacket::Deserialize(DataBuffer& data,
                 data >> gameMode;
                 data >> ping;
 
-                u8 hasDisplayName;
+                uint8_t hasDisplayName;
                 MCString displayName;
 
                 data >> hasDisplayName;
@@ -1364,7 +1364,7 @@ bool PlayerListItemPacket::Deserialize(DataBuffer& data,
                 actionData->ping = ping.GetInt();
             } break;
             case Action::UpdateDisplay: {
-                u8 hasDisplayName;
+                uint8_t hasDisplayName;
                 MCString displayName;
 
                 data >> hasDisplayName;
@@ -1650,7 +1650,7 @@ DisplayScoreboardPacket::DisplayScoreboardPacket() {}
 
 bool DisplayScoreboardPacket::Deserialize(DataBuffer& data,
                                           std::size_t packetLength) {
-    u8 pos;
+    uint8_t pos;
     MCString name;
 
     data >> pos >> name;
@@ -1772,7 +1772,7 @@ ScoreboardObjectivePacket::ScoreboardObjectivePacket() {}
 bool ScoreboardObjectivePacket::Deserialize(DataBuffer& data,
                                             std::size_t packetLength) {
     MCString objective, value, type;
-    u8 mode;
+    uint8_t mode;
 
     data >> objective >> mode >> value >> type;
 
@@ -1815,7 +1815,7 @@ TeamsPacket::TeamsPacket() {}
 
 bool TeamsPacket::Deserialize(DataBuffer& data, std::size_t packetLength) {
     MCString name;
-    u8 mode;
+    uint8_t mode;
 
     data >> name >> mode;
 
@@ -1832,7 +1832,7 @@ bool TeamsPacket::Deserialize(DataBuffer& data, std::size_t packetLength) {
                     visbility >> collision >> m_Color >> count;
             } else {
                 VarInt formatting;
-                u8 friendlyFlags;
+                uint8_t friendlyFlags;
 
                 data >> display >> friendlyFlags >> visbility >> collision >>
                     formatting >> prefix >> suffix >> count;
@@ -1860,7 +1860,7 @@ bool TeamsPacket::Deserialize(DataBuffer& data, std::size_t packetLength) {
                 data >> display >> prefix >> suffix >> m_FriendlyFlags >>
                     visbility >> collision >> m_Color;
             } else {
-                u8 friendlyFlags;
+                uint8_t friendlyFlags;
                 VarInt formatting;
                 data >> display >> friendlyFlags >> visbility >> collision >>
                     formatting >> prefix >> suffix;
@@ -1900,7 +1900,7 @@ UpdateScorePacket::UpdateScorePacket() {}
 bool UpdateScorePacket::Deserialize(DataBuffer& data,
                                     std::size_t packetLength) {
     MCString name, objective;
-    u8 action;
+    uint8_t action;
 
     data >> name >> action >> objective;
 
@@ -2089,7 +2089,7 @@ bool EntityPropertiesPacket::Deserialize(DataBuffer& data,
         for (s32 j = 0; j < modifierCount.GetInt(); ++j) {
             UUID uuid;
             double amount;
-            u8 operation;
+            uint8_t operation;
 
             data >> uuid;
             data >> amount;
@@ -2332,7 +2332,7 @@ DataBuffer TeleportConfirmPacket::Serialize() const {
 }
 
 PrepareCraftingGridPacket::PrepareCraftingGridPacket(
-    u8 windowId, s16 actionNumber, const std::vector<Entry>& returnEntries,
+    uint8_t windowId, s16 actionNumber, const std::vector<Entry>& returnEntries,
     const std::vector<Entry>& prepareEntries)
     : m_WindowId(windowId),
       m_ActionNumber(actionNumber),
@@ -2367,7 +2367,7 @@ DataBuffer PrepareCraftingGridPacket::Serialize() const {
     return buffer;
 }
 
-CraftRecipeRequestPacket::CraftRecipeRequestPacket(u8 windowId, s32 recipeId,
+CraftRecipeRequestPacket::CraftRecipeRequestPacket(uint8_t windowId, s32 recipeId,
                                                    bool makeAll)
     : m_WindowId(windowId), m_RecipeId(recipeId), m_MakeAll(makeAll) {}
 
@@ -2438,8 +2438,8 @@ DataBuffer ClientStatusPacket::Serialize() const {
 }
 
 ClientSettingsPacket::ClientSettingsPacket(const std::wstring& locale,
-                                           u8 viewDistance, ChatMode chatMode,
-                                           bool chatColors, u8 skinFlags,
+                                           uint8_t viewDistance, ChatMode chatMode,
+                                           bool chatColors, uint8_t skinFlags,
                                            MainHand hand)
     : m_Locale(locale),
       m_ViewDistance(viewDistance),
@@ -2465,7 +2465,7 @@ DataBuffer ClientSettingsPacket::Serialize() const {
     return buffer;
 }
 
-ConfirmTransactionPacket::ConfirmTransactionPacket(u8 windowId, s16 action,
+ConfirmTransactionPacket::ConfirmTransactionPacket(uint8_t windowId, s16 action,
                                                    bool accepted)
     : m_WindowId(windowId), m_Action(action), m_Accepted(accepted) {}
 
@@ -2480,7 +2480,7 @@ DataBuffer ConfirmTransactionPacket::Serialize() const {
     return buffer;
 }
 
-EnchantItemPacket::EnchantItemPacket(u8 windowId, u8 enchantmentIndex) {}
+EnchantItemPacket::EnchantItemPacket(uint8_t windowId, uint8_t enchantmentIndex) {}
 
 DataBuffer EnchantItemPacket::Serialize() const {
     DataBuffer buffer;
@@ -2490,7 +2490,7 @@ DataBuffer EnchantItemPacket::Serialize() const {
     return buffer;
 }
 
-ClickWindowPacket::ClickWindowPacket(u8 windowId, u16 slotIndex, u8 button,
+ClickWindowPacket::ClickWindowPacket(uint8_t windowId, u16 slotIndex, uint8_t button,
                                      u16 action, s32 mode,
                                      inventory::Slot clickedItem)
     : m_WindowId(windowId),
@@ -2511,7 +2511,7 @@ DataBuffer ClickWindowPacket::Serialize() const {
     return buffer;
 }
 
-CloseWindowPacket::CloseWindowPacket(u8 windowId) : m_WindowId(windowId) {}
+CloseWindowPacket::CloseWindowPacket(uint8_t windowId) : m_WindowId(windowId) {}
 
 DataBuffer CloseWindowPacket::Serialize() const {
     DataBuffer buffer;
@@ -2661,7 +2661,7 @@ DataBuffer PlayerAbilitiesPacket::Serialize() const {
 
     buffer << m_Id;
 
-    u8 flags = (u8)m_IsFlying << 1;
+    uint8_t flags = (uint8_t)m_IsFlying << 1;
     float flyingSpeed = 0.0f;
     float walkingSpeed = 0.0f;
 
@@ -2679,9 +2679,9 @@ DataBuffer PlayerDiggingPacket::Serialize() const {
     Position location((s32)m_Position.x, (s32)m_Position.y, (s32)m_Position.z);
 
     buffer << m_Id;
-    buffer << (u8)m_Status;
+    buffer << (uint8_t)m_Status;
     buffer << location;
-    buffer << (u8)m_Face;
+    buffer << (uint8_t)m_Face;
 
     return buffer;
 }
@@ -2702,7 +2702,7 @@ DataBuffer EntityActionPacket::Serialize() const {
     return buffer;
 }
 
-SteerVehiclePacket::SteerVehiclePacket(float sideways, float forward, u8 flags)
+SteerVehiclePacket::SteerVehiclePacket(float sideways, float forward, uint8_t flags)
     : m_Sideways(sideways), m_Forward(forward), m_Flags(flags) {}
 
 DataBuffer SteerVehiclePacket::Serialize() const {
@@ -2806,7 +2806,7 @@ PlayerBlockPlacementPacket::PlayerBlockPlacementPacket(Vector3i position,
 DataBuffer PlayerBlockPlacementPacket::Serialize() const {
     DataBuffer buffer;
     Position location((s32)m_Position.x, (s32)m_Position.y, (s32)m_Position.z);
-    VarInt face((u8)m_Face), hand((int)m_Hand);
+    VarInt face((uint8_t)m_Face), hand((int)m_Hand);
 
     buffer << m_Id;
     buffer << location;

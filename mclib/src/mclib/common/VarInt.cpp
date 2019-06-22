@@ -25,7 +25,7 @@ DataBuffer& operator<<(DataBuffer& out, const VarInt& var) {
     char data[10];
 
     do {
-        u8 nextByte = uval & 0x7F;
+        uint8_t nextByte = uval & 0x7F;
         uval >>= 7;
         if (uval) nextByte |= 0x80;
         data[encoded++] = nextByte;

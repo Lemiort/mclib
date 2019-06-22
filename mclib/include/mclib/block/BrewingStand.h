@@ -15,7 +15,7 @@ class BrewingStand : public BlockEntity,
                      public Nameable {
 private:
     s32 m_BrewTime;
-    u8 m_Fuel;
+    uint8_t m_Fuel;
 
 public:
     MCLIB_API BrewingStand(BlockEntityType type, Vector3i position)
@@ -28,8 +28,8 @@ public:
     inventory::Slot GetIngredientSlot() const noexcept;
     inventory::Slot GetFuelSlot() const noexcept;
 
-    u8 GetBrewTime() const noexcept { return m_BrewTime; }
-    u8 GetFuel() const noexcept { return m_Fuel; }
+    uint8_t GetBrewTime() const noexcept { return m_BrewTime; }
+    uint8_t GetFuel() const noexcept { return m_Fuel; }
 };
 
 }  // namespace block

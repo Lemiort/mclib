@@ -17,17 +17,17 @@ private:
     nbt::NBT m_NBT;
     s32 m_ItemId;
     s16 m_ItemDamage;
-    u8 m_ItemCount;
+    uint8_t m_ItemCount;
 
 public:
     Slot() noexcept : m_ItemId(-1), m_ItemCount(0), m_ItemDamage(0) {}
-    Slot(s32 itemId, u8 itemCount, s16 itemDamage) noexcept
+    Slot(s32 itemId, uint8_t itemCount, s16 itemDamage) noexcept
         : m_ItemId(itemId),
           m_ItemCount(itemCount),
           m_ItemDamage(itemDamage),
           m_NBT() {}
 
-    Slot(s32 itemId, u8 itemCount, s16 itemDamage, nbt::NBT nbt) noexcept
+    Slot(s32 itemId, uint8_t itemCount, s16 itemDamage, nbt::NBT nbt) noexcept
         : m_ItemId(itemId),
           m_ItemCount(itemCount),
           m_ItemDamage(itemDamage),
@@ -39,7 +39,7 @@ public:
     Slot& operator=(Slot&& rhs) = default;
 
     s32 GetItemId() const noexcept { return m_ItemId; }
-    u8 GetItemCount() const noexcept { return m_ItemCount; }
+    uint8_t GetItemCount() const noexcept { return m_ItemCount; }
     s16 GetItemDamage() const noexcept { return m_ItemDamage; }
     const nbt::NBT& GetNBT() const noexcept { return m_NBT; }
 

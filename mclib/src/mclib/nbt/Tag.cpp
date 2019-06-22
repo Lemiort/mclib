@@ -23,7 +23,7 @@ std::ostream& operator<<(std::ostream& os, TagType type) {
 std::wstring Tag::GetName() const noexcept { return m_Name; }
 
 DataBuffer& operator<<(DataBuffer& out, const Tag& tag) {
-    u8 type = (u8)tag.GetType();
+    uint8_t type = (uint8_t)tag.GetType();
     out << type;
 
     std::wstring name = tag.GetName();
@@ -157,7 +157,7 @@ void TagIntArray::Read(DataBuffer& buffer) {
 }
 
 void TagList::Write(DataBuffer& buffer) const {
-    u8 type = (u8)m_ListType;
+    uint8_t type = (uint8_t)m_ListType;
     s32 size = (m_ListType != TagType::End) ? m_Tags.size() : 0;
 
     buffer << type;
@@ -169,7 +169,7 @@ void TagList::Write(DataBuffer& buffer) const {
 }
 
 void TagList::Read(DataBuffer& buffer) {
-    u8 type;
+    uint8_t type;
     s32 size;
 
     buffer >> type;
@@ -274,12 +274,12 @@ void TagCompound::Write(DataBuffer& buffer) const {
         buffer << *pair.second;
     }
 
-    buffer << (u8)0;
+    buffer << (uint8_t)0;
 }
 
 void TagCompound::Read(DataBuffer& buffer) {
     while (true) {
-        u8 typeValue;
+        uint8_t typeValue;
 
         buffer >> typeValue;
 
@@ -418,7 +418,7 @@ void TagDouble::Write(DataBuffer& buffer) const { buffer << m_Value; }
 void TagDouble::Read(DataBuffer& buffer) { buffer >> m_Value; }
 
 DataBuffer& operator>>(DataBuffer& in, Tag& tag) {
-    u8 type;
+    uint8_t type;
     in >> type;
 
     TagString name;

@@ -168,7 +168,7 @@ s64 GetTime() {
         .count();
 }
 
-inventory::Slot CreateFirework(bool flicker, bool trail, u8 type, u8 duration,
+inventory::Slot CreateFirework(bool flicker, bool trail, uint8_t type, uint8_t duration,
                                std::vector<int> colors,
                                const std::string& name = "") {
     using namespace nbt;
@@ -791,7 +791,7 @@ public:
 
         for (const inventory::Slot& slot : slots) {
             s16 id = slot.GetItemId();
-            u8 count = slot.GetItemCount();
+            uint8_t count = slot.GetItemCount();
             s16 dmg = slot.GetItemDamage();
             // const Minecraft::NBT::NBT& nbt = slot.GetNBT();
 
@@ -1160,14 +1160,14 @@ public:
 
             /* std::map<u32, bool> usedMap;
 
-             for (u8 colorIndex1 = 0; colorIndex1 < colors.size();
-             ++colorIndex1) { for (u8 colorIndex2 = 0; colorIndex2 <
-             colors.size(); ++colorIndex2) { for (u8 colorIndex3 = 0;
+             for (uint8_t colorIndex1 = 0; colorIndex1 < colors.size();
+             ++colorIndex1) { for (uint8_t colorIndex2 = 0; colorIndex2 <
+             colors.size(); ++colorIndex2) { for (uint8_t colorIndex3 = 0;
              colorIndex3 < colors.size(); ++colorIndex3) { if (colorIndex1 ==
              colorIndex2) continue; if (colorIndex1 == colorIndex3) continue; if
              (colorIndex2 == colorIndex3) continue;
 
-                         std::vector<u8> sorted = { colorIndex1, colorIndex2,
+                         std::vector<uint8_t> sorted = { colorIndex1, colorIndex2,
              colorIndex3 }; std::sort(sorted.begin(), sorted.end());
 
                          u32 combined = (sorted[0] << 16) | (sorted[1] << 8) |

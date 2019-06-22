@@ -198,7 +198,7 @@ void InventoryManager::HandlePacket(
 
 void InventoryManager::HandlePacket(
     protocol::packets::in::ConfirmTransactionPacket* packet) {
-    u8 windowId = packet->GetWindowId();
+    uint8_t windowId = packet->GetWindowId();
     s16 action = packet->GetAction();
     bool accepted = packet->IsAccepted();
 

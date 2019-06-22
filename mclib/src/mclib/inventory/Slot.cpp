@@ -6,7 +6,7 @@ namespace mc {
 namespace inventory {
 
 Slot Slot::FromNBT(nbt::TagCompound& compound) {
-    u8 count = 0;
+    uint8_t count = 0;
     s16 id = -1;
     s16 damage = 0;
     nbt::NBT nbt;
@@ -41,7 +41,7 @@ DataBuffer Slot::Serialize(protocol::Version version) const {
             if (m_NBT.HasData()) {
                 out << m_NBT;
             } else {
-                out << (u8)0;
+                out << (uint8_t)0;
             }
         } else {
             out << false;
@@ -55,7 +55,7 @@ DataBuffer Slot::Serialize(protocol::Version version) const {
         if (m_NBT.HasData()) {
             out << m_NBT;
         } else {
-            out << (u8)0;
+            out << (uint8_t)0;
         }
     }
 
@@ -95,7 +95,7 @@ void Slot::Deserialize(DataBuffer& in, protocol::Version version) {
         in >> m_ItemCount;
         in >> m_ItemDamage;
 
-        u8 hasNBT;
+        uint8_t hasNBT;
         in >> hasNBT;
 
         if (hasNBT) {

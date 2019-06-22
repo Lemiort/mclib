@@ -172,10 +172,10 @@ class SpawnObjectPacket : public InboundPacket {  // 0x00
 private:
     EntityId m_EntityId;
     UUID m_UUID;
-    u8 m_Type;
+    uint8_t m_Type;
     Vector3f m_Position;
-    u8 m_Pitch;
-    u8 m_Yaw;
+    uint8_t m_Pitch;
+    uint8_t m_Yaw;
     s32 m_Data;
     Vector3s m_Velocity;
 
@@ -186,10 +186,10 @@ public:
 
     EntityId GetEntityId() const { return m_EntityId; }
     UUID GetUUID() const { return m_UUID; }
-    u8 GetType() const { return m_Type; }
+    uint8_t GetType() const { return m_Type; }
     Vector3f GetPosition() const { return m_Position; }
-    u8 GetPitch() const { return m_Pitch; }
-    u8 GetYaw() const { return m_Yaw; }
+    uint8_t GetPitch() const { return m_Pitch; }
+    uint8_t GetYaw() const { return m_Yaw; }
 
     s32 GetData() const { return m_Data; }
     Vector3s GetVelocity() const { return m_Velocity; }
@@ -214,7 +214,7 @@ public:
 class SpawnGlobalEntityPacket : public InboundPacket {  // 0x02
 private:
     EntityId m_EntityId;
-    u8 m_Type;
+    uint8_t m_Type;
     Vector3d m_Position;
 
 public:
@@ -224,7 +224,7 @@ public:
 
     EntityId GetEntityId() const { return m_EntityId; }
     // Always 1 (thunderbolt)
-    u8 GetType() const { return m_Type; }
+    uint8_t GetType() const { return m_Type; }
     Vector3d GetPosition() const { return m_Position; }
 };
 
@@ -234,9 +234,9 @@ private:
     UUID m_UUID;
     u32 m_Type;
     Vector3d m_Position;
-    u8 m_Yaw;
-    u8 m_Pitch;
-    u8 m_HeadPitch;
+    uint8_t m_Yaw;
+    uint8_t m_Pitch;
+    uint8_t m_HeadPitch;
     Vector3s m_Velocity;
     entity::EntityMetadata m_Metadata;
 
@@ -249,9 +249,9 @@ public:
     UUID GetUUID() const { return m_UUID; }
     u32 GetType() const { return m_Type; }
     Vector3d GetPosition() const { return m_Position; }
-    u8 GetYaw() const { return m_Yaw; }
-    u8 GetPitch() const { return m_Pitch; }
-    u8 GetHeadPitch() const { return m_HeadPitch; }
+    uint8_t GetYaw() const { return m_Yaw; }
+    uint8_t GetPitch() const { return m_Pitch; }
+    uint8_t GetHeadPitch() const { return m_HeadPitch; }
     Vector3s GetVelocity() const { return m_Velocity; }
     const entity::EntityMetadata& GetMetadata() const { return m_Metadata; }
 };
@@ -282,8 +282,8 @@ private:
     EntityId m_EntityId;
     UUID m_UUID;
     Vector3d m_Position;
-    u8 m_Yaw;
-    u8 m_Pitch;
+    uint8_t m_Yaw;
+    uint8_t m_Pitch;
     entity::EntityMetadata m_Metadata;
 
 public:
@@ -294,8 +294,8 @@ public:
     EntityId GetEntityId() const { return m_EntityId; }
     UUID GetUUID() const { return m_UUID; }
     Vector3d GetPosition() const { return m_Position; }
-    u8 GetYaw() const { return m_Yaw; }
-    u8 GetPitch() const { return m_Pitch; }
+    uint8_t GetYaw() const { return m_Yaw; }
+    uint8_t GetPitch() const { return m_Pitch; }
     const entity::EntityMetadata& GetMetadata() const { return m_Metadata; }
 };
 
@@ -388,7 +388,7 @@ class BlockBreakAnimationPacket : public InboundPacket {  // 0x08
 private:
     EntityId m_EntityId;
     Vector3i m_Position;
-    u8 m_DestroyStage;
+    uint8_t m_DestroyStage;
 
 public:
     MCLIB_API BlockBreakAnimationPacket();
@@ -399,7 +399,7 @@ public:
     EntityId GetEntityId() const { return m_EntityId; }
     Vector3i GetPosition() const { return m_Position; }
     // 0-9
-    u8 GetDestroyStage() const { return m_DestroyStage; }
+    uint8_t GetDestroyStage() const { return m_DestroyStage; }
 };
 
 class UpdateBlockEntityPacket : public InboundPacket {  // 0x09
@@ -436,8 +436,8 @@ public:
 class BlockActionPacket : public InboundPacket {  // 0x0A
 private:
     Vector3i m_Position;
-    u8 m_ActionId;
-    u8 m_ActionParam;
+    uint8_t m_ActionId;
+    uint8_t m_ActionParam;
     s32 m_BlockType;
 
 public:
@@ -446,8 +446,8 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     Vector3i GetPosition() const { return m_Position; }
-    u8 GetActionId() const { return m_ActionId; }
-    u8 GetActionParam() const { return m_ActionParam; }
+    uint8_t GetActionId() const { return m_ActionId; }
+    uint8_t GetActionParam() const { return m_ActionParam; }
     // The block type ID for the block, not including metadata/damage value
     s32 GetBlockType() const { return m_BlockType; }
 };
@@ -487,7 +487,7 @@ private:
     float m_Health;
     Color m_Color;
     u32 m_Divisions;
-    u8 m_Flags;
+    uint8_t m_Flags;
 
 public:
     MCLIB_API BossBarPacket();
@@ -503,19 +503,19 @@ public:
     u32 GetDivisions() const { return m_Divisions; }
 
     bool HasFlag(Flag flag) const { return (m_Flags & (int)flag) != 0; }
-    u8 GetFlags() const { return m_Flags; }
+    uint8_t GetFlags() const { return m_Flags; }
 };
 
 class ServerDifficultyPacket : public InboundPacket {  // 0x0D
 private:
-    u8 m_Difficulty;
+    uint8_t m_Difficulty;
 
 public:
     MCLIB_API ServerDifficultyPacket();
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    u8 GetDifficulty() const { return m_Difficulty; }
+    uint8_t GetDifficulty() const { return m_Difficulty; }
 };
 
 class TabCompletePacket : public InboundPacket {  // 0x0E
@@ -579,7 +579,7 @@ public:
 
 class ConfirmTransactionPacket : public InboundPacket {  // 0x11
 private:
-    u8 m_WindowId;
+    uint8_t m_WindowId;
     s16 m_Action;
     bool m_Accepted;
 
@@ -588,29 +588,29 @@ public:
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    u8 GetWindowId() const { return m_WindowId; }
+    uint8_t GetWindowId() const { return m_WindowId; }
     s16 GetAction() const { return m_Action; }
     bool IsAccepted() const { return m_Accepted; }
 };
 
 class CloseWindowPacket : public InboundPacket {  // 0x12
 private:
-    u8 m_WindowId;
+    uint8_t m_WindowId;
 
 public:
     MCLIB_API CloseWindowPacket();
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    u8 GetWindowId() const { return m_WindowId; }
+    uint8_t GetWindowId() const { return m_WindowId; }
 };
 
 class OpenWindowPacket : public InboundPacket {  // 0x13
 private:
-    u8 m_WindowId;
+    uint8_t m_WindowId;
     std::wstring m_WindowType;
     std::wstring m_WindowTitle;
-    u8 m_SlotCount;
+    uint8_t m_SlotCount;
     // Optional. Only used when window type is "EntityHorse"
     EntityId m_EntityId;
 
@@ -619,16 +619,16 @@ public:
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    u8 GetWindowId() const { return m_WindowId; }
+    uint8_t GetWindowId() const { return m_WindowId; }
     const std::wstring& GetWindowType() const { return m_WindowType; }
     const std::wstring& GetWindowTitle() const { return m_WindowTitle; }
-    u8 GetSlotCount() const { return m_SlotCount; }
+    uint8_t GetSlotCount() const { return m_SlotCount; }
     EntityId GetEntityId() const { return m_EntityId; }
 };
 
 class WindowItemsPacket : public InboundPacket {  // 0x14
 private:
-    u8 m_WindowId;
+    uint8_t m_WindowId;
     std::vector<inventory::Slot> m_Slots;
 
 public:
@@ -636,7 +636,7 @@ public:
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    u8 GetWindowId() const { return m_WindowId; }
+    uint8_t GetWindowId() const { return m_WindowId; }
 
     // Contains every slot for the window, even empty ones (-1 itemId in Slot)
     const std::vector<inventory::Slot>& GetSlots() const { return m_Slots; }
@@ -644,7 +644,7 @@ public:
 
 class WindowPropertyPacket : public InboundPacket {  // 0x15
 private:
-    u8 m_WindowId;
+    uint8_t m_WindowId;
     s16 m_Property;
     s16 m_Value;
 
@@ -653,14 +653,14 @@ public:
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    u8 GetWindowId() const { return m_WindowId; }
+    uint8_t GetWindowId() const { return m_WindowId; }
     s16 GetProperty() const { return m_Property; }
     s16 GetValue() const { return m_Value; }
 };
 
 class SetSlotPacket : public InboundPacket {  // 0x16
 private:
-    u8 m_WindowId;
+    uint8_t m_WindowId;
     s16 m_SlotIndex;
     inventory::Slot m_Slot;
 
@@ -670,7 +670,7 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     // 0 is inventory window
-    u8 GetWindowId() const { return m_WindowId; }
+    uint8_t GetWindowId() const { return m_WindowId; }
 
     /**
      * 0-3 are armor slots,
@@ -738,7 +738,7 @@ public:
 class EntityStatusPacket : public InboundPacket {  // 0x1B
 private:
     EntityId m_EntityId;
-    u8 m_Status;
+    uint8_t m_Status;
 
 public:
     MCLIB_API EntityStatusPacket();
@@ -746,7 +746,7 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     EntityId GetEntityId() const { return m_EntityId; }
-    u8 GetStatus() const { return m_Status; }
+    uint8_t GetStatus() const { return m_Status; }
 };
 
 class ExplosionPacket : public InboundPacket {  // 0x1C
@@ -888,10 +888,10 @@ public:
 class JoinGamePacket : public InboundPacket {  // 0x23
 private:
     s32 m_EntityId;
-    u8 m_Gamemode;
+    uint8_t m_Gamemode;
     s32 m_Dimension;
-    u8 m_Difficulty;
-    u8 m_MaxPlayers;
+    uint8_t m_Difficulty;
+    uint8_t m_MaxPlayers;
     MCString m_LevelType;
     bool m_ReducedDebug;
 
@@ -901,10 +901,10 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     s32 GetEntityId() const { return m_EntityId; }
-    u8 GetGamemode() const { return m_Gamemode; }
+    uint8_t GetGamemode() const { return m_Gamemode; }
     s32 GetDimension() const { return m_Dimension; }
-    u8 GetDifficulty() const { return m_Difficulty; }
-    u8 GetMaxPlayers() const { return m_MaxPlayers; }
+    uint8_t GetDifficulty() const { return m_Difficulty; }
+    uint8_t GetMaxPlayers() const { return m_MaxPlayers; }
     std::wstring GetLevelType() const { return m_LevelType.GetUTF16(); }
     bool GetReducedDebug() const { return m_ReducedDebug; }
 };
@@ -912,22 +912,22 @@ public:
 class MapPacket : public InboundPacket {  // 0x24
 public:
     struct Icon {
-        u8 direction;
-        u8 type;
-        u8 x;
-        u8 z;
+        uint8_t direction;
+        uint8_t type;
+        uint8_t x;
+        uint8_t z;
     };
 
 private:
     s32 m_MapId;
-    u8 m_Scale;
+    uint8_t m_Scale;
     bool m_TrackPosition;
     std::vector<Icon> m_Icons;
-    u8 m_Columns;
+    uint8_t m_Columns;
 
-    u8 m_Rows;
-    u8 m_X;
-    u8 m_Z;
+    uint8_t m_Rows;
+    uint8_t m_X;
+    uint8_t m_Z;
     s32 m_Length;
     std::string m_Data;
 
@@ -937,13 +937,13 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     s32 GetMapId() const { return m_MapId; }
-    u8 GetScale() const { return m_Scale; }
+    uint8_t GetScale() const { return m_Scale; }
     bool IsTrackingPosition() const { return m_TrackPosition; }
     const std::vector<Icon>& GetIcons() const { return m_Icons; }
-    u8 GetColumns() const { return m_Columns; }
-    u8 GetRows() const { return m_Rows; }
-    u8 GetX() const { return m_X; }
-    u8 GetZ() const { return m_Z; }
+    uint8_t GetColumns() const { return m_Columns; }
+    uint8_t GetRows() const { return m_Rows; }
+    uint8_t GetX() const { return m_X; }
+    uint8_t GetZ() const { return m_Z; }
     s32 GetLength() const { return m_Length; }
     const std::string& GetData() const { return m_Data; }
 };
@@ -971,8 +971,8 @@ class EntityLookAndRelativeMovePacket : public InboundPacket {  // 0x26
 private:
     EntityId m_EntityId;
     Vector3s m_Delta;
-    u8 m_Yaw;
-    u8 m_Pitch;
+    uint8_t m_Yaw;
+    uint8_t m_Pitch;
     bool m_OnGround;
 
 public:
@@ -982,16 +982,16 @@ public:
 
     EntityId GetEntityId() const { return m_EntityId; }
     Vector3s GetDelta() const { return m_Delta; }
-    u8 GetYaw() const { return m_Yaw; }
-    u8 GetPitch() const { return m_Pitch; }
+    uint8_t GetYaw() const { return m_Yaw; }
+    uint8_t GetPitch() const { return m_Pitch; }
     float IsOnGround() const { return m_OnGround; }
 };
 
 class EntityLookPacket : public InboundPacket {  // 0x27
 private:
     EntityId m_EntityId;
-    u8 m_Yaw;
-    u8 m_Pitch;
+    uint8_t m_Yaw;
+    uint8_t m_Pitch;
     bool m_OnGround;
 
 public:
@@ -1000,8 +1000,8 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     EntityId GetEntityId() const { return m_EntityId; }
-    u8 GetYaw() const { return m_Yaw; }
-    u8 GetPitch() const { return m_Pitch; }
+    uint8_t GetYaw() const { return m_Yaw; }
+    uint8_t GetPitch() const { return m_Pitch; }
     float IsOnGround() const { return m_OnGround; }
 };
 
@@ -1050,7 +1050,7 @@ public:
     enum class Flag { Invulnerable, Flying, AllowFlying, Creative };
 
 private:
-    u8 m_Flags;
+    uint8_t m_Flags;
     float m_FlyingSpeed;
     float m_FOVModifier;
 
@@ -1059,7 +1059,7 @@ public:
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    u8 GetFlags() const { return m_Flags; }
+    uint8_t GetFlags() const { return m_Flags; }
     float GetFlyingSpeed() const { return m_FlyingSpeed; }
     float GetFOVModifier() const { return m_FOVModifier; }
 
@@ -1127,7 +1127,7 @@ class PlayerPositionAndLookPacket : public InboundPacket {  // 0x2E
 private:
     Vector3d m_Position;
     float m_Yaw, m_Pitch;
-    u8 m_Flags;
+    uint8_t m_Flags;
     s32 m_TeleportId;
 
 public:
@@ -1138,7 +1138,7 @@ public:
     Vector3d GetPosition() const { return m_Position; }
     float GetYaw() const { return m_Yaw; }
     float GetPitch() const { return m_Pitch; }
-    u8 GetFlags() const { return m_Flags; }
+    uint8_t GetFlags() const { return m_Flags; }
     s32 GetTeleportId() const { return m_TeleportId; }
 };
 
@@ -1189,7 +1189,7 @@ public:
 class RemoveEntityEffectPacket : public InboundPacket {  // 0x31
 private:
     EntityId m_EntityId;
-    u8 m_EffectId;
+    uint8_t m_EffectId;
 
 public:
     MCLIB_API RemoveEntityEffectPacket();
@@ -1197,7 +1197,7 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     EntityId GetEntityId() const { return m_EntityId; }
-    u8 GetEffectId() const { return m_EffectId; }
+    uint8_t GetEffectId() const { return m_EffectId; }
 };
 
 class ResourcePackSendPacket : public InboundPacket {  // 0x32
@@ -1217,8 +1217,8 @@ public:
 class RespawnPacket : public InboundPacket {  // 0x33
 private:
     s32 m_Dimension;
-    u8 m_Difficulty;
-    u8 m_Gamemode;
+    uint8_t m_Difficulty;
+    uint8_t m_Gamemode;
     std::wstring m_Level;
 
 public:
@@ -1227,15 +1227,15 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     s32 GetDimension() const { return m_Dimension; }
-    u8 GetDifficulty() const { return m_Difficulty; }
-    u8 GetGamemode() const { return m_Gamemode; }
+    uint8_t GetDifficulty() const { return m_Difficulty; }
+    uint8_t GetGamemode() const { return m_Gamemode; }
     const std::wstring& GetLevel() const { return m_Level; }
 };
 
 class EntityHeadLookPacket : public InboundPacket {  // 0x34
 private:
     EntityId m_EntityId;
-    u8 m_Yaw;
+    uint8_t m_Yaw;
 
 public:
     MCLIB_API EntityHeadLookPacket();
@@ -1243,7 +1243,7 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     EntityId GetEntityId() const { return m_EntityId; }
-    u8 GetYaw() const { return m_Yaw; }
+    uint8_t GetYaw() const { return m_Yaw; }
 };
 
 class WorldBorderPacket : public InboundPacket {  // 0x35
@@ -1329,7 +1329,7 @@ public:
 
 class HeldItemChangePacket : public InboundPacket {  // 0x37
 private:
-    u8 m_Slot;
+    uint8_t m_Slot;
 
 public:
     MCLIB_API HeldItemChangePacket();
@@ -1337,7 +1337,7 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     // The new slot that the player selected (0-8)
-    u8 GetSlot() const { return m_Slot; }
+    uint8_t GetSlot() const { return m_Slot; }
 };
 
 class DisplayScoreboardPacket : public InboundPacket {  // 0x38
@@ -1504,10 +1504,10 @@ private:
     std::wstring m_TeamDisplayName;
     std::wstring m_TeamPrefix;
     std::wstring m_TeamSuffix;
-    u8 m_FriendlyFlags;
+    uint8_t m_FriendlyFlags;
     std::wstring m_TagVisbility;
     std::wstring m_CollisionRule;
-    u8 m_Color;
+    uint8_t m_Color;
     std::vector<std::wstring> m_Players;
 
 public:
@@ -1520,10 +1520,10 @@ public:
     const std::wstring& GetTeamDisplayName() const { return m_TeamDisplayName; }
     const std::wstring& GetTeamPrefix() const { return m_TeamPrefix; }
     const std::wstring& GetTeamSuffix() const { return m_TeamSuffix; }
-    u8 GetFriendlyFlags() const { return m_FriendlyFlags; }
+    uint8_t GetFriendlyFlags() const { return m_FriendlyFlags; }
     const std::wstring& GetTagVisibility() const { return m_TagVisbility; }
     const std::wstring& GetCollisionRule() const { return m_CollisionRule; }
-    u8 GetColor() const { return m_Color; }
+    uint8_t GetColor() const { return m_Color; }
     const std::vector<std::wstring>& GetPlayers() const { return m_Players; }
 };
 
@@ -1658,8 +1658,8 @@ class EntityTeleportPacket : public InboundPacket {  // 0x49
 private:
     EntityId m_EntityId;
     Vector3d m_Position;
-    u8 m_Yaw;
-    u8 m_Pitch;
+    uint8_t m_Yaw;
+    uint8_t m_Pitch;
     bool m_OnGround;
 
 public:
@@ -1669,8 +1669,8 @@ public:
 
     EntityId GetEntityId() const { return m_EntityId; }
     Vector3d GetPosition() const { return m_Position; }
-    u8 GetYaw() const { return m_Yaw; }
-    u8 GetPitch() const { return m_Pitch; }
+    uint8_t GetYaw() const { return m_Yaw; }
+    uint8_t GetPitch() const { return m_Pitch; }
     float IsOnGround() const { return m_OnGround; }
 };
 
@@ -1696,10 +1696,10 @@ public:
 
 private:
     EntityId m_EntityId;
-    u8 m_EffectId;
-    u8 m_Amplifier;
+    uint8_t m_EffectId;
+    uint8_t m_Amplifier;
     s32 m_Duration;
-    u8 m_Flags;
+    uint8_t m_Flags;
 
 public:
     MCLIB_API EntityEffectPacket();
@@ -1707,10 +1707,10 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     EntityId GetEntityId() const { return m_EntityId; }
-    u8 GetEffectId() const { return m_EffectId; }
-    u8 GetAmplifier() const { return m_Amplifier; }
+    uint8_t GetEffectId() const { return m_EffectId; }
+    uint8_t GetAmplifier() const { return m_Amplifier; }
     s32 GetDuration() const { return m_Duration; }
-    u8 GetFlags() const { return m_Flags; }
+    uint8_t GetFlags() const { return m_Flags; }
 
     bool HasFlag(Flag flag) const { return (m_Flags & (int)flag) != 0; }
 };
@@ -1727,7 +1727,7 @@ public:
 
 class CraftRecipeResponsePacket : public InboundPacket {
 private:
-    u8 m_WindowId;
+    uint8_t m_WindowId;
     s32 m_RecipeId;
 
 public:
@@ -1821,31 +1821,31 @@ class PrepareCraftingGridPacket : public OutboundPacket {
 public:
     struct Entry {
         inventory::Slot item;
-        u8 craftingSlot;
-        u8 playerSlot;
+        uint8_t craftingSlot;
+        uint8_t playerSlot;
     };
 
 private:
-    u8 m_WindowId;
+    uint8_t m_WindowId;
     s16 m_ActionNumber;
     std::vector<Entry> m_ReturnEntries;
     std::vector<Entry> m_PrepareEntries;
 
 public:
     MCLIB_API PrepareCraftingGridPacket(
-        u8 windowId, s16 actionNumber, const std::vector<Entry>& returnEntries,
+        uint8_t windowId, s16 actionNumber, const std::vector<Entry>& returnEntries,
         const std::vector<Entry>& prepareEntries);
     DataBuffer MCLIB_API Serialize() const;
 };
 
 class CraftRecipeRequestPacket : public OutboundPacket {
 private:
-    u8 m_WindowId;
+    uint8_t m_WindowId;
     s32 m_RecipeId;
     bool m_MakeAll;
 
 public:
-    MCLIB_API CraftRecipeRequestPacket(u8 windowId, s32 recipeId, bool makeAll);
+    MCLIB_API CraftRecipeRequestPacket(uint8_t windowId, s32 recipeId, bool makeAll);
     DataBuffer MCLIB_API Serialize() const;
 };
 
@@ -1892,51 +1892,51 @@ public:
 class ClientSettingsPacket : public OutboundPacket {  // 0x04
 private:
     std::wstring m_Locale;
-    u8 m_ViewDistance;
+    uint8_t m_ViewDistance;
     ChatMode m_ChatMode;
     bool m_ChatColors;
-    u8 m_SkinFlags;
+    uint8_t m_SkinFlags;
     MainHand m_MainHand;
 
 public:
-    MCLIB_API ClientSettingsPacket(const std::wstring& locale, u8 viewDistance,
+    MCLIB_API ClientSettingsPacket(const std::wstring& locale, uint8_t viewDistance,
                                    ChatMode chatMode, bool chatColors,
-                                   u8 skinFlags, MainHand hand);
+                                   uint8_t skinFlags, MainHand hand);
     DataBuffer MCLIB_API Serialize() const;
 };
 
 class ConfirmTransactionPacket : public OutboundPacket {  // 0x05
 private:
-    u8 m_WindowId;
+    uint8_t m_WindowId;
     s16 m_Action;
     bool m_Accepted;
 
 public:
-    MCLIB_API ConfirmTransactionPacket(u8 windowId, s16 action, bool accepted);
+    MCLIB_API ConfirmTransactionPacket(uint8_t windowId, s16 action, bool accepted);
     DataBuffer MCLIB_API Serialize() const;
 };
 
 class EnchantItemPacket : public OutboundPacket {  // 0x06
 private:
-    u8 m_WindowId;
-    u8 m_EnchantmentIndex;
+    uint8_t m_WindowId;
+    uint8_t m_EnchantmentIndex;
 
 public:
-    MCLIB_API EnchantItemPacket(u8 windowId, u8 enchantmentIndex);
+    MCLIB_API EnchantItemPacket(uint8_t windowId, uint8_t enchantmentIndex);
     DataBuffer MCLIB_API Serialize() const;
 };
 
 class ClickWindowPacket : public OutboundPacket {  // 0x07
 private:
-    u8 m_WindowId;
+    uint8_t m_WindowId;
     u16 m_SlotIndex;
-    u8 m_Button;
+    uint8_t m_Button;
     u16 m_Action;
     s32 m_Mode;
     inventory::Slot m_ClickedItem;
 
 public:
-    MCLIB_API ClickWindowPacket(u8 windowId, u16 slotIndex, u8 button,
+    MCLIB_API ClickWindowPacket(uint8_t windowId, u16 slotIndex, uint8_t button,
                                 u16 action, s32 mode,
                                 inventory::Slot clickedItem);
     DataBuffer MCLIB_API Serialize() const;
@@ -1944,10 +1944,10 @@ public:
 
 class CloseWindowPacket : public OutboundPacket {  // 0x08
 private:
-    u8 m_WindowId;
+    uint8_t m_WindowId;
 
 public:
-    MCLIB_API CloseWindowPacket(u8 windowId);
+    MCLIB_API CloseWindowPacket(uint8_t windowId);
     DataBuffer MCLIB_API Serialize() const;
 };
 
@@ -2115,11 +2115,11 @@ class SteerVehiclePacket : public OutboundPacket {  // 0x15
 private:
     float m_Sideways;
     float m_Forward;
-    u8 m_Flags;
+    uint8_t m_Flags;
 
 public:
     // Flags: 0x01 = Jump, 0x02 = Unmount
-    MCLIB_API SteerVehiclePacket(float sideways, float forward, u8 flags);
+    MCLIB_API SteerVehiclePacket(float sideways, float forward, uint8_t flags);
     DataBuffer MCLIB_API Serialize() const;
 };
 

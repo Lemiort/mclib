@@ -14,15 +14,15 @@ class VarInt;
 
 class DataBuffer {
 private:
-    typedef std::vector<u8> Data;
+    using Data = std::vector<uint8_t>;
     Data m_Buffer;
     std::size_t m_ReadOffset = 0;
 
 public:
-    typedef Data::iterator iterator;
-    typedef Data::const_iterator const_iterator;
-    typedef Data::reference reference;
-    typedef Data::const_reference const_reference;
+    using iterator = Data::iterator;
+    using const_iterator = Data::const_iterator;
+    using reference = Data::reference;
+    using const_reference = Data::const_reference;
 
     MCLIB_API DataBuffer();
     MCLIB_API DataBuffer(const DataBuffer& other);
@@ -44,7 +44,7 @@ public:
     template <typename T>
     DataBuffer& operator<<(T data) {
         // Switch to big endian
-        std::reverse((u8*)&data, (u8*)&data + sizeof(T));
+        std::reverse((uint8_t*)&data, (uint8_t*)&data + sizeof(T));
         Append(data);
         return *this;
     }
@@ -68,7 +68,7 @@ public:
     DataBuffer& operator>>(T& data) {
         assert(m_ReadOffset + sizeof(T) <= GetSize());
         data = *(T*)&m_Buffer[m_ReadOffset];
-        std::reverse((u8*)&data, (u8*)&data + sizeof(T));
+        std::reverse((uint8_t*)&data, (uint8_t*)&data + sizeof(T));
         m_ReadOffset += sizeof(T);
         return *this;
     }
@@ -95,7 +95,7 @@ public:
         m_ReadOffset += amount;
     }
 
-    void ReadSome(u8* buffer, std::size_t amount) {
+    void ReadSome(uint8_t* buffer, std::size_t amount) {
         assert(m_ReadOffset + amount <= GetSize());
         std::copy_n(m_Buffer.begin() + m_ReadOffset, amount, buffer);
         m_ReadOffset += amount;

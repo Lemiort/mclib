@@ -30,7 +30,7 @@ public:
 
 private:
     SkullType m_Type;
-    u8 m_Rotation;
+    uint8_t m_Rotation;
     UUID m_OwnerUUID;
     std::wstring m_OwnerName;
     std::vector<Texture> m_Textures;
@@ -41,7 +41,7 @@ public:
     MCLIB_API bool ImportNBT(nbt::NBT* nbt);
 
     inline SkullType GetType() const noexcept { return m_Type; }
-    inline u8 GetRotation() const noexcept { return m_Rotation; }
+    inline uint8_t GetRotation() const noexcept { return m_Rotation; }
     inline UUID GetOwnerUUID() const noexcept { return m_OwnerUUID; }
     inline const std::wstring& GetOwnerName() const noexcept {
         return m_OwnerName;
