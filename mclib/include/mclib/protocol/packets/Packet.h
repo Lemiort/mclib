@@ -827,7 +827,7 @@ public:
     s64 GetAliveId() const { return m_AliveId; }
 };
 
-class ChunkDataPacket : public InboundPacket {  // 0x20
+class ChunkDataPacket : public InboundPacket {  // 0x21
 private:
     world::ChunkColumnPtr m_ChunkColumn;
     std::vector<block::BlockEntityPtr> m_BlockEntities;
@@ -890,9 +890,9 @@ private:
     s32 m_EntityId;
     u8 m_Gamemode;
     s32 m_Dimension;
-    u8 m_Difficulty;
     u8 m_MaxPlayers;
     MCString m_LevelType;
+    VarInt m_ViewDistance;
     bool m_ReducedDebug;
 
 public:
@@ -903,13 +903,13 @@ public:
     s32 GetEntityId() const { return m_EntityId; }
     u8 GetGamemode() const { return m_Gamemode; }
     s32 GetDimension() const { return m_Dimension; }
-    u8 GetDifficulty() const { return m_Difficulty; }
     u8 GetMaxPlayers() const { return m_MaxPlayers; }
     std::wstring GetLevelType() const { return m_LevelType.GetUTF16(); }
+    VarInt GetViewDistance() const { return m_ViewDistance; }
     bool GetReducedDebug() const { return m_ReducedDebug; }
 };
 
-class MapPacket : public InboundPacket {  // 0x24
+class MapPacket : public InboundPacket {  // 0x26
 public:
     struct Icon {
         u8 direction;
@@ -922,6 +922,7 @@ private:
     s32 m_MapId;
     u8 m_Scale;
     bool m_TrackPosition;
+    bool m_Locked;
     std::vector<Icon> m_Icons;
     u8 m_Columns;
 
@@ -939,6 +940,7 @@ public:
     s32 GetMapId() const { return m_MapId; }
     u8 GetScale() const { return m_Scale; }
     bool IsTrackingPosition() const { return m_TrackPosition; }
+    bool IsLocked() const { return m_Locked; }
     const std::vector<Icon> &GetIcons() const { return m_Icons; }
     u8 GetColumns() const { return m_Columns; }
     u8 GetRows() const { return m_Rows; }
@@ -946,6 +948,21 @@ public:
     u8 GetZ() const { return m_Z; }
     s32 GetLength() const { return m_Length; }
     const std::string &GetData() const { return m_Data; }
+};
+
+class OpenBook : public InboundPacket {  // 0x2D
+public:
+private:
+    // VarInt enum Hand;
+public:
+    MCLIB_API OpenBook();
+    bool MCLIB_API Deserialize(DataBuffer &data, std::size_t packetLength) {
+        throw std::runtime_error(
+            "Function is not implemented");  // TODO implement
+    }
+    void MCLIB_API Dispatch(PacketHandler *handler) {
+        throw std::runtime_error("Function is not implemented");
+    }
 };
 
 // This packet allows at most 8 blocks movement in any direction,

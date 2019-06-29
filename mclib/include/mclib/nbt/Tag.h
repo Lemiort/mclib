@@ -27,7 +27,8 @@ enum class TagType {
     String,
     List,
     Compound,
-    IntArray
+    IntArray,
+    LongArray
 };
 
 MCLIB_API std::string to_string(mc::nbt::TagType type);
@@ -118,6 +119,26 @@ public:
     TagType MCLIB_API GetType() const noexcept;
 
     std::vector<s32> MCLIB_API GetValue() const noexcept { return m_Value; }
+    friend MCLIB_API DataBuffer &operator<<(DataBuffer &out, const Tag &tag);
+};
+
+class TagLongArray : public Tag {
+private:
+    std::vector<s64> m_Value;
+
+    void MCLIB_API Write(DataBuffer &buffer) const;
+    void MCLIB_API Read(DataBuffer &buffer);
+
+public:
+    MCLIB_API TagLongArray() : Tag(L"") {}
+    MCLIB_API TagLongArray(std::wstring name, std::vector<s64> val)
+        : Tag(name), m_Value(val) {}
+    MCLIB_API TagLongArray(std::string name, std::vector<s64> val)
+        : Tag(name), m_Value(val) {}
+
+    TagType MCLIB_API GetType() const noexcept;
+
+    std::vector<s64> MCLIB_API GetValue() const noexcept { return m_Value; }
     friend MCLIB_API DataBuffer &operator<<(DataBuffer &out, const Tag &tag);
 };
 
@@ -333,6 +354,7 @@ MCLIB_API DataBuffer &operator<<(DataBuffer &out, const TagByteArray &tag);
 MCLIB_API DataBuffer &operator<<(DataBuffer &out, const TagList &tag);
 MCLIB_API DataBuffer &operator<<(DataBuffer &out, const TagCompound &tag);
 MCLIB_API DataBuffer &operator<<(DataBuffer &out, const TagIntArray &tag);
+MCLIB_API DataBuffer &operator<<(DataBuffer &out, const TagLongArray &tag);
 MCLIB_API DataBuffer &operator<<(DataBuffer &out, const TagByte &tag);
 MCLIB_API DataBuffer &operator<<(DataBuffer &out, const TagShort &tag);
 MCLIB_API DataBuffer &operator<<(DataBuffer &out, const TagInt &tag);
@@ -346,6 +368,7 @@ MCLIB_API DataBuffer &operator>>(DataBuffer &in, TagByteArray &tag);
 MCLIB_API DataBuffer &operator>>(DataBuffer &in, TagList &tag);
 MCLIB_API DataBuffer &operator>>(DataBuffer &in, TagCompound &tag);
 MCLIB_API DataBuffer &operator>>(DataBuffer &in, TagIntArray &tag);
+MCLIB_API DataBuffer &operator>>(DataBuffer &in, TagLongArray &tag);
 MCLIB_API DataBuffer &operator>>(DataBuffer &in, TagByte &tag);
 MCLIB_API DataBuffer &operator>>(DataBuffer &in, TagShort &tag);
 MCLIB_API DataBuffer &operator>>(DataBuffer &in, TagInt &tag);

@@ -21,6 +21,11 @@ Chunk &Chunk::operator=(const Chunk &other) {
 }
 
 void Chunk::Load(DataBuffer &in, ChunkColumnMetadata *meta, s32 chunkIndex) {
+    s16 block_count;  // Number of non-air blocks present in the chunk section,
+                      // for lighting purposes. "Non-air" is defined as any block
+                      // other than air, cave air, and void air (in particular,
+                      // note that fluids such as water are still counted).
+    in >> block_count;
     in >> m_BitsPerBlock;
 
     VarInt paletteLength;
@@ -43,16 +48,6 @@ void Chunk::Load(DataBuffer &in, ChunkColumnMetadata *meta, s32 chunkIndex) {
         u64 data;
         in >> data;
         m_Data[i] = data;
-    }
-
-    static const s64 lightSize = 16 * 16 * 16 / 2;
-
-    // Block light data
-    in.SetReadOffset(in.GetReadOffset() + lightSize);
-
-    // Sky Light
-    if (meta->skylight) {
-        in.SetReadOffset(in.GetReadOffset() + lightSize);
     }
 }
 

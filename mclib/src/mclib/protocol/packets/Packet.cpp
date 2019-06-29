@@ -992,6 +992,8 @@ bool ChunkDataPacket::Deserialize(DataBuffer &data, std::size_t packetLength) {
     data >> mask;
 
     metadata.sectionmask = mask.GetInt();
+    nbt::NBT heightmaps;  // TODO add parsing
+    data >> heightmaps;
 
     if (m_Connection)
         metadata.skylight = m_Connection->GetDimension() == 0;
@@ -1097,9 +1099,9 @@ bool JoinGamePacket::Deserialize(DataBuffer &data, std::size_t packetLength) {
     data >> m_EntityId;
     data >> m_Gamemode;
     data >> m_Dimension;
-    data >> m_Difficulty;
     data >> m_MaxPlayers;
     data >> m_LevelType;
+    data >> m_ViewDistance;
     data >> m_ReducedDebug;
     return true;
 }

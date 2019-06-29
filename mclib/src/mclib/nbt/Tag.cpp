@@ -156,6 +156,29 @@ void TagIntArray::Read(DataBuffer &buffer) {
     }
 }
 
+TagType TagLongArray::GetType() const noexcept { return TagType::LongArray; }
+
+void TagLongArray::Write(DataBuffer &buffer) const {
+    s32 length = m_Value.size();
+
+    buffer << length;
+    for (s64 val : m_Value) buffer << val;
+}
+
+void TagLongArray::Read(DataBuffer &buffer) {
+    s32 length;
+
+    buffer >> length;
+
+    m_Value.clear();
+
+    for (s32 i = 0; i < length; ++i) {
+        s64 val;
+        buffer >> val;
+        m_Value.push_back(val);
+    }
+}
+
 void TagList::Write(DataBuffer &buffer) const {
     u8 type = (u8)m_ListType;
     s32 size = (m_ListType != TagType::End) ? m_Tags.size() : 0;
@@ -316,6 +339,8 @@ void TagCompound::Read(DataBuffer &buffer) {
             tag = std::make_shared<TagCompound>();
         else if (type == TagType::IntArray)
             tag = std::make_shared<TagIntArray>();
+        else if (type == TagType::LongArray)
+            tag = std::make_shared<TagLongArray>();
 
         if (tag) {
             m_Tags.push_back(std::make_pair(type, tag));

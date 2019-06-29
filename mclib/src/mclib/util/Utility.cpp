@@ -877,7 +877,7 @@ public:
     void HandlePacket(protocol::packets::in::JoinGamePacket *packet) {
         console << "Joining game with entity id of " << packet->GetEntityId()
                 << "\n";
-        console << "Game difficulty: " << (int)packet->GetDifficulty()
+        console << "View distance: " << packet->GetViewDistance().GetInt()
                 << ", Dimension: " << (int)packet->GetDimension() << "\n";
         console << "Level type: " << packet->GetLevelType() << "\n";
     }

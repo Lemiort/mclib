@@ -10,8 +10,8 @@ namespace mc {
 Position::Position(s32 x, s32 y, s32 z) noexcept : m_X(x), m_Y(y), m_Z(z) {}
 
 s64 Position::Encode64() const noexcept {
-    return ((m_X & 0x3FFFFFF) << 38) | ((m_Y & 0xFFF) << 26) |
-           (m_Z & 0x3FFFFFF);
+    return ((m_X & 0x3FFFFFF) << 38) | ((m_Z & 0x3FFFFFF) << 12) |
+           (m_Y & 0xFFF);
 }
 
 DataBuffer &operator<<(DataBuffer &out, const Position &pos) {
@@ -23,8 +23,8 @@ DataBuffer &operator>>(DataBuffer &in, Position &pos) {
     in >> val;
 
     pos.m_X = val >> 38;
-    pos.m_Y = (val >> 26) & 0xFFF;
-    pos.m_Z = val << 38 >> 38;
+    pos.m_Y = val & 0xFFF;
+    pos.m_Z = (val << 26 >> 38);
 
     if (pos.m_X >= std::pow(2, 25)) pos.m_X -= (s64)std::pow(2, 26);
     if (pos.m_Y >= std::pow(2, 11)) pos.m_Y -= (s64)std::pow(2, 12);

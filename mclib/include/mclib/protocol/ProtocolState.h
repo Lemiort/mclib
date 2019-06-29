@@ -17,6 +17,7 @@ enum class Version {
     Minecraft_1_12_1 = 338,
     Minecraft_1_12_2 = 340,
     Minecraft_1_13_2 = 404,
+    Minecraft_1_14_3 = 490,
 };
 
 MCLIB_API std::string to_string(Version version);
@@ -133,10 +134,23 @@ enum ProtocolPlay {
     EntityProperties,
     EntityEffect,
     AdvancementProgress = 0x4E,
-
     Advancements,
     UnlockRecipes,
     CraftRecipeResponse,
+    OpenHorseWindow,
+    UpdateLight,
+    TradeList,
+    OpenBook,
+    PlayerInfo,
+    FacePlayer,
+    SelectAdvancementTab,
+    UpdateViewPosition,
+    UpdateViewDistance,
+    EntitySoundEffect,
+    StopSound,
+    NBTQueryResponse,
+    DeclareRecipes,
+    Tags,
 };
 
 }  // namespace play

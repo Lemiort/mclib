@@ -25,9 +25,9 @@ DataBuffer &operator<<(DataBuffer &out, const VarInt &var) {
     char data[10];
 
     do {
-        u8 nextByte = uval & 0x7F;
+        u8 nextByte = uval & 0b01111111;
         uval >>= 7;
-        if (uval) nextByte |= 0x80;
+        if (uval) nextByte |= 0b10000000;
         data[encoded++] = nextByte;
     } while (uval);
     out << std::string(data, encoded);
@@ -49,9 +49,9 @@ DataBuffer &operator>>(DataBuffer &in, VarInt &var) {
     do {
         if (i >= in.GetSize())
             throw std::out_of_range("Failed reading VarInt from DataBuffer.");
-        value |= (u64)(in[i] & 0x7F) << shift;
+        value |= static_cast<u64>((in[i] & 0b01111111) << shift);
         shift += 7;
-    } while ((in[i++] & 0x80) != 0);
+    } while ((in[i++] & 0b10000000) != 0);
 
     in.SetReadOffset(i);
 
