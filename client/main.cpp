@@ -1,4 +1,6 @@
-#include "Logger.h"
+
+#include <getopt.h>
+#include <iostream>
 
 #include <mclib/common/Common.h>
 #include <mclib/core/Client.h>
@@ -7,18 +9,12 @@
 #include <mclib/util/Utility.h>
 #include <mclib/util/VersionFetcher.h>
 
-#include <iostream>
-
-#ifdef _DEBUG
-#pragma comment(lib, "../Debug/mclibd.lib")
-#else
-#pragma comment(lib, "../Release/mclib.lib")
-#endif
+#include "Logger.h"
 
 namespace {
 
 const std::string server("127.0.0.1");
-const u16 port = 25565;
+u16 port = 25565;
 const std::string username("testplayer");
 const std::string password("");
 const bool useProfileToken = false;
@@ -26,8 +22,10 @@ const bool useProfileToken = false;
 }  // namespace
 
 int run(mc::protocol::Version versions, mc::util::ForgeHandler &forge);
+void parse_arguments(int argc, char *argv[]);
 
-int main(void) {
+int main(int argc, char *argv[]) {
+    parse_arguments(argc, argv);
     mc::util::VersionFetcher versionFetcher(server, port);
 
     std::cout << "Fetching version" << std::endl;
@@ -74,4 +72,10 @@ int run(mc::protocol::Version version, mc::util::ForgeHandler &forge) {
     }
 
     return 0;
+}
+
+void parse_arguments(int argc, char *argv[]) {
+    if (argc == 2) {
+        port = strtoul(argv[1], nullptr, 10);
+    }
 }
