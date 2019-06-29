@@ -3,8 +3,8 @@
 namespace mc {
 namespace block {
 
-bool Sign::ImportNBT(nbt::NBT* nbt) {
-    nbt::TagString* textTags[] = {
+bool Sign::ImportNBT(nbt::NBT *nbt) {
+    nbt::TagString *textTags[] = {
         nbt->GetTag<nbt::TagString>(L"Text1"),
         nbt->GetTag<nbt::TagString>(L"Text2"),
         nbt->GetTag<nbt::TagString>(L"Text3"),
@@ -23,9 +23,9 @@ bool Sign::ImportNBT(nbt::NBT* nbt) {
     return textCount == 4;
 }
 
-const std::wstring& Sign::GetText(std::size_t index) const {
+const std::wstring &Sign::GetText(std::size_t index) const {
     return m_Text[index];
 }
 
-} // ns block
-} // ns mc
+}  // namespace block
+}  // namespace mc

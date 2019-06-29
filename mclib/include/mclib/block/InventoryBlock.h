@@ -10,9 +10,9 @@
 namespace mc {
 namespace block {
 
-// Stores the items that some blocks can contain, such as chests, dispensers, furnaces, etc.
-// Server doesn't actually send this data.
-// Keep it here for the future in case reading map files is ever needed.
+// Stores the items that some blocks can contain, such as chests, dispensers,
+// furnaces, etc. Server doesn't actually send this data. Keep it here for the
+// future in case reading map files is ever needed.
 class InventoryBlock {
 public:
     using ItemMap = std::unordered_map<u8, inventory::Slot>;
@@ -24,15 +24,15 @@ private:
     s64 m_LootTableSeed;
 
 public:
-    MCLIB_API bool ImportNBT(nbt::NBT* nbt);
+    MCLIB_API bool ImportNBT(nbt::NBT *nbt);
 
-    const std::wstring& GetLock() const noexcept { return m_Lock; }
-    const ItemMap& GetItems() const noexcept { return m_Items; }
-    const std::wstring& GetLootTable() const noexcept { return m_LootTable; }
+    const std::wstring &GetLock() const noexcept { return m_Lock; }
+    const ItemMap &GetItems() const noexcept { return m_Items; }
+    const std::wstring &GetLootTable() const noexcept { return m_LootTable; }
     s64 GetLootTableSeed() const noexcept { return m_LootTableSeed; }
 };
 
-} // ns block
-} // ns mc
+}  // namespace block
+}  // namespace mc
 
 #endif

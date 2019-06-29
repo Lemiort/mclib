@@ -14,17 +14,14 @@
 namespace mc {
 namespace network {
 
-TCPSocket::TCPSocket()
-    : Socket(Socket::TCP), m_Port(0)
-{
+TCPSocket::TCPSocket() : Socket(Socket::TCP), m_Port(0) {
     m_Handle = INVALID_SOCKET;
 }
 
-bool TCPSocket::Connect(const IPAddress& address, unsigned short port) {
-    if (this->GetStatus() == Connected)
-        return true;
+bool TCPSocket::Connect(const IPAddress &address, unsigned short port) {
+    if (this->GetStatus() == Connected) return true;
 
-    struct addrinfo hints = { 0 }, *result = nullptr;
+    struct addrinfo hints = {0}, *result = nullptr;
 
     if ((m_Handle = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
         return false;
@@ -33,13 +30,15 @@ bool TCPSocket::Connect(const IPAddress& address, unsigned short port) {
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_protocol = IPPROTO_TCP;
 
-    if (getaddrinfo(address.ToString().c_str(), std::to_string(port).c_str(), &hints, &result) != 0)
+    if (getaddrinfo(address.ToString().c_str(), std::to_string(port).c_str(),
+                    &hints, &result) != 0)
         return false;
 
-    struct addrinfo* ptr = nullptr;
+    struct addrinfo *ptr = nullptr;
     for (ptr = result; ptr != nullptr; ptr = ptr->ai_next) {
-        struct sockaddr_in* sockaddr = (struct sockaddr_in*)ptr->ai_addr;
-        if (::connect(m_Handle, (struct sockaddr*)sockaddr, sizeof(struct sockaddr_in)) != 0)
+        struct sockaddr_in *sockaddr = (struct sockaddr_in *)ptr->ai_addr;
+        if (::connect(m_Handle, (struct sockaddr *)sockaddr,
+                      sizeof(struct sockaddr_in)) != 0)
             continue;
         m_RemoteAddr = *sockaddr;
         break;
@@ -47,8 +46,7 @@ bool TCPSocket::Connect(const IPAddress& address, unsigned short port) {
 
     freeaddrinfo(result);
 
-    if (!ptr)
-        return false;
+    if (!ptr) return false;
 
     this->SetStatus(Connected);
     m_RemoteIP = address;
@@ -56,14 +54,14 @@ bool TCPSocket::Connect(const IPAddress& address, unsigned short port) {
     return true;
 }
 
-size_t TCPSocket::Send(const unsigned char* data, size_t size) {
-    if (this->GetStatus() != Connected)
-        return 0;
+size_t TCPSocket::Send(const unsigned char *data, size_t size) {
+    if (this->GetStatus() != Connected) return 0;
 
     size_t sent = 0;
 
     while (sent < size) {
-        int cur = ::send(m_Handle, reinterpret_cast<const char*>(data + sent), size - sent, 0);
+        int cur = ::send(m_Handle, reinterpret_cast<const char *>(data + sent),
+                         size - sent, 0);
         if (cur <= 0) {
             Disconnect();
             return 0;
@@ -74,11 +72,11 @@ size_t TCPSocket::Send(const unsigned char* data, size_t size) {
     return sent;
 }
 
-std::size_t TCPSocket::Receive(DataBuffer& buffer, std::size_t amount) {
+std::size_t TCPSocket::Receive(DataBuffer &buffer, std::size_t amount) {
     buffer.Resize(amount);
     buffer.SetReadOffset(0);
 
-    int recvAmount = recv(m_Handle, (char*)&buffer[0], amount, MSG_DONTWAIT);
+    int recvAmount = recv(m_Handle, (char *)&buffer[0], amount, MSG_DONTWAIT);
     if (recvAmount <= 0) {
 #if defined(_WIN32) || defined(WIN32)
         int err = WSAGetLastError();
@@ -109,8 +107,7 @@ DataBuffer TCPSocket::Receive(std::size_t amount) {
 #else
         int err = errno;
 #endif
-        if (err == WOULDBLOCK)
-            return DataBuffer();
+        if (err == WOULDBLOCK) return DataBuffer();
 
         Disconnect();
         return DataBuffer();
@@ -119,5 +116,5 @@ DataBuffer TCPSocket::Receive(std::size_t amount) {
     return DataBuffer(std::string(buf.get(), received));
 }
 
-} // ns network
-} // ns mc
+}  // namespace network
+}  // namespace mc

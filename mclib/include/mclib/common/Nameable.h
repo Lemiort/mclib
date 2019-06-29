@@ -8,10 +8,10 @@ private:
     std::wstring m_CustomName;
 
 public:
-    virtual ~Nameable() { }
+    virtual ~Nameable() {}
 
-    const std::wstring& GetCustomName() const noexcept { return m_CustomName; }
-    void SetCustomName(const std::wstring& name) { m_CustomName = name; }
+    const std::wstring &GetCustomName() const noexcept { return m_CustomName; }
+    void SetCustomName(const std::wstring &name) { m_CustomName = name; }
 };
 
 #endif

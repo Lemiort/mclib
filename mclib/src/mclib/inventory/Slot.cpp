@@ -5,7 +5,7 @@
 namespace mc {
 namespace inventory {
 
-Slot Slot::FromNBT(nbt::TagCompound& compound) {
+Slot Slot::FromNBT(nbt::TagCompound &compound) {
     u8 count = 0;
     s16 id = -1;
     s16 damage = 0;
@@ -14,13 +14,13 @@ Slot Slot::FromNBT(nbt::TagCompound& compound) {
     for (auto iter = compound.begin(); iter != compound.end(); ++iter) {
         auto tag = iter->second;
         if (tag->GetName() == L"Count") {
-            count = ((nbt::TagByte*)tag.get())->GetValue();
+            count = ((nbt::TagByte *)tag.get())->GetValue();
         } else if (tag->GetName() == L"Damage") {
-            damage = ((nbt::TagShort*)tag.get())->GetValue();
+            damage = ((nbt::TagShort *)tag.get())->GetValue();
         } else if (tag->GetName() == L"id") {
-            id = ((nbt::TagShort*)tag.get())->GetValue();
+            id = ((nbt::TagShort *)tag.get())->GetValue();
         } else if (tag->GetName() == L"tag") {
-            nbt::TagCompound* newRoot = ((nbt::TagCompound*)tag.get());
+            nbt::TagCompound *newRoot = ((nbt::TagCompound *)tag.get());
 
             nbt.SetRoot(*newRoot);
         }
@@ -62,7 +62,7 @@ DataBuffer Slot::Serialize(protocol::Version version) const {
     return out;
 }
 
-void Slot::Deserialize(DataBuffer& in, protocol::Version version) {
+void Slot::Deserialize(DataBuffer &in, protocol::Version version) {
     m_ItemId = -1;
     m_ItemCount = 0;
     m_ItemDamage = 0;
@@ -103,9 +103,7 @@ void Slot::Deserialize(DataBuffer& in, protocol::Version version) {
             in >> m_NBT;
         }
     }
-
-    
 }
 
-} // ns inventory
-} // ns mc
+}  // namespace inventory
+}  // namespace mc

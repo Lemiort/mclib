@@ -8,10 +8,10 @@ namespace entity {
 
 class EntityFactory {
 public:
-    static Entity* CreateEntity(EntityId id, u8 type);
+    static Entity *CreateEntity(EntityId id, u8 type);
 };
 
-} // ns entity
-} // ns mc
+}  // namespace entity
+}  // namespace mc
 
 #endif

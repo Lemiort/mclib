@@ -7,15 +7,15 @@ namespace example {
 
 class TextureGrabber : public mc::protocol::packets::PacketHandler {
 private:
-    bool ContainsTextureURL(const mc::json& root);
+    bool ContainsTextureURL(const mc::json &root);
 
 public:
-    TextureGrabber(mc::protocol::packets::PacketDispatcher* dispatcher);
+    TextureGrabber(mc::protocol::packets::PacketDispatcher *dispatcher);
     ~TextureGrabber();
 
-    void HandlePacket(mc::protocol::packets::in::PlayerListItemPacket* packet);
+    void HandlePacket(mc::protocol::packets::in::PlayerListItemPacket *packet);
 };
 
-} // ns example
+}  // namespace example
 
 #endif

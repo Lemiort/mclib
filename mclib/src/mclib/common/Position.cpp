@@ -7,22 +7,18 @@
 
 namespace mc {
 
-Position::Position(s32 x, s32 y, s32 z) noexcept
-    : m_X(x), m_Y(y), m_Z(z)
-{
-    
-}
+Position::Position(s32 x, s32 y, s32 z) noexcept : m_X(x), m_Y(y), m_Z(z) {}
 
 s64 Position::Encode64() const noexcept {
-    return ((m_X & 0x3FFFFFF) << 38) | ((m_Y & 0xFFF) << 26) | (m_Z & 0x3FFFFFF);
+    return ((m_X & 0x3FFFFFF) << 38) | ((m_Y & 0xFFF) << 26) |
+           (m_Z & 0x3FFFFFF);
 }
 
-
-DataBuffer& operator<<(DataBuffer& out, const Position& pos) {
+DataBuffer &operator<<(DataBuffer &out, const Position &pos) {
     return out << pos.Encode64();
 }
 
-DataBuffer& operator>>(DataBuffer& in, Position& pos) {
+DataBuffer &operator>>(DataBuffer &in, Position &pos) {
     u64 val;
     in >> val;
 
@@ -37,20 +33,20 @@ DataBuffer& operator>>(DataBuffer& in, Position& pos) {
     return in;
 }
 
-std::string to_string(const Position& pos) {
+std::string to_string(const Position &pos) {
     std::stringstream ss;
 
     ss << "(" << pos.GetX() << ", " << pos.GetY() << ", " << pos.GetZ() << ")";
     return ss.str();
 }
 
-} // ns mc
+}  // namespace mc
 
-std::ostream& operator<<(std::ostream& out, const mc::Position& pos) {
+std::ostream &operator<<(std::ostream &out, const mc::Position &pos) {
     return out << mc::to_string(pos);
 }
 
-std::wostream& operator<<(std::wostream& out, const mc::Position& pos) {
+std::wostream &operator<<(std::wostream &out, const mc::Position &pos) {
     std::string str = mc::to_string(pos);
     std::wstring wstr(str.begin(), str.end());
 

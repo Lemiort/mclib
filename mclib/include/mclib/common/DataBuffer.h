@@ -2,10 +2,10 @@
 #define MCLIB_COMMON_DATA_BUFFER_H_
 
 #include <mclib/common/Common.h>
-#include <vector>
 #include <algorithm>
-#include <cstring>
 #include <cassert>
+#include <cstring>
+#include <vector>
 
 namespace mc {
 
@@ -25,13 +25,13 @@ public:
     typedef Data::const_reference const_reference;
 
     MCLIB_API DataBuffer();
-    MCLIB_API DataBuffer(const DataBuffer& other);
-    MCLIB_API DataBuffer(const DataBuffer& other, std::size_t offset);
-    MCLIB_API DataBuffer(DataBuffer&& other);
-    MCLIB_API DataBuffer(const std::string& str);
+    MCLIB_API DataBuffer(const DataBuffer &other);
+    MCLIB_API DataBuffer(const DataBuffer &other, std::size_t offset);
+    MCLIB_API DataBuffer(DataBuffer &&other);
+    MCLIB_API DataBuffer(const std::string &str);
 
-    MCLIB_API DataBuffer& operator=(const DataBuffer& other);
-    MCLIB_API DataBuffer& operator=(DataBuffer&& other);
+    MCLIB_API DataBuffer &operator=(const DataBuffer &other);
+    MCLIB_API DataBuffer &operator=(DataBuffer &&other);
 
     template <typename T>
     void Append(T data) {
@@ -42,97 +42,91 @@ public:
     }
 
     template <typename T>
-    DataBuffer& operator<<(T data) {
+    DataBuffer &operator<<(T data) {
         // Switch to big endian
-        std::reverse((u8*)&data, (u8*)&data + sizeof(T));
+        std::reverse((u8 *)&data, (u8 *)&data + sizeof(T));
         Append(data);
         return *this;
     }
 
-    DataBuffer& operator<<(std::string data) {
+    DataBuffer &operator<<(std::string data) {
         m_Buffer.insert(m_Buffer.end(), data.begin(), data.end());
         return *this;
     }
 
-    DataBuffer& operator<<(DataBuffer& data) {
+    DataBuffer &operator<<(DataBuffer &data) {
         m_Buffer.insert(m_Buffer.end(), data.begin(), data.end());
         return *this;
     }
 
-    DataBuffer& operator<<(const DataBuffer& data) {
+    DataBuffer &operator<<(const DataBuffer &data) {
         m_Buffer.insert(m_Buffer.end(), data.begin(), data.end());
         return *this;
     }
 
     template <typename T>
-    DataBuffer& operator>>(T& data) {
+    DataBuffer &operator>>(T &data) {
         assert(m_ReadOffset + sizeof(T) <= GetSize());
         data = *(T *)&m_Buffer[m_ReadOffset];
-        std::reverse((u8*)&data, (u8*)&data + sizeof(T));
+        std::reverse((u8 *)&data, (u8 *)&data + sizeof(T));
         m_ReadOffset += sizeof(T);
         return *this;
     }
 
-    DataBuffer& operator>>(DataBuffer& data) {
+    DataBuffer &operator>>(DataBuffer &data) {
         data.Resize(GetSize() - m_ReadOffset);
-        std::copy(m_Buffer.begin() + m_ReadOffset, m_Buffer.end(), data.begin());
+        std::copy(m_Buffer.begin() + m_ReadOffset, m_Buffer.end(),
+                  data.begin());
         m_ReadOffset = m_Buffer.size();
         return *this;
     }
 
-    DataBuffer& operator>>(std::string& data) {
+    DataBuffer &operator>>(std::string &data) {
         data.resize(GetSize() - m_ReadOffset);
-        std::copy(m_Buffer.begin() + m_ReadOffset, m_Buffer.end(), data.begin());
+        std::copy(m_Buffer.begin() + m_ReadOffset, m_Buffer.end(),
+                  data.begin());
         m_ReadOffset = m_Buffer.size();
         return *this;
     }
 
-    void ReadSome(char* buffer, std::size_t amount) {
+    void ReadSome(char *buffer, std::size_t amount) {
         assert(m_ReadOffset + amount <= GetSize());
         std::copy_n(m_Buffer.begin() + m_ReadOffset, amount, buffer);
         m_ReadOffset += amount;
     }
 
-    void ReadSome(u8* buffer, std::size_t amount) {
+    void ReadSome(u8 *buffer, std::size_t amount) {
         assert(m_ReadOffset + amount <= GetSize());
         std::copy_n(m_Buffer.begin() + m_ReadOffset, amount, buffer);
         m_ReadOffset += amount;
     }
 
-    void ReadSome(DataBuffer& buffer, std::size_t amount) {
+    void ReadSome(DataBuffer &buffer, std::size_t amount) {
         assert(m_ReadOffset + amount <= GetSize());
         buffer.Resize(amount);
         std::copy_n(m_Buffer.begin() + m_ReadOffset, amount, buffer.begin());
         m_ReadOffset += amount;
     }
 
-    void ReadSome(std::string& buffer, std::size_t amount) {
+    void ReadSome(std::string &buffer, std::size_t amount) {
         assert(m_ReadOffset + amount <= GetSize());
         buffer.resize(amount);
         std::copy_n(m_Buffer.begin() + m_ReadOffset, amount, buffer.begin());
         m_ReadOffset += amount;
     }
 
-    void Resize(std::size_t size) {
-        m_Buffer.resize(size);
-    }
+    void Resize(std::size_t size) { m_Buffer.resize(size); }
 
-    void Reserve(std::size_t amount) {
-        m_Buffer.reserve(amount);
-    }
+    void Reserve(std::size_t amount) { m_Buffer.reserve(amount); }
 
-    void erase(iterator it) {
-        m_Buffer.erase(it);
-    }
+    void erase(iterator it) { m_Buffer.erase(it); }
 
     void Clear() {
         m_Buffer.clear();
         m_ReadOffset = 0;
     }
 
-    bool IsFinished() const {
-        return m_ReadOffset >= m_Buffer.size();
-    }
+    bool IsFinished() const { return m_ReadOffset >= m_Buffer.size(); }
 
     std::size_t GetReadOffset() const { return m_ReadOffset; }
     void MCLIB_API SetReadOffset(std::size_t pos);
@@ -151,8 +145,8 @@ public:
     const_reference operator[](Data::size_type i) const { return m_Buffer[i]; }
 };
 
-MCLIB_API std::ostream& operator<<(std::ostream& os, const DataBuffer& buffer);
+MCLIB_API std::ostream &operator<<(std::ostream &os, const DataBuffer &buffer);
 
-} // ns mc
+}  // namespace mc
 
 #endif

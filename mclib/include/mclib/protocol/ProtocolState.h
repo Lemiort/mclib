@@ -7,12 +7,7 @@
 namespace mc {
 namespace protocol {
 
-enum class State {
-    Handshake,
-    Status,
-    Login,
-    Play
-};
+enum class State { Handshake, Status, Login, Play };
 
 enum class Version {
     Minecraft_1_10_2 = 210,
@@ -32,12 +27,14 @@ private:
     State m_ProtocolState;
 
 public:
-    UnfinishedProtocolException(VarInt id, State state) : m_PacketId(id), m_ProtocolState(state) { }
+    UnfinishedProtocolException(VarInt id, State state)
+        : m_PacketId(id), m_ProtocolState(state) {}
     std::string what() const {
-        return "Unknown packet type " + std::to_string(m_PacketId.GetInt()) + " received during " + std::to_string((s32)m_ProtocolState) + " protocol state.";
+        return "Unknown packet type " + std::to_string(m_PacketId.GetInt()) +
+               " received during " + std::to_string((s32)m_ProtocolState) +
+               " protocol state.";
     }
 };
-
 
 namespace login {
 
@@ -48,16 +45,13 @@ enum ProtocolLogin {
     SetCompression
 };
 
-} // ns login
+}  // namespace login
 
 namespace status {
 
-enum ProtocolStatus {
-    Response = 0,
-    Pong
-};
+enum ProtocolStatus { Response = 0, Pong };
 
-} // ns status
+}  // namespace status
 
 namespace play {
 
@@ -145,27 +139,27 @@ enum ProtocolPlay {
     CraftRecipeResponse,
 };
 
-} // ns play
+}  // namespace play
 
-} // ns protocol
-} // ns mc
+}  // namespace protocol
+}  // namespace mc
 
 namespace std {
 
 template <>
 struct hash<mc::protocol::State> {
-    std::size_t operator()(const mc::protocol::State& state) const {
+    std::size_t operator()(const mc::protocol::State &state) const {
         return std::hash<int>()(static_cast<int>(state));
     }
 };
 
 template <>
 struct hash<mc::protocol::Version> {
-    std::size_t operator()(const mc::protocol::Version& version) const {
+    std::size_t operator()(const mc::protocol::Version &version) const {
         return std::hash<int>()(static_cast<int>(version));
     }
 };
 
-} // ns std
+}  // namespace std
 
 #endif

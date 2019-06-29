@@ -3,18 +3,16 @@
 namespace mc {
 namespace block {
 
-bool FlowerPot::ImportNBT(nbt::NBT* nbt) {
+bool FlowerPot::ImportNBT(nbt::NBT *nbt) {
     auto itemTag = nbt->GetTag<nbt::TagString>(L"Item");
     auto dataTag = nbt->GetTag<nbt::TagInt>(L"Data");
 
-    if (itemTag)
-        m_ItemId = itemTag->GetValue();
+    if (itemTag) m_ItemId = itemTag->GetValue();
 
-    if (dataTag)
-        m_ItemData = dataTag->GetValue();
+    if (dataTag) m_ItemData = dataTag->GetValue();
 
     return true;
 }
 
-} // ns block
-} // ns mc
+}  // namespace block
+}  // namespace mc

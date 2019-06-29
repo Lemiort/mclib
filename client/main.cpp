@@ -23,9 +23,9 @@ const std::string username("testplayer");
 const std::string password("");
 const bool useProfileToken = false;
 
-} // ns
+}  // namespace
 
-int run(mc::protocol::Version versions, mc::util::ForgeHandler& forge);
+int run(mc::protocol::Version versions, mc::util::ForgeHandler &forge);
 
 int main(void) {
     mc::util::VersionFetcher versionFetcher(server, port);
@@ -36,18 +36,20 @@ int main(void) {
 
     mc::block::BlockRegistry::GetInstance()->RegisterVanillaBlocks(version);
 
-    std::cout << "Connecting with version " << mc::protocol::to_string(version) << std::endl;
+    std::cout << "Connecting with version " << mc::protocol::to_string(version)
+              << std::endl;
     return run(version, versionFetcher.GetForge());
 }
 
-int run(mc::protocol::Version version, mc::util::ForgeHandler& forge) {
+int run(mc::protocol::Version version, mc::util::ForgeHandler &forge) {
     mc::protocol::packets::PacketDispatcher dispatcher;
     mc::core::Client client(&dispatcher, version);
 
     forge.SetConnection(client.GetConnection());
 
     client.GetPlayerController()->SetHandleFall(true);
-    client.GetConnection()->GetSettings()
+    client.GetConnection()
+        ->GetSettings()
         .SetMainHand(mc::MainHand::Right)
         .SetViewDistance(16);
 
@@ -60,11 +62,13 @@ int run(mc::protocol::Version version, mc::util::ForgeHandler& forge) {
 
         if (useProfileToken && mc::util::GetProfileToken(username, &token)) {
             std::cout << "Using profile token." << std::endl;
-            client.Login(server, port, username, token, mc::core::UpdateMethod::Block);
+            client.Login(server, port, username, token,
+                         mc::core::UpdateMethod::Block);
         } else {
-            client.Login(server, port, username, password, mc::core::UpdateMethod::Block);
+            client.Login(server, port, username, password,
+                         mc::core::UpdateMethod::Block);
         }
-    } catch (std::exception& e) {
+    } catch (std::exception &e) {
         std::wcout << e.what() << std::endl;
         return 1;
     }

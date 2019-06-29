@@ -17,25 +17,27 @@ class PacketDispatcher {
 private:
     typedef s64 PacketId;
     typedef std::pair<State, PacketId> PacketType;
-    std::map<PacketType, std::vector<PacketHandler*>> m_Handlers;
+    std::map<PacketType, std::vector<PacketHandler *>> m_Handlers;
 
 public:
     PacketDispatcher() = default;
 
-    PacketDispatcher(const PacketDispatcher& rhs) = delete;
-    PacketDispatcher& operator=(const PacketDispatcher& rhs) = delete;
-    PacketDispatcher(PacketDispatcher&& rhs) = delete;
-    PacketDispatcher& operator=(PacketDispatcher&& rhs) = delete;
+    PacketDispatcher(const PacketDispatcher &rhs) = delete;
+    PacketDispatcher &operator=(const PacketDispatcher &rhs) = delete;
+    PacketDispatcher(PacketDispatcher &&rhs) = delete;
+    PacketDispatcher &operator=(PacketDispatcher &&rhs) = delete;
 
-    void MCLIB_API Dispatch(Packet* packet);
+    void MCLIB_API Dispatch(Packet *packet);
 
-    void MCLIB_API RegisterHandler(State protocolState, PacketId id, PacketHandler* handler);
-    void MCLIB_API UnregisterHandler(State protocolState, PacketId id, PacketHandler* handler);
-    void MCLIB_API UnregisterHandler(PacketHandler* handler);
+    void MCLIB_API RegisterHandler(State protocolState, PacketId id,
+                                   PacketHandler *handler);
+    void MCLIB_API UnregisterHandler(State protocolState, PacketId id,
+                                     PacketHandler *handler);
+    void MCLIB_API UnregisterHandler(PacketHandler *handler);
 };
 
-} // ns packets
-} // ns protocol
-} // ns mc
+}  // namespace packets
+}  // namespace protocol
+}  // namespace mc
 
 #endif

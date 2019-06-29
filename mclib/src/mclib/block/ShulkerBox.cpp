@@ -3,7 +3,7 @@
 namespace mc {
 namespace block {
 
-bool ShulkerBox::ImportNBT(nbt::NBT* nbt) {
+bool ShulkerBox::ImportNBT(nbt::NBT *nbt) {
     auto nameTag = nbt->GetTag<nbt::TagString>(L"CustomName");
 
     if (nameTag) {
@@ -13,5 +13,5 @@ bool ShulkerBox::ImportNBT(nbt::NBT* nbt) {
     return InventoryBlock::ImportNBT(nbt);
 }
 
-} // ns block
-} // ns mc
+}  // namespace block
+}  // namespace mc

@@ -5,14 +5,14 @@
 namespace mc {
 namespace nbt {
 
-DataBuffer& operator<<(DataBuffer& out, const NBT& nbt) {
-    const auto& root = nbt.GetRoot();
+DataBuffer &operator<<(DataBuffer &out, const NBT &nbt) {
+    const auto &root = nbt.GetRoot();
 
     out << root;
     return out;
 }
 
-DataBuffer& operator>>(DataBuffer& in, NBT& nbt) {
+DataBuffer &operator>>(DataBuffer &in, NBT &nbt) {
     size_t offset = in.GetReadOffset();
     u8 type;
     in >> type;
@@ -25,5 +25,5 @@ DataBuffer& operator>>(DataBuffer& in, NBT& nbt) {
     return in;
 }
 
-} // ns nbt
-} // ns mc
+}  // namespace nbt
+}  // namespace mc

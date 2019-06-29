@@ -3,7 +3,7 @@
 namespace mc {
 namespace block {
 
-bool Hopper::ImportNBT(nbt::NBT* nbt) {
+bool Hopper::ImportNBT(nbt::NBT *nbt) {
     auto nameTag = nbt->GetTag<nbt::TagString>(L"CustomName");
 
     if (nameTag) {
@@ -18,5 +18,5 @@ bool Hopper::ImportNBT(nbt::NBT* nbt) {
     return InventoryBlock::ImportNBT(nbt);
 }
 
-} // ns block
-} // ns mc
+}  // namespace block
+}  // namespace mc
