@@ -20,7 +20,8 @@ Chunk& Chunk::operator=(const Chunk& other) {
     return *this;
 }
 
-void Chunk::Load(DataBuffer& in, ChunkColumnMetadata* meta, s32 chunkIndex) {
+void Chunk::Load(DataBuffer& in, ChunkColumnMetadata* meta,
+                 int32_t chunkIndex) {
     in >> m_BitsPerBlock;
 
     VarInt paletteLength;
@@ -28,10 +29,10 @@ void Chunk::Load(DataBuffer& in, ChunkColumnMetadata* meta, s32 chunkIndex) {
 
     m_Palette.reserve(paletteLength.GetInt());
 
-    for (s32 i = 0; i < paletteLength.GetInt(); ++i) {
+    for (int32_t i = 0; i < paletteLength.GetInt(); ++i) {
         VarInt paletteValue;
         in >> paletteValue;
-        m_Palette.push_back((u16)paletteValue.GetInt());
+        m_Palette.push_back((uint16_t)paletteValue.GetInt());
     }
 
     VarInt dataArrayLength;
@@ -39,16 +40,17 @@ void Chunk::Load(DataBuffer& in, ChunkColumnMetadata* meta, s32 chunkIndex) {
 
     m_Data.resize(dataArrayLength.GetInt());
 
-    for (s32 i = 0; i < dataArrayLength.GetInt(); ++i) {
-        u64 data;
+    for (int32_t i = 0; i < dataArrayLength.GetInt(); ++i) {
+        uint64_t data;
         in >> data;
         m_Data[i] = data;
     }
 
-    static const s64 lightSize = 16 * 16 * 16 / 2;
+    static const int64_t lightSize = 16 * 16 * 16 / 2;
 
     // Block light data
     in.SetReadOffset(in.GetReadOffset() + lightSize);
+    // TODO add light parsing here
 
     // Sky Light
     if (meta->skylight) {
@@ -64,25 +66,25 @@ block::BlockPtr Chunk::GetBlock(Vector3i chunkPosition) const {
 
     const std::size_t index = (std::size_t)(
         chunkPosition.y * 16 * 16 + chunkPosition.z * 16 + chunkPosition.x);
-    const s32 bitIndex = index * m_BitsPerBlock;
-    const s32 startIndex = bitIndex / 64;
-    const s32 endIndex = (((index + 1) * m_BitsPerBlock) - 1) / 64;
-    const s32 startSubIndex = bitIndex % 64;
+    const int32_t bitIndex = index * m_BitsPerBlock;
+    const int32_t startIndex = bitIndex / 64;
+    const int32_t endIndex = (((index + 1) * m_BitsPerBlock) - 1) / 64;
+    const int32_t startSubIndex = bitIndex % 64;
 
-    const s64 maxValue = (1 << m_BitsPerBlock) - 1;
-    u32 value;
+    const int64_t maxValue = (1 << m_BitsPerBlock) - 1;
+    uint32_t value;
 
     if (startIndex == endIndex) {
-        value = (u32)((m_Data[startIndex] >> startSubIndex) & maxValue);
+        value = (uint32_t)((m_Data[startIndex] >> startSubIndex) & maxValue);
     } else {
-        const s32 endSubIndex = 64 - startSubIndex;
+        const int32_t endSubIndex = 64 - startSubIndex;
 
-        value = (u32)(((m_Data[startIndex] >> startSubIndex) |
-                       (m_Data[endIndex] << endSubIndex)) &
-                      maxValue);
+        value = (uint32_t)(((m_Data[startIndex] >> startSubIndex) |
+                            (m_Data[endIndex] << endSubIndex)) &
+                           maxValue);
     }
 
-    const u16 blockType = m_BitsPerBlock < 9 ? m_Palette[value] : value;
+    const uint16_t blockType = m_BitsPerBlock < 9 ? m_Palette[value] : value;
 
     return block::BlockRegistry::GetInstance()->GetBlock(blockType);
 }
@@ -90,13 +92,13 @@ block::BlockPtr Chunk::GetBlock(Vector3i chunkPosition) const {
 void Chunk::SetBlock(Vector3i chunkPosition, block::BlockPtr block) {
     std::size_t index = (std::size_t)(chunkPosition.y * 16 * 16 +
                                       chunkPosition.z * 16 + chunkPosition.x);
-    s32 bitIndex = index * m_BitsPerBlock;
-    s32 startIndex = bitIndex / 64;
-    s32 endIndex = (((index + 1) * m_BitsPerBlock) - 1) / 64;
-    s32 startSubIndex = bitIndex % 64;
+    int32_t bitIndex = index * m_BitsPerBlock;
+    int32_t startIndex = bitIndex / 64;
+    int32_t endIndex = (((index + 1) * m_BitsPerBlock) - 1) / 64;
+    int32_t startSubIndex = bitIndex % 64;
 
-    s64 maxValue = (1 << m_BitsPerBlock) - 1;
-    u32 blockType = block->GetType();
+    int64_t maxValue = (1 << m_BitsPerBlock) - 1;
+    uint32_t blockType = block->GetType();
 
     if (m_BitsPerBlock == 0) {
         m_BitsPerBlock = 4;
@@ -104,31 +106,31 @@ void Chunk::SetBlock(Vector3i chunkPosition, block::BlockPtr block) {
 
     if (m_Data.empty()) {
         m_Palette.push_back(0);
-        u32 size = (16 * 16 * 16) * m_BitsPerBlock / 64;
+        uint32_t size = (16 * 16 * 16) * m_BitsPerBlock / 64;
 
         m_Data.resize(size);
         memset(&m_Data[0], 0, size * sizeof(m_Data[0]));
     }
 
-    auto iter =
-        std::find_if(m_Palette.begin(), m_Palette.end(),
-                     [blockType](u32 ptype) { return ptype == blockType; });
+    auto iter = std::find_if(
+        m_Palette.begin(), m_Palette.end(),
+        [blockType](uint32_t ptype) { return ptype == blockType; });
 
     if (iter == m_Palette.end())
         iter = m_Palette.insert(m_Palette.end(), blockType);
 
-    s32 value = std::distance(m_Palette.begin(), iter);
+    int32_t value = std::distance(m_Palette.begin(), iter);
 
     // Erase old value in data entry and OR with new data
     m_Data[startIndex] = (m_Data[startIndex] & ~(maxValue << startSubIndex)) |
-                         (((s64)value & maxValue) << startSubIndex);
+                         (((int64_t)value & maxValue) << startSubIndex);
 
     if (startIndex != endIndex) {
-        s32 endSubIndex = 64 - startSubIndex;
+        int32_t endSubIndex = 64 - startSubIndex;
 
         // Erase beginning of data and then OR with new data
         m_Data[endIndex] = (m_Data[endIndex] >> endSubIndex << endSubIndex) |
-                           ((s64)value & maxValue) >> endSubIndex;
+                           ((int64_t)value & maxValue) >> endSubIndex;
     }
 }
 
@@ -137,7 +139,7 @@ ChunkColumn::ChunkColumn(ChunkColumnMetadata metadata) : m_Metadata(metadata) {
 }
 
 block::BlockPtr ChunkColumn::GetBlock(Vector3i position) {
-    s32 chunkIndex = (s32)(position.y / 16);
+    int32_t chunkIndex = (int32_t)(position.y / 16);
     Vector3i relativePosition(position.x, position.y % 16, position.z);
 
     if (chunkIndex < 0 || chunkIndex > 15 || !m_Chunks[chunkIndex])
@@ -165,7 +167,7 @@ std::vector<block::BlockEntityPtr> ChunkColumn::GetBlockEntities() {
 DataBuffer& operator>>(DataBuffer& in, ChunkColumn& column) {
     ChunkColumnMetadata* meta = &column.m_Metadata;
 
-    for (s16 i = 0; i < ChunkColumn::ChunksPerColumn; ++i) {
+    for (int16_t i = 0; i < ChunkColumn::ChunksPerColumn; ++i) {
         // The section mask says whether or not there is data in this chunk.
         if (meta->sectionmask & (1 << i)) {
             column.m_Chunks[i] = std::make_shared<Chunk>();

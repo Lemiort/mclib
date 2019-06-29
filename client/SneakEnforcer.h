@@ -12,7 +12,7 @@ private:
     mc::core::Client* m_Client;
     mc::core::PlayerManager* m_PlayerManager;
     mc::core::Connection* m_Connection;
-    s64 m_StartTime;
+    int64_t m_StartTime;
 
 public:
     SneakEnforcer(mc::core::Client* client);

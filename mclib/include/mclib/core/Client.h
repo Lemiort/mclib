@@ -42,7 +42,7 @@ private:
     inventory::Hotbar m_Hotbar;
     std::unique_ptr<util::PlayerController> m_PlayerController;
     world::World m_World;
-    s64 m_LastUpdate;
+    int64_t m_LastUpdate;
     bool m_Connected;
     std::thread m_UpdateThread;
 

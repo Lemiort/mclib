@@ -10,14 +10,14 @@ namespace block {
 
 class Bed : public BlockEntity {
 private:
-    s32 m_Color;
+    int32_t m_Color;
 
 public:
     MCLIB_API Bed(BlockEntityType type, Vector3i position)
         : BlockEntity(type, position) {}
     MCLIB_API bool ImportNBT(nbt::NBT* nbt);
 
-    inline s32 GetColor() const noexcept { return m_Color; }
+    inline int32_t GetColor() const noexcept { return m_Color; }
 };
 
 }  // namespace block

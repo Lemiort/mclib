@@ -44,7 +44,7 @@ void BlockPlacer::HandlePacket(
 }
 
 void BlockPlacer::OnTick() {
-    s64 time = mc::util::GetTime();
+    int64_t time = mc::util::GetTime();
     if (time - m_LastUpdate < 5000) return;
     m_LastUpdate = time;
 

@@ -9,12 +9,12 @@ namespace mc {
 namespace protocol {
 namespace packets {
 
-s32 GetDispatcherId(Packet* packet) {
+int32_t GetDispatcherId(Packet* packet) {
     auto version = packet->GetProtocolVersion();
 
     protocol::Protocol protocol = protocol::Protocol::GetProtocol(version);
 
-    s32 agnosticId = 0;
+    int32_t agnosticId = 0;
     if (!protocol.GetAgnosticId(packet->GetProtocolState(),
                                 packet->GetId().GetInt(), agnosticId)) {
         throw std::runtime_error(std::string("Unknown packet type ") +
@@ -59,7 +59,7 @@ void PacketDispatcher::Dispatch(Packet* packet) {
     if (!packet) return;
 
     auto state = packet->GetProtocolState();
-    s64 id = GetDispatcherId(packet);
+    int64_t id = GetDispatcherId(packet);
 
     PacketType type(state, id);
     for (PacketHandler* handler : m_Handlers[type]) packet->Dispatch(handler);

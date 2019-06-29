@@ -13,18 +13,18 @@ class DataBuffer;
 
 class UUID {
 private:
-    u64 m_MostSigBits;
-    u64 m_LeastSigBits;
+    uint64_t m_MostSigBits;
+    uint64_t m_LeastSigBits;
 
 public:
     UUID() noexcept : m_MostSigBits(0), m_LeastSigBits(0) {}
-    UUID(u64 most, u64 least)
+    UUID(uint64_t most, uint64_t least)
     noexcept : m_MostSigBits(most), m_LeastSigBits(least) {}
 
     std::string MCLIB_API ToString(bool dashes = true) const;
 
-    u64 GetUpperBits() const noexcept { return m_MostSigBits; }
-    u64 GetLowerBits() const noexcept { return m_LeastSigBits; }
+    uint64_t GetUpperBits() const noexcept { return m_MostSigBits; }
+    uint64_t GetLowerBits() const noexcept { return m_LeastSigBits; }
 
     static UUID MCLIB_API FromString(const std::string& str,
                                      bool dashes = true);

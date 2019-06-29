@@ -14,7 +14,7 @@ class BrewingStand : public BlockEntity,
                      public InventoryBlock,
                      public Nameable {
 private:
-    s32 m_BrewTime;
+    int32_t m_BrewTime;
     uint8_t m_Fuel;
 
 public:

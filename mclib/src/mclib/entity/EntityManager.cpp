@@ -16,8 +16,8 @@
 namespace mc {
 namespace entity {
 
-EntityType GetEntityTypeFromObjectId(s32 oid) {
-    static const std::unordered_map<s32, EntityType> mapping = {
+EntityType GetEntityTypeFromObjectId(int32_t oid) {
+    static const std::unordered_map<int32_t, EntityType> mapping = {
         {1, EntityType::Boat},
         {2, EntityType::Item},
         {3, EntityType::AreaEffectCloud},

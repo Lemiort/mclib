@@ -36,7 +36,7 @@ ClientSettings& ClientSettings::SetViewDistance(uint8_t distance) noexcept {
     return *this;
 }
 
-ClientSettings& ClientSettings::SetViewDistance(s32 distance) noexcept {
+ClientSettings& ClientSettings::SetViewDistance(int32_t distance) noexcept {
     this->SetViewDistance((uint8_t)distance);
     return *this;
 }

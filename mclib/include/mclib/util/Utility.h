@@ -29,7 +29,7 @@ MCLIB_API bool GetProfileToken(const std::string& username,
                                core::AuthToken* token);
 MCLIB_API std::string ParseChatNode(const json& node);
 MCLIB_API std::string StripChatMessage(const std::string& message);
-MCLIB_API s64 GetTime();
+MCLIB_API int64_t GetTime();
 
 class PlayerController : public core::PlayerListener {
 private:
@@ -41,7 +41,7 @@ private:
     float m_Pitch;
     AABB m_BoundingBox;
     EntityId m_EntityId;
-    u64 m_LastUpdate;
+    uint64_t m_LastUpdate;
     Vector3d m_TargetPos;
     bool m_Sprinting;
     bool m_LoadedIn;
@@ -55,7 +55,7 @@ private:
     const float FallSpeed = 8.3f * (50.0f / 1000.0f);
 
     std::vector<std::pair<block::BlockPtr, mc::Vector3i>> GetNearbyBlocks(
-        const s32 radius);
+        const int32_t radius);
 
 public:
     MCLIB_API PlayerController(core::Connection* connection,
@@ -100,7 +100,7 @@ private:
     core::PlayerPtr m_Following;
     PlayerController& m_PlayerController;
     std::wstring m_Target;
-    u64 m_LastUpdate;
+    uint64_t m_LastUpdate;
 
 public:
     MCLIB_API PlayerFollower(protocol::packets::PacketDispatcher* dispatcher,

@@ -51,7 +51,7 @@ void Logger::HandlePacket(mc::protocol::packets::in::ChatPacket* packet) {
     } else if (message.find("!find ") != std::string::npos) {
         std::string toFind = message.substr(message.find("!find ") + 6);
 
-        s32 itemId = strtol(toFind.c_str(), nullptr, 10);
+        int32_t itemId = strtol(toFind.c_str(), nullptr, 10);
         mc::inventory::Inventory* inv =
             m_Client->GetInventoryManager()->GetPlayerInventory();
         if (inv) {
@@ -73,7 +73,7 @@ void Logger::HandlePacket(
 void Logger::HandlePacket(
     mc::protocol::packets::in::BlockChangePacket* packet) {
     mc::Vector3i pos = packet->GetPosition();
-    s32 blockId = packet->GetBlockId();
+    int32_t blockId = packet->GetBlockId();
 
     std::cout << "Block changed at " << pos << " to " << blockId << std::endl;
 }

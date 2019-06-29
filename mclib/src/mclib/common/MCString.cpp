@@ -23,7 +23,7 @@ MCString MCString::FromUTF8(const std::string& utf8) {
 DataBuffer& operator<<(DataBuffer& out, const MCString& str) {
     std::string utf8 = utf16to8(str.m_UTF16);
 
-    VarInt bytes = (s32)utf8.size();
+    VarInt bytes = (int32_t)utf8.size();
     out << bytes;
     out << utf8;
 

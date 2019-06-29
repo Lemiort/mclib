@@ -23,7 +23,7 @@ World::World(protocol::packets::PacketDispatcher* dispatcher)
 
 World::~World() { GetDispatcher()->UnregisterHandler(this); }
 
-bool World::SetBlock(Vector3i position, u32 blockData) {
+bool World::SetBlock(Vector3i position, uint32_t blockData) {
     ChunkColumnPtr chunk = GetChunk(position);
     if (!chunk) return false;
 
@@ -78,7 +78,7 @@ void World::HandlePacket(protocol::packets::in::ChunkDataPacket* packet) {
 
     if (!m_Chunks[key]) m_Chunks[key] = col;
 
-    for (s32 i = 0; i < ChunkColumn::ChunksPerColumn; ++i) {
+    for (int32_t i = 0; i < ChunkColumn::ChunksPerColumn; ++i) {
         ChunkPtr chunk = (*col)[i];
 
         NotifyListeners(&WorldListener::OnChunkLoad, chunk, meta, i);
@@ -126,7 +126,7 @@ void World::HandlePacket(
 
 void World::HandlePacket(protocol::packets::in::BlockChangePacket* packet) {
     block::BlockPtr newBlock = block::BlockRegistry::GetInstance()->GetBlock(
-        (u16)packet->GetBlockId());
+        (uint16_t)packet->GetBlockId());
     block::BlockPtr oldBlock = GetBlock(packet->GetPosition());
 
     SetBlock(packet->GetPosition(), packet->GetBlockId());
@@ -178,8 +178,8 @@ void World::HandlePacket(protocol::packets::in::RespawnPacket* packet) {
 }
 
 ChunkColumnPtr World::GetChunk(Vector3i pos) const {
-    s32 x = (s32)std::floor(pos.x / 16.0);
-    s32 z = (s32)std::floor(pos.z / 16.0);
+    int32_t x = (int32_t)std::floor(pos.x / 16.0);
+    int32_t z = (int32_t)std::floor(pos.z / 16.0);
 
     ChunkCoord key(x, z);
 
@@ -191,13 +191,15 @@ ChunkColumnPtr World::GetChunk(Vector3i pos) const {
 }
 
 block::BlockPtr World::GetBlock(Vector3f pos) const {
-    return GetBlock(Vector3i((s64)std::floor(pos.x), (s64)std::floor(pos.y),
-                             (s64)std::floor(pos.z)));
+    return GetBlock(Vector3i((int64_t)std::floor(pos.x),
+                             (int64_t)std::floor(pos.y),
+                             (int64_t)std::floor(pos.z)));
 }
 
 block::BlockPtr World::GetBlock(Vector3d pos) const {
-    return GetBlock(Vector3i((s64)std::floor(pos.x), (s64)std::floor(pos.y),
-                             (s64)std::floor(pos.z)));
+    return GetBlock(Vector3i((int64_t)std::floor(pos.x),
+                             (int64_t)std::floor(pos.y),
+                             (int64_t)std::floor(pos.z)));
 }
 
 block::BlockPtr World::GetBlock(Vector3i pos) const {
@@ -205,8 +207,8 @@ block::BlockPtr World::GetBlock(Vector3i pos) const {
 
     if (!col) return block::BlockRegistry::GetInstance()->GetBlock(0);
 
-    s64 x = pos.x % 16;
-    s64 z = pos.z % 16;
+    int64_t x = pos.x % 16;
+    int64_t z = pos.z % 16;
 
     if (x < 0) x += 16;
     if (z < 0) z += 16;

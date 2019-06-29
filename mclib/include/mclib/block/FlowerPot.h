@@ -11,7 +11,7 @@ namespace block {
 class FlowerPot : public BlockEntity {
 private:
     std::wstring m_ItemId;
-    s32 m_ItemData;
+    int32_t m_ItemData;
 
 public:
     MCLIB_API FlowerPot(BlockEntityType type, Vector3i position)
@@ -19,7 +19,7 @@ public:
     MCLIB_API bool ImportNBT(nbt::NBT* nbt);
 
     inline const std::wstring& GetItemId() const noexcept { return m_ItemId; }
-    inline s32 GetItemData() const noexcept { return m_ItemData; }
+    inline int32_t GetItemData() const noexcept { return m_ItemData; }
 };
 
 }  // namespace block

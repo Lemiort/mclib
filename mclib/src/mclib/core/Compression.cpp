@@ -12,7 +12,7 @@ namespace core {
 DataBuffer CompressionNone::Compress(DataBuffer& buffer) {
     DataBuffer packet;
 
-    VarInt length((s32)buffer.GetSize());
+    VarInt length((int32_t)buffer.GetSize());
     packet << length;
     packet << buffer;
 
@@ -51,7 +51,7 @@ DataBuffer CompressionZ::Compress(DataBuffer& buffer) {
         // Don't compress since it's a small packet
         VarInt dataLength(0);
         VarInt packetLength(
-            (s32)(buffer.GetSize() + dataLength.GetSerializedLength()));
+            (int32_t)(buffer.GetSize() + dataLength.GetSerializedLength()));
 
         packet << packetLength;
         packet << dataLength;
@@ -61,9 +61,9 @@ DataBuffer CompressionZ::Compress(DataBuffer& buffer) {
 
     deflate(buffer.ToString(), compressedData);
 
-    VarInt dataLength((s32)buffer.GetSize());
+    VarInt dataLength((int32_t)buffer.GetSize());
     VarInt packetLength(
-        (s32)(compressedData.length() + dataLength.GetSerializedLength()));
+        (int32_t)(compressedData.length() + dataLength.GetSerializedLength()));
 
     packet << packetLength;
     packet << dataLength;

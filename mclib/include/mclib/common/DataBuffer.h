@@ -89,18 +89,36 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Read some bytes from buffer to c-string
+     *
+     * @param[out] buffer
+     * @param[in] amount of bytes
+     */
     void ReadSome(char* buffer, std::size_t amount) {
         assert(m_ReadOffset + amount <= GetSize());
         std::copy_n(m_Buffer.begin() + m_ReadOffset, amount, buffer);
         m_ReadOffset += amount;
     }
 
+    /**
+     * @brief Read some bytes from buffer to c-string
+     *
+     * @param[out] buffer
+     * @param[in] amount of bytes
+     */
     void ReadSome(uint8_t* buffer, std::size_t amount) {
         assert(m_ReadOffset + amount <= GetSize());
         std::copy_n(m_Buffer.begin() + m_ReadOffset, amount, buffer);
         m_ReadOffset += amount;
     }
 
+    /**
+     * @brief Read some bytes from buffer to another buffer
+     *
+     * @param[out] buffer
+     * @param[in] amount of bytes
+     */
     void ReadSome(DataBuffer& buffer, std::size_t amount) {
         assert(m_ReadOffset + amount <= GetSize());
         buffer.Resize(amount);
@@ -108,6 +126,12 @@ public:
         m_ReadOffset += amount;
     }
 
+    /**
+     * @brief Read some bytes from buffer to string
+     *
+     * @param[out] buffer
+     * @param[in] amount of bytes
+     */
     void ReadSome(std::string& buffer, std::size_t amount) {
         assert(m_ReadOffset + amount <= GetSize());
         buffer.resize(amount);

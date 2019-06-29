@@ -12,19 +12,19 @@ class MonsterSpawner : public BlockEntity {
 public:
     struct SpawnPotential {
         std::wstring type;
-        s32 weight;
+        int32_t weight;
     };
 
 private:
     std::vector<SpawnPotential> m_SpawnPotentials;
     std::wstring m_EntityId;
-    s16 m_SpawnCount;
-    s16 m_SpawnRange;
-    s16 m_Delay;
-    s16 m_MinSpawnDelay;
-    s16 m_MaxSpawnDelay;
-    s16 m_MaxNearbyEntities;
-    s16 m_RequiredPlayerRange;
+    int16_t m_SpawnCount;
+    int16_t m_SpawnRange;
+    int16_t m_Delay;
+    int16_t m_MinSpawnDelay;
+    int16_t m_MaxSpawnDelay;
+    int16_t m_MaxNearbyEntities;
+    int16_t m_RequiredPlayerRange;
 
 public:
     MCLIB_API MonsterSpawner(BlockEntityType type, Vector3i position)
@@ -38,15 +38,15 @@ public:
     inline const std::wstring& GetEntityId() const noexcept {
         return m_EntityId;
     }
-    inline s16 GetSpawnCount() const noexcept { return m_SpawnCount; }
-    inline s16 GetSpawnRange() const noexcept { return m_SpawnRange; }
-    inline s16 GetDelay() const noexcept { return m_Delay; }
-    inline s16 GetMinSpawnDelay() const noexcept { return m_MinSpawnDelay; }
-    inline s16 GetMaxSpawnDelay() const noexcept { return m_MaxSpawnDelay; }
-    inline s16 GetMaxNearbyEntities() const noexcept {
+    inline int16_t GetSpawnCount() const noexcept { return m_SpawnCount; }
+    inline int16_t GetSpawnRange() const noexcept { return m_SpawnRange; }
+    inline int16_t GetDelay() const noexcept { return m_Delay; }
+    inline int16_t GetMinSpawnDelay() const noexcept { return m_MinSpawnDelay; }
+    inline int16_t GetMaxSpawnDelay() const noexcept { return m_MaxSpawnDelay; }
+    inline int16_t GetMaxNearbyEntities() const noexcept {
         return m_MaxNearbyEntities;
     }
-    inline s16 GetRequiredPlayerRange() const noexcept {
+    inline int16_t GetRequiredPlayerRange() const noexcept {
         return m_RequiredPlayerRange;
     }
 };

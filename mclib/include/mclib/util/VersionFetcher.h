@@ -15,11 +15,11 @@ private:
     mc::util::ForgeHandler m_Forge;
     mc::core::Connection* m_Connection;
     std::string m_Host;
-    u16 m_Port;
+    uint16_t m_Port;
     bool m_Found;
 
 public:
-    MCLIB_API VersionFetcher(const std::string& host, u16 port);
+    MCLIB_API VersionFetcher(const std::string& host, uint16_t port);
 
     MCLIB_API mc::protocol::Version GetVersion();
     MCLIB_API void OnPingResponse(const json& node) override;

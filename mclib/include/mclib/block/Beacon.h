@@ -11,9 +11,9 @@ namespace block {
 class Beacon : public BlockEntity {
 private:
     std::wstring m_Lock;
-    s32 m_Levels;
-    s32 m_Primary;
-    s32 m_Secondary;
+    int32_t m_Levels;
+    int32_t m_Primary;
+    int32_t m_Secondary;
 
 public:
     MCLIB_API Beacon(BlockEntityType type, Vector3i position)
@@ -23,9 +23,9 @@ public:
           m_Secondary(0) {}
     MCLIB_API bool ImportNBT(nbt::NBT* nbt);
 
-    s32 GetLevels() const noexcept { return m_Levels; }
-    s32 GetPrimary() const noexcept { return m_Primary; }
-    s32 GetSecondary() const noexcept { return m_Secondary; }
+    int32_t GetLevels() const noexcept { return m_Levels; }
+    int32_t GetPrimary() const noexcept { return m_Primary; }
+    int32_t GetSecondary() const noexcept { return m_Secondary; }
 };
 
 }  // namespace block

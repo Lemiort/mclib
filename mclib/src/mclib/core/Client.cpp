@@ -58,7 +58,7 @@ void Client::Update() {
         playerEntity->SetPosition(m_PlayerController->GetPosition());
     }
 
-    s64 time = util::GetTime();
+    int64_t time = util::GetTime();
     if (time >= m_LastUpdate + (1000 / 20)) {
         m_PlayerController->Update();
         NotifyListeners(&ClientListener::OnTick);

@@ -178,7 +178,7 @@ void Connection::HandlePacket(
     m_Compressor = std::make_unique<CompressionZ>(packet->GetMaxPacketSize());
 }
 
-bool Connection::Connect(const std::string& server, u16 port) {
+bool Connection::Connect(const std::string& server, uint16_t port) {
     bool result = false;
 
     m_Socket = std::make_unique<network::TCPSocket>();
@@ -236,7 +236,8 @@ protocol::packets::Packet* Connection::CreatePacket(DataBuffer& buffer) {
         return nullptr;
     }
 
-    if (length.GetInt() == 0 || buffer.GetRemaining() < (u32)length.GetInt()) {
+    if (length.GetInt() == 0 ||
+        buffer.GetRemaining() < (uint32_t)length.GetInt()) {
         // Reset the read offset back to what it was because the full packet
         // hasn't been received yet.
         buffer.SetReadOffset(readOffset);
@@ -309,7 +310,7 @@ bool Connection::Login(const std::string& username,
         return false;
 
     protocol::packets::out::HandshakePacket handshake(
-        static_cast<s32>(m_Protocol.GetVersion()), m_Server + fml, m_Port,
+        static_cast<int32_t>(m_Protocol.GetVersion()), m_Server + fml, m_Port,
         protocol::State::Login);
 
     SendPacket(&handshake);
@@ -346,7 +347,7 @@ bool Connection::Login(const std::string& username, AuthToken token) {
     m_Yggdrasil = std::move(token.GetYggdrasil());
 
     protocol::packets::out::HandshakePacket handshake(
-        static_cast<s32>(m_Protocol.GetVersion()), m_Server + fml, m_Port,
+        static_cast<int32_t>(m_Protocol.GetVersion()), m_Server + fml, m_Port,
         protocol::State::Login);
 
     SendPacket(&handshake);
@@ -378,7 +379,7 @@ void Connection::Ping() {
     std::string fml("\0FML\0", 5);
 
     protocol::packets::out::HandshakePacket handshake(
-        static_cast<s32>(m_Protocol.GetVersion()), m_Server + fml, m_Port,
+        static_cast<int32_t>(m_Protocol.GetVersion()), m_Server + fml, m_Port,
         protocol::State::Status);
     SendPacket(&handshake);
 

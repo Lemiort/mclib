@@ -19,7 +19,7 @@ SneakEnforcer::~SneakEnforcer() {
 }
 
 void SneakEnforcer::OnTick() {
-    s64 ticks = mc::util::GetTime() - m_StartTime;
+    int64_t ticks = mc::util::GetTime() - m_StartTime;
     float pitch =
         (((float)std::sin(ticks * 3 * 3.14 / 1000) * 0.5f + 0.5f) * 360.0f) -
         180.0f;

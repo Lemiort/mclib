@@ -4,16 +4,6 @@
 #include <cstddef>
 #include <cstdint>
 
-typedef int8_t s8;
-typedef int16_t s16;
-typedef int32_t s32;
-typedef int64_t s64;
-
-typedef uint8_t uint8_t;
-typedef uint16_t u16;
-typedef uint32_t u32;
-typedef uint64_t u64;
-
 #ifdef _MSC_VER
 #define NOEXCEPT
 #else
@@ -22,7 +12,7 @@ typedef uint64_t u64;
 
 namespace mc {
 
-typedef s32 EntityId;
+using EntityId = int32_t;
 
 enum class Hand { Main, Off };
 enum class MainHand { Left, Right };

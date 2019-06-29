@@ -15,7 +15,7 @@ class PacketHandler;
 
 class PacketDispatcher {
 private:
-    typedef s64 PacketId;
+    typedef int64_t PacketId;
     typedef std::pair<State, PacketId> PacketType;
     std::map<PacketType, std::vector<PacketHandler*>> m_Handlers;
 

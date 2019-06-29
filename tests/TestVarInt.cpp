@@ -19,11 +19,11 @@ TEST(VarInt, VarIntStoresAndReturnsIntegers) {
 }
 
 TEST(VarInt, VarLongStoresAndReturnsLongs) {
-    mc::VarLong positive = std::numeric_limits<s64>::max();
-    mc::VarLong negative = std::numeric_limits<s64>::min();
+    mc::VarLong positive = std::numeric_limits<int64_t>::max();
+    mc::VarLong negative = std::numeric_limits<int64_t>::min();
 
-    EXPECT_EQ(positive.GetLong(), std::numeric_limits<s64>::max());
-    EXPECT_EQ(negative.GetLong(), std::numeric_limits<s64>::min());
+    EXPECT_EQ(positive.GetLong(), std::numeric_limits<int64_t>::max());
+    EXPECT_EQ(negative.GetLong(), std::numeric_limits<int64_t>::min());
 }
 
 TEST(VarInt, VarIntSerializesAndDeserializesCorrectly) {

@@ -16,7 +16,7 @@ public:
     // yIndex is the chunk section index of the column, 0 means bottom chunk, 15
     // means top
     virtual void OnChunkLoad(ChunkPtr chunk, const ChunkColumnMetadata& meta,
-                             u16 yIndex) {}
+                             uint16_t yIndex) {}
     virtual void OnChunkUnload(ChunkColumnPtr chunk) {}
     virtual void OnBlockChange(Vector3i position, block::BlockPtr newBlock,
                                block::BlockPtr oldBlock) {}
@@ -25,11 +25,11 @@ public:
 class World : public protocol::packets::PacketHandler,
               public util::ObserverSubject<WorldListener> {
 private:
-    typedef std::pair<s32, s32> ChunkCoord;
+    typedef std::pair<int32_t, int32_t> ChunkCoord;
 
     std::map<ChunkCoord, ChunkColumnPtr> m_Chunks;
 
-    bool MCLIB_API SetBlock(Vector3i position, u32 blockData);
+    bool MCLIB_API SetBlock(Vector3i position, uint32_t blockData);
 
 public:
     MCLIB_API World(protocol::packets::PacketDispatcher* dispatcher);

@@ -59,9 +59,9 @@ public:
         : m_Id(0xFF),
           m_ProtocolState(protocol::State::Play),
           m_Connection(nullptr),
-          m_ProtocolVersion(protocol::Version::Minecraft_1_11_2) {}
+          m_ProtocolVersion(protocol::Version::Minecraft_1_14_2) {}
 
-    virtual ~Packet() {}
+    virtual ~Packet() = default;
 
     Packet(const Packet& rhs) = default;
     Packet& operator=(const Packet& rhs) = default;
@@ -80,7 +80,7 @@ public:
     virtual bool Deserialize(DataBuffer& data, std::size_t packetLength) = 0;
     virtual void Dispatch(PacketHandler* handler) = 0;
 
-    void SetId(s32 id) { m_Id = id; }
+    void SetId(int32_t id) { m_Id = id; }
     void SetProtocolVersion(protocol::Version version) noexcept {
         m_ProtocolVersion = version;
     }
@@ -163,7 +163,7 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     // Packets of this size or higher may be compressed
-    s64 GetMaxPacketSize() const { return m_MaxPacketSize.GetLong(); }
+    int64_t GetMaxPacketSize() const { return m_MaxPacketSize.GetLong(); }
 };
 
 // Play packets
@@ -176,7 +176,7 @@ private:
     Vector3f m_Position;
     uint8_t m_Pitch;
     uint8_t m_Yaw;
-    s32 m_Data;
+    int32_t m_Data;
     Vector3s m_Velocity;
 
 public:
@@ -191,7 +191,7 @@ public:
     uint8_t GetPitch() const { return m_Pitch; }
     uint8_t GetYaw() const { return m_Yaw; }
 
-    s32 GetData() const { return m_Data; }
+    int32_t GetData() const { return m_Data; }
     Vector3s GetVelocity() const { return m_Velocity; }
 };
 
@@ -199,7 +199,7 @@ class SpawnExperienceOrbPacket : public InboundPacket {  // 0x01
 private:
     EntityId m_EntityId;
     Vector3d m_Position;
-    u16 m_Count;
+    uint16_t m_Count;
 
 public:
     MCLIB_API SpawnExperienceOrbPacket();
@@ -208,7 +208,7 @@ public:
 
     EntityId GetEntityId() const { return m_EntityId; }
     Vector3d GetPosition() const { return m_Position; }
-    u16 GetCount() const { return m_Count; }
+    uint16_t GetCount() const { return m_Count; }
 };
 
 class SpawnGlobalEntityPacket : public InboundPacket {  // 0x02
@@ -232,7 +232,7 @@ class SpawnMobPacket : public InboundPacket {  // 0x03
 private:
     EntityId m_EntityId;
     UUID m_UUID;
-    u32 m_Type;
+    uint32_t m_Type;
     Vector3d m_Position;
     uint8_t m_Yaw;
     uint8_t m_Pitch;
@@ -247,7 +247,7 @@ public:
 
     EntityId GetEntityId() const { return m_EntityId; }
     UUID GetUUID() const { return m_UUID; }
-    u32 GetType() const { return m_Type; }
+    uint32_t GetType() const { return m_Type; }
     Vector3d GetPosition() const { return m_Position; }
     uint8_t GetYaw() const { return m_Yaw; }
     uint8_t GetPitch() const { return m_Pitch; }
@@ -325,7 +325,7 @@ public:
 
 class StatisticsPacket : public InboundPacket {  // 0x07
 public:
-    typedef std::map<std::wstring, s32> Statistics;
+    typedef std::map<std::wstring, int32_t> Statistics;
 
 private:
     Statistics m_Statistics;
@@ -352,7 +352,7 @@ public:
         std::wstring description;
         inventory::Slot icon;
         FrameType frameType;
-        s32 flags;
+        int32_t flags;
         std::wstring backgroundTexture;
         float x;
         float y;
@@ -360,7 +360,7 @@ public:
 
     struct CriterionProgress {
         bool achieved;
-        s64 date;
+        int64_t date;
     };
 
     struct Advancement {
@@ -438,7 +438,7 @@ private:
     Vector3i m_Position;
     uint8_t m_ActionId;
     uint8_t m_ActionParam;
-    s32 m_BlockType;
+    int32_t m_BlockType;
 
 public:
     MCLIB_API BlockActionPacket();
@@ -449,13 +449,13 @@ public:
     uint8_t GetActionId() const { return m_ActionId; }
     uint8_t GetActionParam() const { return m_ActionParam; }
     // The block type ID for the block, not including metadata/damage value
-    s32 GetBlockType() const { return m_BlockType; }
+    int32_t GetBlockType() const { return m_BlockType; }
 };
 
 class BlockChangePacket : public InboundPacket {  // 0x0B
 private:
     Vector3i m_Position;
-    s32 m_BlockId;
+    int32_t m_BlockId;
 
 public:
     MCLIB_API BlockChangePacket();
@@ -463,7 +463,7 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     Vector3i GetPosition() const { return m_Position; }
-    s32 GetBlockId() const { return m_BlockId; }
+    int32_t GetBlockId() const { return m_BlockId; }
 };
 
 class BossBarPacket : public InboundPacket {  // 0x0C
@@ -486,7 +486,7 @@ private:
     std::wstring m_Title;
     float m_Health;
     Color m_Color;
-    u32 m_Divisions;
+    uint32_t m_Divisions;
     uint8_t m_Flags;
 
 public:
@@ -500,7 +500,7 @@ public:
     const std::wstring& GetTitle() const { return m_Title; }
     float GetHealth() const { return m_Health; }
     Color GetColor() const { return m_Color; }
-    u32 GetDivisions() const { return m_Divisions; }
+    uint32_t GetDivisions() const { return m_Divisions; }
 
     bool HasFlag(Flag flag) const { return (m_Flags & (int)flag) != 0; }
     uint8_t GetFlags() const { return m_Flags; }
@@ -551,17 +551,17 @@ class MultiBlockChangePacket : public InboundPacket {  // 0x10
 public:
     struct BlockChange {
         // Relative to chunk
-        s16 x;
+        int16_t x;
         // Relative to chunk
-        s16 y;
+        int16_t y;
         // Relative to chunk
-        s16 z;
-        s16 blockData;
+        int16_t z;
+        int16_t blockData;
     };
 
 private:
-    s32 m_ChunkX;
-    s32 m_ChunkZ;
+    int32_t m_ChunkX;
+    int32_t m_ChunkZ;
 
     std::vector<BlockChange> m_BlockChanges;
 
@@ -570,8 +570,8 @@ public:
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    s32 GetChunkX() const { return m_ChunkX; }
-    s32 GetChunkZ() const { return m_ChunkZ; }
+    int32_t GetChunkX() const { return m_ChunkX; }
+    int32_t GetChunkZ() const { return m_ChunkZ; }
     const std::vector<BlockChange>& GetBlockChanges() const {
         return m_BlockChanges;
     }
@@ -580,7 +580,7 @@ public:
 class ConfirmTransactionPacket : public InboundPacket {  // 0x11
 private:
     uint8_t m_WindowId;
-    s16 m_Action;
+    int16_t m_Action;
     bool m_Accepted;
 
 public:
@@ -589,7 +589,7 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     uint8_t GetWindowId() const { return m_WindowId; }
-    s16 GetAction() const { return m_Action; }
+    int16_t GetAction() const { return m_Action; }
     bool IsAccepted() const { return m_Accepted; }
 };
 
@@ -645,8 +645,8 @@ public:
 class WindowPropertyPacket : public InboundPacket {  // 0x15
 private:
     uint8_t m_WindowId;
-    s16 m_Property;
-    s16 m_Value;
+    int16_t m_Property;
+    int16_t m_Value;
 
 public:
     MCLIB_API WindowPropertyPacket();
@@ -654,14 +654,14 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     uint8_t GetWindowId() const { return m_WindowId; }
-    s16 GetProperty() const { return m_Property; }
-    s16 GetValue() const { return m_Value; }
+    int16_t GetProperty() const { return m_Property; }
+    int16_t GetValue() const { return m_Value; }
 };
 
 class SetSlotPacket : public InboundPacket {  // 0x16
 private:
     uint8_t m_WindowId;
-    s16 m_SlotIndex;
+    int16_t m_SlotIndex;
     inventory::Slot m_Slot;
 
 public:
@@ -679,23 +679,23 @@ public:
      * 9 is start of top row of inventory, each row has 9 slots
      * 36 (9*3 + 9) is start of hotbar
      */
-    s16 GetSlotIndex() const { return m_SlotIndex; }
+    int16_t GetSlotIndex() const { return m_SlotIndex; }
 
     inventory::Slot GetSlot() const { return m_Slot; }
 };
 
 class SetCooldownPacket : public InboundPacket {  // 0x17
 private:
-    s32 m_ItemId;
-    s32 m_Ticks;
+    int32_t m_ItemId;
+    int32_t m_Ticks;
 
 public:
     MCLIB_API SetCooldownPacket();
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    s32 GetItemId() const { return m_ItemId; }
-    s32 GetTicks() const { return m_Ticks; }
+    int32_t GetItemId() const { return m_ItemId; }
+    int32_t GetTicks() const { return m_Ticks; }
 };
 
 class PluginMessagePacket : public InboundPacket {  // 0x18
@@ -775,16 +775,16 @@ public:
 
 class UnloadChunkPacket : public InboundPacket {  // 0x1D
 private:
-    s32 m_ChunkX;
-    s32 m_ChunkZ;
+    int32_t m_ChunkX;
+    int32_t m_ChunkZ;
 
 public:
     MCLIB_API UnloadChunkPacket();
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    s32 GetChunkX() const { return m_ChunkX; }
-    s32 GetChunkZ() const { return m_ChunkZ; }
+    int32_t GetChunkX() const { return m_ChunkX; }
+    int32_t GetChunkZ() const { return m_ChunkZ; }
 };
 
 class ChangeGameStatePacket : public InboundPacket {  // 0x1E
@@ -817,14 +817,14 @@ public:
 
 class KeepAlivePacket : public InboundPacket {  // 0x1F
 private:
-    s64 m_AliveId;
+    int64_t m_AliveId;
 
 public:
     MCLIB_API KeepAlivePacket();
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    s64 GetAliveId() const { return m_AliveId; }
+    int64_t GetAliveId() const { return m_AliveId; }
 };
 
 class ChunkDataPacket : public InboundPacket {  // 0x20
@@ -845,9 +845,9 @@ public:
 
 class EffectPacket : public InboundPacket {  // 0x21
 private:
-    s32 m_EffectId;
+    int32_t m_EffectId;
     Vector3i m_Position;
-    s32 m_Data;
+    int32_t m_Data;
     bool m_DisableRelativeVolume;
 
 public:
@@ -855,44 +855,44 @@ public:
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    s32 GetEffectId() const { return m_EffectId; }
+    int32_t GetEffectId() const { return m_EffectId; }
     Vector3i GetPosition() const { return m_Position; }
-    s32 GetData() const { return m_Data; }
+    int32_t GetData() const { return m_Data; }
     bool GetDisableRelativeVolume() const { return m_DisableRelativeVolume; }
 };
 
 class ParticlePacket : public InboundPacket {  // 0x22
 private:
-    s32 m_ParticleId;
+    int32_t m_ParticleId;
     bool m_LongDistance;
     Vector3d m_Position;
     Vector3d m_MaxOffset;
     float m_ParticleData;
-    s32 m_Count;
-    std::vector<s32> m_Data;
+    int32_t m_Count;
+    std::vector<int32_t> m_Data;
 
 public:
     MCLIB_API ParticlePacket();
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    s32 GetParticleId() const { return m_ParticleId; }
+    int32_t GetParticleId() const { return m_ParticleId; }
     bool IsLongDistance() const { return m_LongDistance; }
     Vector3d GetPosition() const { return m_Position; }
     Vector3d GetMaxOffset() const { return m_MaxOffset; }
     float GetParticleData() const { return m_ParticleData; }
-    s32 GetCount() const { return m_Count; }
-    const std::vector<s32>& GetData() const { return m_Data; }
+    int32_t GetCount() const { return m_Count; }
+    const std::vector<int32_t>& GetData() const { return m_Data; }
 };
 
-class JoinGamePacket : public InboundPacket {  // 0x23
+class JoinGamePacket : public InboundPacket {  // 0x25
 private:
-    s32 m_EntityId;
+    int32_t m_EntityId;
     uint8_t m_Gamemode;
-    s32 m_Dimension;
-    uint8_t m_Difficulty;
+    int32_t m_Dimension;
     uint8_t m_MaxPlayers;
     MCString m_LevelType;
+    VarInt m_ViewDistance;
     bool m_ReducedDebug;
 
 public:
@@ -900,16 +900,16 @@ public:
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    s32 GetEntityId() const { return m_EntityId; }
+    int32_t GetEntityId() const { return m_EntityId; }
     uint8_t GetGamemode() const { return m_Gamemode; }
-    s32 GetDimension() const { return m_Dimension; }
-    uint8_t GetDifficulty() const { return m_Difficulty; }
+    int32_t GetDimension() const { return m_Dimension; }
     uint8_t GetMaxPlayers() const { return m_MaxPlayers; }
     std::wstring GetLevelType() const { return m_LevelType.GetUTF16(); }
+    VarInt GetViewDistance() const { return m_ViewDistance; }
     bool GetReducedDebug() const { return m_ReducedDebug; }
 };
 
-class MapPacket : public InboundPacket {  // 0x24
+class MapPacket : public InboundPacket {  // 0x26
 public:
     struct Icon {
         uint8_t direction;
@@ -919,16 +919,17 @@ public:
     };
 
 private:
-    s32 m_MapId;
+    int32_t m_MapId;
     uint8_t m_Scale;
     bool m_TrackPosition;
+    bool m_Locked;
     std::vector<Icon> m_Icons;
     uint8_t m_Columns;
 
     uint8_t m_Rows;
     uint8_t m_X;
     uint8_t m_Z;
-    s32 m_Length;
+    int32_t m_Length;
     std::string m_Data;
 
 public:
@@ -936,16 +937,32 @@ public:
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    s32 GetMapId() const { return m_MapId; }
+    int32_t GetMapId() const { return m_MapId; }
     uint8_t GetScale() const { return m_Scale; }
     bool IsTrackingPosition() const { return m_TrackPosition; }
+    bool IsLocked() const { return m_Locked; }
     const std::vector<Icon>& GetIcons() const { return m_Icons; }
     uint8_t GetColumns() const { return m_Columns; }
     uint8_t GetRows() const { return m_Rows; }
     uint8_t GetX() const { return m_X; }
     uint8_t GetZ() const { return m_Z; }
-    s32 GetLength() const { return m_Length; }
+    int32_t GetLength() const { return m_Length; }
     const std::string& GetData() const { return m_Data; }
+};
+
+class OpenBook : public InboundPacket {  // 0x2D
+public:
+private:
+    // VarInt enum Hand;
+public:
+    MCLIB_API OpenBook();
+    bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength) {
+        throw std::runtime_error(
+            "Function is not implemented");  // TODO implement
+    }
+    void MCLIB_API Dispatch(PacketHandler* handler) {
+        throw std::runtime_error("Function is not implemented");
+    }
 };
 
 // This packet allows at most 8 blocks movement in any direction,
@@ -1072,7 +1089,7 @@ public:
 
 private:
     Event m_Event;
-    s32 m_Duration;          // EndCombat only
+    int32_t m_Duration;      // EndCombat only
     EntityId m_PlayerId;     // EntityDead only
     EntityId m_EntityId;     // EndCombat and EntityDead only
     std::wstring m_Message;  // EntityDead only
@@ -1083,7 +1100,7 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     Event GetEvent() const { return m_Event; }
-    s32 GetDuration() const { return m_Duration; }
+    int32_t GetDuration() const { return m_Duration; }
     EntityId GetPlayerId() const { return m_PlayerId; }
     EntityId GetEntityId() const { return m_EntityId; }
     const std::wstring& GetMessage() const { return m_Message; }
@@ -1103,8 +1120,8 @@ public:
         UUID uuid;
         std::wstring name;
         std::map<std::wstring, std::wstring> properties;
-        s32 gamemode;
-        s32 ping;
+        int32_t gamemode;
+        int32_t ping;
         std::wstring displayName;
     };
     typedef std::shared_ptr<ActionData> ActionDataPtr;
@@ -1128,7 +1145,7 @@ private:
     Vector3d m_Position;
     float m_Yaw, m_Pitch;
     uint8_t m_Flags;
-    s32 m_TeleportId;
+    int32_t m_TeleportId;
 
 public:
     MCLIB_API PlayerPositionAndLookPacket();
@@ -1139,7 +1156,7 @@ public:
     float GetYaw() const { return m_Yaw; }
     float GetPitch() const { return m_Pitch; }
     uint8_t GetFlags() const { return m_Flags; }
-    s32 GetTeleportId() const { return m_TeleportId; }
+    int32_t GetTeleportId() const { return m_TeleportId; }
 };
 
 class UseBedPacket : public InboundPacket {  // 0x2F
@@ -1177,8 +1194,8 @@ private:
     bool m_OpenCraftingBook;
     bool m_Filter;
 
-    std::vector<s32> m_Array1;
-    std::vector<s32> m_Array2;
+    std::vector<int32_t> m_Array1;
+    std::vector<int32_t> m_Array2;
 
 public:
     MCLIB_API UnlockRecipesPacket();
@@ -1214,10 +1231,9 @@ public:
     const std::string& GetHash() const { return m_Hash; }
 };
 
-class RespawnPacket : public InboundPacket {  // 0x33
+class RespawnPacket : public InboundPacket {  // 0x3A
 private:
-    s32 m_Dimension;
-    uint8_t m_Difficulty;
+    int32_t m_Dimension;
     uint8_t m_Gamemode;
     std::wstring m_Level;
 
@@ -1226,8 +1242,7 @@ public:
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    s32 GetDimension() const { return m_Dimension; }
-    uint8_t GetDifficulty() const { return m_Difficulty; }
+    int32_t GetDimension() const { return m_Dimension; }
     uint8_t GetGamemode() const { return m_Gamemode; }
     const std::wstring& GetLevel() const { return m_Level; }
 };
@@ -1262,10 +1277,10 @@ private:
     double m_OldDiameter;
     double m_X;
     double m_Z;
-    s64 m_Speed;
-    s32 m_PortalTeleportBoundary;
-    s32 m_WarningTime;
-    s32 m_WarningBlocks;
+    int64_t m_Speed;
+    int32_t m_PortalTeleportBoundary;
+    int32_t m_WarningTime;
+    int32_t m_WarningBlocks;
 
     Action m_Action;
 
@@ -1289,27 +1304,29 @@ public:
      * world border speed to game ticks, so it gets out of sync with
      * server lag
      */
-    s64 GetSpeed() const { return m_Speed; }
+    int64_t GetSpeed() const { return m_Speed; }
 
     /**
      * Resulting coordinates from a portal teleport are limited to +-value.
      * Usually 29999984.
      */
-    s32 GetPortalTeleportBoundary() const { return m_PortalTeleportBoundary; }
+    int32_t GetPortalTeleportBoundary() const {
+        return m_PortalTeleportBoundary;
+    }
     /**
      * Causes the screen to be tinted red when a contracting world border will
      * reach the player within the specified time. The default is 15 seconds.
      * The tint will not display if the user is using fast graphics.
      * Unit: seconds
      */
-    s32 GetWarningTime() const { return m_WarningTime; }
+    int32_t GetWarningTime() const { return m_WarningTime; }
     /**
      * Causes the screen to be tinted red when the player is within
      * the specified number of blocks from the world border.
      * The default is 5 blocks.
      * The tint will not display if the user is using fast graphics.
      */
-    s32 GetWarningBlocks() const { return m_WarningBlocks; };
+    int32_t GetWarningBlocks() const { return m_WarningBlocks; };
 
     // Different values are set depending on which action is happening
     Action GetAction() const { return m_Action; }
@@ -1430,8 +1447,8 @@ public:
 class SetExperiencePacket : public InboundPacket {  // 0x3D
 private:
     float m_ExperienceBar;
-    s32 m_Level;
-    s32 m_TotalExperience;
+    int32_t m_Level;
+    int32_t m_TotalExperience;
 
 public:
     MCLIB_API SetExperiencePacket();
@@ -1439,14 +1456,14 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     float GetExperienceBar() const { return m_ExperienceBar; }
-    s32 GetLevel() const { return m_Level; }
-    s32 GetTotalExperience() const { return m_TotalExperience; }
+    int32_t GetLevel() const { return m_Level; }
+    int32_t GetTotalExperience() const { return m_TotalExperience; }
 };
 
 class UpdateHealthPacket : public InboundPacket {  // 0x3E
 private:
     float m_Health;
-    s32 m_Food;
+    int32_t m_Food;
     float m_Saturation;
 
 public:
@@ -1455,7 +1472,7 @@ public:
     void MCLIB_API Dispatch(PacketHandler* handler);
 
     float GetHealth() const { return m_Health; }
-    s32 GetFood() const { return m_Food; }
+    int32_t GetFood() const { return m_Food; }
     float GetSaturation() const { return m_Saturation; }
 };
 
@@ -1535,7 +1552,7 @@ private:
     std::wstring m_ScoreName;
     Action m_Action;
     std::wstring m_Objective;
-    s32 m_Value;
+    int32_t m_Value;
 
 public:
     MCLIB_API UpdateScorePacket();
@@ -1545,7 +1562,7 @@ public:
     const std::wstring& GetScoreName() const { return m_ScoreName; }
     Action GetAction() const { return m_Action; }
     const std::wstring& GetObjective() const { return m_Objective; }
-    s32 GetValue() const { return m_Value; }
+    int32_t GetValue() const { return m_Value; }
 };
 
 class SpawnPositionPacket : public InboundPacket {  // 0x43
@@ -1562,16 +1579,16 @@ public:
 
 class TimeUpdatePacket : public InboundPacket {  // 0x44
 private:
-    s64 m_WorldAge;
-    s64 m_Time;
+    int64_t m_WorldAge;
+    int64_t m_Time;
 
 public:
     MCLIB_API TimeUpdatePacket();
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    s64 GetWorldAge() const { return m_WorldAge; }
-    s64 GetTime() const { return m_Time; }
+    int64_t GetWorldAge() const { return m_WorldAge; }
+    int64_t GetTime() const { return m_Time; }
 };
 
 class TitlePacket : public InboundPacket {  // 0x45
@@ -1588,9 +1605,9 @@ public:
 private:
     Action m_Action;
     std::wstring m_Text;
-    s32 m_FadeIn;
-    s32 m_Stay;
-    s32 m_FadeOut;
+    int32_t m_FadeIn;
+    int32_t m_Stay;
+    int32_t m_FadeOut;
 
 public:
     MCLIB_API TitlePacket();
@@ -1599,14 +1616,14 @@ public:
 
     Action GetAction() const { return m_Action; }
     const std::wstring& GetText() const { return m_Text; }
-    s32 GetFadeIn() const { return m_FadeIn; }
-    s32 GetStay() const { return m_Stay; }
-    s32 GetFadeOut() const { return m_FadeOut; }
+    int32_t GetFadeIn() const { return m_FadeIn; }
+    int32_t GetStay() const { return m_Stay; }
+    int32_t GetFadeOut() const { return m_FadeOut; }
 };
 
 class SoundEffectPacket : public InboundPacket {  // 0x46
 private:
-    s32 m_SoundId;
+    int32_t m_SoundId;
     SoundCategory m_Category;
     Vector3d m_Position;
     float m_Volume;
@@ -1617,7 +1634,7 @@ public:
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    s32 GetSoundId() const { return m_SoundId; }
+    int32_t GetSoundId() const { return m_SoundId; }
     SoundCategory GetCategory() const { return m_Category; }
     Vector3d GetPosition() const { return m_Position; }
     float GetVolume() const { return m_Volume; }
@@ -1642,7 +1659,7 @@ class CollectItemPacket : public InboundPacket {  // 0x48
 private:
     EntityId m_Collector;
     EntityId m_Collected;
-    s32 m_PickupCount;
+    int32_t m_PickupCount;
 
 public:
     MCLIB_API CollectItemPacket();
@@ -1651,7 +1668,7 @@ public:
 
     EntityId GetCollectorId() const { return m_Collector; }
     EntityId GetCollectedId() const { return m_Collected; }
-    s32 GetPickupCount() const { return m_PickupCount; }
+    int32_t GetPickupCount() const { return m_PickupCount; }
 };
 
 class EntityTeleportPacket : public InboundPacket {  // 0x49
@@ -1698,7 +1715,7 @@ private:
     EntityId m_EntityId;
     uint8_t m_EffectId;
     uint8_t m_Amplifier;
-    s32 m_Duration;
+    int32_t m_Duration;
     uint8_t m_Flags;
 
 public:
@@ -1709,7 +1726,7 @@ public:
     EntityId GetEntityId() const { return m_EntityId; }
     uint8_t GetEffectId() const { return m_EffectId; }
     uint8_t GetAmplifier() const { return m_Amplifier; }
-    s32 GetDuration() const { return m_Duration; }
+    int32_t GetDuration() const { return m_Duration; }
     uint8_t GetFlags() const { return m_Flags; }
 
     bool HasFlag(Flag flag) const { return (m_Flags & (int)flag) != 0; }
@@ -1728,7 +1745,7 @@ public:
 class CraftRecipeResponsePacket : public InboundPacket {
 private:
     uint8_t m_WindowId;
-    s32 m_RecipeId;
+    int32_t m_RecipeId;
 
 public:
     MCLIB_API CraftRecipeResponsePacket();
@@ -1752,14 +1769,14 @@ public:
 
 class PongPacket : public InboundPacket {  // 0x01
 private:
-    s64 m_Payload;
+    int64_t m_Payload;
 
 public:
     MCLIB_API PongPacket();
     bool MCLIB_API Deserialize(DataBuffer& data, std::size_t packetLength);
     void MCLIB_API Dispatch(PacketHandler* handler);
 
-    s64 GetPayload() const { return m_Payload; }
+    int64_t GetPayload() const { return m_Payload; }
 };
 
 }  // namespace status
@@ -1773,12 +1790,12 @@ class HandshakePacket : public OutboundPacket {  // 0x00
 private:
     VarInt m_ProtocolVersion;
     MCString m_Server;
-    u16 m_Port;
+    uint16_t m_Port;
     VarInt m_NewState;
 
 public:
-    MCLIB_API HandshakePacket(s32 protocol, std::string server, u16 port,
-                              State state);
+    MCLIB_API HandshakePacket(int32_t protocol, std::string server,
+                              uint16_t port, State state);
     DataBuffer MCLIB_API Serialize() const;
 };
 
@@ -1810,10 +1827,10 @@ public:
 // Play packets
 class TeleportConfirmPacket : public OutboundPacket {  // 0x00
 private:
-    s32 m_TeleportId;
+    int32_t m_TeleportId;
 
 public:
-    MCLIB_API TeleportConfirmPacket(s32 teleportId);
+    MCLIB_API TeleportConfirmPacket(int32_t teleportId);
     DataBuffer MCLIB_API Serialize() const;
 };
 
@@ -1827,13 +1844,14 @@ public:
 
 private:
     uint8_t m_WindowId;
-    s16 m_ActionNumber;
+    int16_t m_ActionNumber;
     std::vector<Entry> m_ReturnEntries;
     std::vector<Entry> m_PrepareEntries;
 
 public:
     MCLIB_API PrepareCraftingGridPacket(
-        uint8_t windowId, s16 actionNumber, const std::vector<Entry>& returnEntries,
+        uint8_t windowId, int16_t actionNumber,
+        const std::vector<Entry>& returnEntries,
         const std::vector<Entry>& prepareEntries);
     DataBuffer MCLIB_API Serialize() const;
 };
@@ -1841,11 +1859,12 @@ public:
 class CraftRecipeRequestPacket : public OutboundPacket {
 private:
     uint8_t m_WindowId;
-    s32 m_RecipeId;
+    int32_t m_RecipeId;
     bool m_MakeAll;
 
 public:
-    MCLIB_API CraftRecipeRequestPacket(uint8_t windowId, s32 recipeId, bool makeAll);
+    MCLIB_API CraftRecipeRequestPacket(uint8_t windowId, int32_t recipeId,
+                                       bool makeAll);
     DataBuffer MCLIB_API Serialize() const;
 };
 
@@ -1899,20 +1918,22 @@ private:
     MainHand m_MainHand;
 
 public:
-    MCLIB_API ClientSettingsPacket(const std::wstring& locale, uint8_t viewDistance,
-                                   ChatMode chatMode, bool chatColors,
-                                   uint8_t skinFlags, MainHand hand);
+    MCLIB_API ClientSettingsPacket(const std::wstring& locale,
+                                   uint8_t viewDistance, ChatMode chatMode,
+                                   bool chatColors, uint8_t skinFlags,
+                                   MainHand hand);
     DataBuffer MCLIB_API Serialize() const;
 };
 
 class ConfirmTransactionPacket : public OutboundPacket {  // 0x05
 private:
     uint8_t m_WindowId;
-    s16 m_Action;
+    int16_t m_Action;
     bool m_Accepted;
 
 public:
-    MCLIB_API ConfirmTransactionPacket(uint8_t windowId, s16 action, bool accepted);
+    MCLIB_API ConfirmTransactionPacket(uint8_t windowId, int16_t action,
+                                       bool accepted);
     DataBuffer MCLIB_API Serialize() const;
 };
 
@@ -1929,15 +1950,15 @@ public:
 class ClickWindowPacket : public OutboundPacket {  // 0x07
 private:
     uint8_t m_WindowId;
-    u16 m_SlotIndex;
+    uint16_t m_SlotIndex;
     uint8_t m_Button;
-    u16 m_Action;
-    s32 m_Mode;
+    uint16_t m_Action;
+    int32_t m_Mode;
     inventory::Slot m_ClickedItem;
 
 public:
-    MCLIB_API ClickWindowPacket(uint8_t windowId, u16 slotIndex, uint8_t button,
-                                u16 action, s32 mode,
+    MCLIB_API ClickWindowPacket(uint8_t windowId, uint16_t slotIndex,
+                                uint8_t button, uint16_t action, int32_t mode,
                                 inventory::Slot clickedItem);
     DataBuffer MCLIB_API Serialize() const;
 };
@@ -1981,13 +2002,13 @@ public:
 
 class KeepAlivePacket : public OutboundPacket {  // 0x0B
 private:
-    s64 m_KeepAliveId;
+    int64_t m_KeepAliveId;
 
 public:
-    MCLIB_API KeepAlivePacket(s64 id);
+    MCLIB_API KeepAlivePacket(int64_t id);
     DataBuffer MCLIB_API Serialize() const;
 
-    s64 GetKeepAliveId() const { return m_KeepAliveId; }
+    int64_t GetKeepAliveId() const { return m_KeepAliveId; }
 };
 
 class PlayerPositionPacket : public OutboundPacket {  // 0x0C
@@ -2102,12 +2123,12 @@ public:
 private:
     EntityId m_EntityId;
     Action m_Action;
-    s32 m_ActionData;
+    int32_t m_ActionData;
 
 public:
     // Action data is only used for HorseJump (0 to 100), 0 otherwise.
     MCLIB_API EntityActionPacket(EntityId eid, Action action,
-                                 s32 actionData = 0);
+                                 int32_t actionData = 0);
     DataBuffer MCLIB_API Serialize() const;
 };
 
@@ -2144,21 +2165,21 @@ public:
 
 class HeldItemChangePacket : public OutboundPacket {  // 0x17
 private:
-    u16 m_Slot;
+    uint16_t m_Slot;
 
 public:
     // Slot should be between 0 and 8, representing hot bar left to right
-    MCLIB_API HeldItemChangePacket(u16 slot);
+    MCLIB_API HeldItemChangePacket(uint16_t slot);
     DataBuffer MCLIB_API Serialize() const;
 };
 
 class CreativeInventoryActionPacket : public OutboundPacket {  // 0x18
 private:
-    s16 m_Slot;
+    int16_t m_Slot;
     inventory::Slot m_Item;
 
 public:
-    MCLIB_API CreativeInventoryActionPacket(s16 slot, inventory::Slot item);
+    MCLIB_API CreativeInventoryActionPacket(int16_t slot, inventory::Slot item);
     DataBuffer MCLIB_API Serialize() const;
 };
 
@@ -2237,10 +2258,10 @@ public:
 
 class PingPacket : public OutboundPacket {  // 0x01
 private:
-    s64 m_Payload;
+    int64_t m_Payload;
 
 public:
-    MCLIB_API PingPacket(s64 payload);
+    MCLIB_API PingPacket(int64_t payload);
     DataBuffer MCLIB_API Serialize() const;
 };
 

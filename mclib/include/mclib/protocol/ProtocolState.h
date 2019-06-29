@@ -32,7 +32,7 @@ public:
         : m_PacketId(id), m_ProtocolState(state) {}
     std::string what() const {
         return "Unknown packet type " + std::to_string(m_PacketId.GetInt()) +
-               " received during " + std::to_string((s32)m_ProtocolState) +
+               " received during " + std::to_string((int32_t)m_ProtocolState) +
                " protocol state.";
     }
 };

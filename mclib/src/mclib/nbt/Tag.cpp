@@ -93,13 +93,13 @@ TagType TagString::GetType() const noexcept { return TagType::String; }
 void TagString::Write(DataBuffer& buffer) const {
     std::string utf8 = utf16to8(m_Value);
 
-    u16 length = (u16)utf8.length();
+    uint16_t length = (uint16_t)utf8.length();
     buffer << length;
     buffer << utf8;
 }
 
 void TagString::Read(DataBuffer& buffer) {
-    u16 length;
+    uint16_t length;
 
     buffer >> length;
 
@@ -118,14 +118,14 @@ void TagString::Read(DataBuffer& buffer) {
 TagType TagByteArray::GetType() const noexcept { return TagType::ByteArray; }
 
 void TagByteArray::Write(DataBuffer& buffer) const {
-    s32 length = m_Value.length();
+    int32_t length = m_Value.length();
 
     buffer << length;
     buffer << m_Value;
 }
 
 void TagByteArray::Read(DataBuffer& buffer) {
-    s32 length;
+    int32_t length;
 
     buffer >> length;
 
@@ -136,21 +136,21 @@ void TagByteArray::Read(DataBuffer& buffer) {
 TagType TagIntArray::GetType() const noexcept { return TagType::IntArray; }
 
 void TagIntArray::Write(DataBuffer& buffer) const {
-    s32 length = m_Value.size();
+    int32_t length = m_Value.size();
 
     buffer << length;
-    for (s32 val : m_Value) buffer << val;
+    for (int32_t val : m_Value) buffer << val;
 }
 
 void TagIntArray::Read(DataBuffer& buffer) {
-    s32 length;
+    int32_t length;
 
     buffer >> length;
 
     m_Value.clear();
 
-    for (s32 i = 0; i < length; ++i) {
-        s32 val;
+    for (int32_t i = 0; i < length; ++i) {
+        int32_t val;
         buffer >> val;
         m_Value.push_back(val);
     }
@@ -158,7 +158,7 @@ void TagIntArray::Read(DataBuffer& buffer) {
 
 void TagList::Write(DataBuffer& buffer) const {
     uint8_t type = (uint8_t)m_ListType;
-    s32 size = (m_ListType != TagType::End) ? m_Tags.size() : 0;
+    int32_t size = (m_ListType != TagType::End) ? m_Tags.size() : 0;
 
     buffer << type;
     buffer << size;
@@ -170,12 +170,12 @@ void TagList::Write(DataBuffer& buffer) const {
 
 void TagList::Read(DataBuffer& buffer) {
     uint8_t type;
-    s32 size;
+    int32_t size;
 
     buffer >> type;
     buffer >> size;
 
-    for (s32 i = 0; i < size; ++i) {
+    for (int32_t i = 0; i < size; ++i) {
         TagPtr tag;
 
         if (type == 1)

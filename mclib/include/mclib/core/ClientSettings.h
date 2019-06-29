@@ -29,7 +29,7 @@ public:
     MCLIB_API ClientSettings& SetChatMode(ChatMode mode) noexcept;
     MCLIB_API ClientSettings& SetMainHand(MainHand main) noexcept;
     MCLIB_API ClientSettings& SetViewDistance(uint8_t distance) noexcept;
-    MCLIB_API ClientSettings& SetViewDistance(s32 distance) noexcept;
+    MCLIB_API ClientSettings& SetViewDistance(int32_t distance) noexcept;
     MCLIB_API ClientSettings& SetSkinParts(uint8_t parts) noexcept;
     MCLIB_API ClientSettings& SetChatColors(bool chatColors) noexcept;
 

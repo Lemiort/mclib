@@ -4,7 +4,6 @@ project(mclib)
 include("${CMAKE_BINARY_DIR}/conanbuildinfo.cmake")
 conan_basic_setup()
 
-set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(mclib)

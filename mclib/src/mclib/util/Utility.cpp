@@ -162,14 +162,14 @@ bool GetProfileToken(const std::string& username, core::AuthToken* token) {
     return false;
 }
 
-s64 GetTime() {
+int64_t GetTime() {
     return std::chrono::duration_cast<std::chrono::milliseconds>(
                std::chrono::system_clock::now().time_since_epoch())
         .count();
 }
 
-inventory::Slot CreateFirework(bool flicker, bool trail, uint8_t type, uint8_t duration,
-                               std::vector<int> colors,
+inventory::Slot CreateFirework(bool flicker, bool trail, uint8_t type,
+                               uint8_t duration, std::vector<int> colors,
                                const std::string& name = "") {
     using namespace nbt;
 
@@ -348,7 +348,7 @@ bool PlayerController::ClearPath(Vector3d target) {
         return true;
     };
 
-    for (s32 i = 0; i < (int)std::ceil(dist); ++i) {
+    for (int32_t i = 0; i < (int)std::ceil(dist); ++i) {
         Vector3d delta(i * n.x, 0, i * n.z);
 
         // Check right side
@@ -396,8 +396,8 @@ void PlayerController::Dig(Vector3d target) {
 }
 
 void PlayerController::Attack(EntityId id) {
-    static u64 timer = 0;
-    static const u64 cooldown = 500;
+    static uint64_t timer = 0;
+    static const uint64_t cooldown = 500;
 
     if (GetTime() - timer < cooldown) return;
 
@@ -416,14 +416,14 @@ void PlayerController::UpdateDigging() {
 }
 
 std::vector<std::pair<block::BlockPtr, Vector3i>>
-PlayerController::GetNearbyBlocks(const s32 radius) {
+PlayerController::GetNearbyBlocks(const int32_t radius) {
     using BlockPos = std::pair<block::BlockPtr, Vector3i>;
 
     std::vector<BlockPos> nearbyBlocks;
 
-    for (s32 x = -radius; x < radius; ++x) {
-        for (s32 y = -radius; y < radius; ++y) {
-            for (s32 z = -radius; z < radius; ++z) {
+    for (int32_t x = -radius; x < radius; ++x) {
+        for (int32_t y = -radius; y < radius; ++y) {
+            for (int32_t z = -radius; z < radius; ++z) {
                 Vector3d checkPos = m_Position + Vector3d(x, y, z);
 
                 auto state = m_World.GetBlock(checkPos);
@@ -504,7 +504,7 @@ void PlayerController::UpdatePosition() {
     // static const double WalkingSpeed = 8.6; // m/s
     static const double TicksPerSecond = 20;
 
-    u64 dt = GetTime() - m_LastUpdate;
+    uint64_t dt = GetTime() - m_LastUpdate;
 
     if (dt < 1000 / TicksPerSecond) return;
 
@@ -790,9 +790,9 @@ public:
         const std::vector<inventory::Slot>& slots = packet->GetSlots();
 
         for (const inventory::Slot& slot : slots) {
-            s16 id = slot.GetItemId();
+            int16_t id = slot.GetItemId();
             uint8_t count = slot.GetItemCount();
-            s16 dmg = slot.GetItemDamage();
+            int16_t dmg = slot.GetItemDamage();
             // const Minecraft::NBT::NBT& nbt = slot.GetNBT();
 
             if (id != -1)
@@ -876,9 +876,10 @@ public:
     void HandlePacket(protocol::packets::in::JoinGamePacket* packet) {
         console << "Joining game with entity id of " << packet->GetEntityId()
                 << "\n";
-        console << "Game difficulty: " << (int)packet->GetDifficulty()
-                << ", Dimension: " << (int)packet->GetDimension() << "\n";
+        console << "Dimension: " << packet->GetDimension() << "\n";
         console << "Level type: " << packet->GetLevelType() << "\n";
+        console << "View distance : " << packet->GetViewDistance().GetInt()
+                << "\n";
     }
 
     void HandlePacket(protocol::packets::in::PluginMessagePacket* packet) {
@@ -915,8 +916,8 @@ void PlayerFollower::UpdateRotation() {
     if (!m_Following || !m_Following->GetEntity()) return;
 
     m_PlayerController.LookAt(m_Following->GetEntity()->GetPosition());
-    /*static u64 lastUpdate = GetTime();
-    u64 ticks = GetTime();
+    /*static uint64_t lastUpdate = GetTime();
+    uint64_t ticks = GetTime();
     float dt = (ticks - lastUpdate) / 1000.0f;
     lastUpdate = ticks;
 
@@ -1019,7 +1020,7 @@ void PlayerFollower::FindClosestPlayer() {
         }
     }
 
-    static u64 lastOutput = 0;
+    static uint64_t lastOutput = 0;
 
     if (GetTime() - lastOutput >= 3000) {
         lastOutput = GetTime();
@@ -1082,7 +1083,7 @@ class CreativeCreator : public protocol::packets::PacketHandler {
 private:
     core::Connection* m_Connection;
     PlayerController* m_Controller;
-    s16 m_Slot;
+    int16_t m_Slot;
     inventory::Slot m_Item;
     bool m_Created;
 
@@ -1091,7 +1092,7 @@ private:
 public:
     CreativeCreator(protocol::packets::PacketDispatcher* dispatcher,
                     core::Connection* connection, PlayerController* controller,
-                    s16 slot, inventory::Slot item)
+                    int16_t slot, inventory::Slot item)
         : protocol::packets::PacketHandler(dispatcher),
           m_Connection(connection),
           m_Controller(controller),
@@ -1158,7 +1159,7 @@ public:
                 DyeColor::Magenta, DyeColor::Orange, DyeColor::BoneMeal};
             int slotIndex = 36;
 
-            /* std::map<u32, bool> usedMap;
+            /* std::map<uint32_t, bool> usedMap;
 
              for (uint8_t colorIndex1 = 0; colorIndex1 < colors.size();
              ++colorIndex1) { for (uint8_t colorIndex2 = 0; colorIndex2 <
@@ -1167,11 +1168,12 @@ public:
              colorIndex2) continue; if (colorIndex1 == colorIndex3) continue; if
              (colorIndex2 == colorIndex3) continue;
 
-                         std::vector<uint8_t> sorted = { colorIndex1, colorIndex2,
-             colorIndex3 }; std::sort(sorted.begin(), sorted.end());
+                         std::vector<uint8_t> sorted = { colorIndex1,
+             colorIndex2, colorIndex3 }; std::sort(sorted.begin(),
+             sorted.end());
 
-                         u32 combined = (sorted[0] << 16) | (sorted[1] << 8) |
-             sorted[2];
+                         uint32_t combined = (sorted[0] << 16) | (sorted[1] <<
+             8) | sorted[2];
 
                          if (usedMap.find(combined) != usedMap.end()) continue;
 

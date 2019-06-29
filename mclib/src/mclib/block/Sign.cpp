@@ -11,8 +11,8 @@ bool Sign::ImportNBT(nbt::NBT* nbt) {
         nbt->GetTag<nbt::TagString>(L"Text4"),
     };
 
-    s32 textCount = 0;
-    for (s32 i = 0; i < 4; ++i) {
+    int32_t textCount = 0;
+    for (int32_t i = 0; i < 4; ++i) {
         if (textTags[i] != nullptr) {
             m_Text[i] = textTags[i]->GetValue();
             textCount++;

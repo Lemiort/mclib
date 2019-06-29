@@ -10,7 +10,7 @@ namespace mc {
 namespace protocol {
 
 using PacketCreator = packets::InboundPacket* (*)();
-using PacketMap = std::unordered_map<s32, s32>;
+using PacketMap = std::unordered_map<int32_t, int32_t>;
 
 class UnsupportedPacketException : public std::exception {
 private:
@@ -40,87 +40,87 @@ public:
     virtual Version GetVersion() const noexcept { return m_Version; }
 
     // Creates an inbound packet from state and packet id
-    virtual packets::InboundPacket* CreateInboundPacket(State state, s32 id);
+    virtual packets::InboundPacket* CreateInboundPacket(State state, int32_t id);
 
     // Convert the protocol id into a protocol agnostic id.
     // This is used as the dispatching id.
-    bool GetAgnosticId(State state, s32 protocolId, s32& agnosticId);
+    bool GetAgnosticId(State state, int32_t protocolId, int32_t& agnosticId);
 
     // Handshake
-    virtual s32 GetPacketId(packets::out::HandshakePacket) { return 0x00; }
+    virtual int32_t GetPacketId(packets::out::HandshakePacket) { return 0x00; }
 
     // Login
-    virtual s32 GetPacketId(packets::out::LoginStartPacket) { return 0x00; }
-    virtual s32 GetPacketId(packets::out::EncryptionResponsePacket) {
+    virtual int32_t GetPacketId(packets::out::LoginStartPacket) { return 0x00; }
+    virtual int32_t GetPacketId(packets::out::EncryptionResponsePacket) {
         return 0x01;
     }
 
     // Status
-    virtual s32 GetPacketId(packets::out::status::RequestPacket) {
+    virtual int32_t GetPacketId(packets::out::status::RequestPacket) {
         return 0x00;
     }
-    virtual s32 GetPacketId(packets::out::status::PingPacket) { return 0x01; }
+    virtual int32_t GetPacketId(packets::out::status::PingPacket) { return 0x01; }
 
     // Play
-    virtual s32 GetPacketId(packets::out::TeleportConfirmPacket) {
+    virtual int32_t GetPacketId(packets::out::TeleportConfirmPacket) {
         return 0x00;
     }
-    virtual s32 GetPacketId(packets::out::TabCompletePacket) { return 0x01; }
-    virtual s32 GetPacketId(packets::out::ChatPacket) { return 0x02; }
-    virtual s32 GetPacketId(packets::out::ClientStatusPacket) { return 0x03; }
-    virtual s32 GetPacketId(packets::out::ClientSettingsPacket) { return 0x04; }
-    virtual s32 GetPacketId(packets::out::ConfirmTransactionPacket) {
+    virtual int32_t GetPacketId(packets::out::TabCompletePacket) { return 0x01; }
+    virtual int32_t GetPacketId(packets::out::ChatPacket) { return 0x02; }
+    virtual int32_t GetPacketId(packets::out::ClientStatusPacket) { return 0x03; }
+    virtual int32_t GetPacketId(packets::out::ClientSettingsPacket) { return 0x04; }
+    virtual int32_t GetPacketId(packets::out::ConfirmTransactionPacket) {
         return 0x05;
     }
-    virtual s32 GetPacketId(packets::out::EnchantItemPacket) { return 0x06; }
-    virtual s32 GetPacketId(packets::out::ClickWindowPacket) { return 0x07; }
-    virtual s32 GetPacketId(packets::out::CloseWindowPacket) { return 0x08; }
-    virtual s32 GetPacketId(packets::out::PluginMessagePacket) { return 0x09; }
-    virtual s32 GetPacketId(packets::out::UseEntityPacket) { return 0x0A; }
-    virtual s32 GetPacketId(packets::out::KeepAlivePacket) { return 0x0B; }
-    virtual s32 GetPacketId(packets::out::PlayerPositionPacket) { return 0x0C; }
-    virtual s32 GetPacketId(packets::out::PlayerPositionAndLookPacket) {
+    virtual int32_t GetPacketId(packets::out::EnchantItemPacket) { return 0x06; }
+    virtual int32_t GetPacketId(packets::out::ClickWindowPacket) { return 0x07; }
+    virtual int32_t GetPacketId(packets::out::CloseWindowPacket) { return 0x08; }
+    virtual int32_t GetPacketId(packets::out::PluginMessagePacket) { return 0x09; }
+    virtual int32_t GetPacketId(packets::out::UseEntityPacket) { return 0x0A; }
+    virtual int32_t GetPacketId(packets::out::KeepAlivePacket) { return 0x0B; }
+    virtual int32_t GetPacketId(packets::out::PlayerPositionPacket) { return 0x0C; }
+    virtual int32_t GetPacketId(packets::out::PlayerPositionAndLookPacket) {
         return 0x0D;
     }
-    virtual s32 GetPacketId(packets::out::PlayerLookPacket) { return 0x0E; }
-    virtual s32 GetPacketId(packets::out::PlayerPacket) { return 0x0F; }
-    virtual s32 GetPacketId(packets::out::VehicleMovePacket) { return 0x10; }
-    virtual s32 GetPacketId(packets::out::SteerBoatPacket) { return 0x11; }
-    virtual s32 GetPacketId(packets::out::PlayerAbilitiesPacket) {
+    virtual int32_t GetPacketId(packets::out::PlayerLookPacket) { return 0x0E; }
+    virtual int32_t GetPacketId(packets::out::PlayerPacket) { return 0x0F; }
+    virtual int32_t GetPacketId(packets::out::VehicleMovePacket) { return 0x10; }
+    virtual int32_t GetPacketId(packets::out::SteerBoatPacket) { return 0x11; }
+    virtual int32_t GetPacketId(packets::out::PlayerAbilitiesPacket) {
         return 0x12;
     }
-    virtual s32 GetPacketId(packets::out::PlayerDiggingPacket) { return 0x13; }
-    virtual s32 GetPacketId(packets::out::EntityActionPacket) { return 0x14; }
-    virtual s32 GetPacketId(packets::out::SteerVehiclePacket) { return 0x15; }
-    virtual s32 GetPacketId(packets::out::ResourcePackStatusPacket) {
+    virtual int32_t GetPacketId(packets::out::PlayerDiggingPacket) { return 0x13; }
+    virtual int32_t GetPacketId(packets::out::EntityActionPacket) { return 0x14; }
+    virtual int32_t GetPacketId(packets::out::SteerVehiclePacket) { return 0x15; }
+    virtual int32_t GetPacketId(packets::out::ResourcePackStatusPacket) {
         return 0x16;
     }
-    virtual s32 GetPacketId(packets::out::HeldItemChangePacket) { return 0x17; }
-    virtual s32 GetPacketId(packets::out::CreativeInventoryActionPacket) {
+    virtual int32_t GetPacketId(packets::out::HeldItemChangePacket) { return 0x17; }
+    virtual int32_t GetPacketId(packets::out::CreativeInventoryActionPacket) {
         return 0x18;
     }
-    virtual s32 GetPacketId(packets::out::UpdateSignPacket) { return 0x19; }
-    virtual s32 GetPacketId(packets::out::AnimationPacket) { return 0x1A; }
-    virtual s32 GetPacketId(packets::out::SpectatePacket) { return 0x1B; }
-    virtual s32 GetPacketId(packets::out::PlayerBlockPlacementPacket) {
+    virtual int32_t GetPacketId(packets::out::UpdateSignPacket) { return 0x19; }
+    virtual int32_t GetPacketId(packets::out::AnimationPacket) { return 0x1A; }
+    virtual int32_t GetPacketId(packets::out::SpectatePacket) { return 0x1B; }
+    virtual int32_t GetPacketId(packets::out::PlayerBlockPlacementPacket) {
         return 0x1C;
     }
-    virtual s32 GetPacketId(packets::out::UseItemPacket) { return 0x1D; }
+    virtual int32_t GetPacketId(packets::out::UseItemPacket) { return 0x1D; }
 
-    virtual s32 GetPacketId(packets::out::PrepareCraftingGridPacket) {
+    virtual int32_t GetPacketId(packets::out::PrepareCraftingGridPacket) {
         throw UnsupportedPacketException(
             "PrepareCraftingGridPacket requires protocol 1.12.0");
     }
-    virtual s32 GetPacketId(packets::out::CraftingBookDataPacket) {
+    virtual int32_t GetPacketId(packets::out::CraftingBookDataPacket) {
         throw UnsupportedPacketException(
             "CraftingBookDataPacket requires protocol 1.12.0");
     }
-    virtual s32 GetPacketId(packets::out::AdvancementTabPacket) {
+    virtual int32_t GetPacketId(packets::out::AdvancementTabPacket) {
         throw UnsupportedPacketException(
             "AdvancementTabPacket requires protocol 1.12.0");
     }
 
-    virtual s32 GetPacketId(packets::out::CraftRecipeRequestPacket) {
+    virtual int32_t GetPacketId(packets::out::CraftRecipeRequestPacket) {
         throw UnsupportedPacketException(
             "CraftRecipeRequestPacket requires protocol 1.12.1");
     }

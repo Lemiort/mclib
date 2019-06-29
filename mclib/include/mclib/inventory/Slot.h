@@ -15,19 +15,20 @@ namespace inventory {
 class Slot {
 private:
     nbt::NBT m_NBT;
-    s32 m_ItemId;
-    s16 m_ItemDamage;
+    int32_t m_ItemId;
+    int16_t m_ItemDamage;
     uint8_t m_ItemCount;
 
 public:
     Slot() noexcept : m_ItemId(-1), m_ItemCount(0), m_ItemDamage(0) {}
-    Slot(s32 itemId, uint8_t itemCount, s16 itemDamage) noexcept
+    Slot(int32_t itemId, uint8_t itemCount, int16_t itemDamage) noexcept
         : m_ItemId(itemId),
           m_ItemCount(itemCount),
           m_ItemDamage(itemDamage),
           m_NBT() {}
 
-    Slot(s32 itemId, uint8_t itemCount, s16 itemDamage, nbt::NBT nbt) noexcept
+    Slot(int32_t itemId, uint8_t itemCount, int16_t itemDamage,
+         nbt::NBT nbt) noexcept
         : m_ItemId(itemId),
           m_ItemCount(itemCount),
           m_ItemDamage(itemDamage),
@@ -38,9 +39,9 @@ public:
     Slot(Slot&& rhs) = default;
     Slot& operator=(Slot&& rhs) = default;
 
-    s32 GetItemId() const noexcept { return m_ItemId; }
+    int32_t GetItemId() const noexcept { return m_ItemId; }
     uint8_t GetItemCount() const noexcept { return m_ItemCount; }
-    s16 GetItemDamage() const noexcept { return m_ItemDamage; }
+    int16_t GetItemDamage() const noexcept { return m_ItemDamage; }
     const nbt::NBT& GetNBT() const noexcept { return m_NBT; }
 
     static MCLIB_API Slot FromNBT(nbt::TagCompound& compound);

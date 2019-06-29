@@ -5,20 +5,20 @@
 namespace mc {
 namespace inventory {
 
-const s32 Inventory::HOTBAR_SLOT_START = 36;
-const s32 Inventory::PLAYER_INVENTORY_ID = 0;
+const int32_t Inventory::HOTBAR_SLOT_START = 36;
+const int32_t Inventory::PLAYER_INVENTORY_ID = 0;
 
 Inventory::Inventory(int windowId) : m_WindowId(windowId), m_CurrentAction(1) {}
 
-Slot Inventory::GetItem(s32 index) const {
+Slot Inventory::GetItem(int32_t index) const {
     auto iter = m_Items.find(index);
     if (iter == m_Items.end()) return Slot();
     return iter->second;
 }
 
-s32 Inventory::FindItemById(s32 itemId) const {
+int32_t Inventory::FindItemById(int32_t itemId) const {
     auto iter = std::find_if(m_Items.begin(), m_Items.end(),
-                             [&](const std::pair<s32, Slot>& slot) {
+                             [&](const std::pair<int32_t, Slot>& slot) {
                                  return slot.second.GetItemId() == itemId;
                              });
 
@@ -26,9 +26,9 @@ s32 Inventory::FindItemById(s32 itemId) const {
     return iter->first;
 }
 
-bool Inventory::Contains(s32 itemId) const {
+bool Inventory::Contains(int32_t itemId) const {
     auto iter = std::find_if(m_Items.begin(), m_Items.end(),
-                             [&](const std::pair<s32, Slot>& slot) {
+                             [&](const std::pair<int32_t, Slot>& slot) {
                                  const Slot& compare = slot.second;
 
                                  return compare.GetItemId() == itemId;
@@ -39,7 +39,7 @@ bool Inventory::Contains(s32 itemId) const {
 
 bool Inventory::Contains(Slot item) const {
     auto iter = std::find_if(
-        m_Items.begin(), m_Items.end(), [&](const std::pair<s32, Slot>& slot) {
+        m_Items.begin(), m_Items.end(), [&](const std::pair<int32_t, Slot>& slot) {
             const Slot& compare = slot.second;
 
             return compare.GetItemId() == item.GetItemId() &&
@@ -49,9 +49,9 @@ bool Inventory::Contains(Slot item) const {
     return iter != m_Items.end();
 }
 
-bool Inventory::ContainsAtLeast(s32 itemId, s32 amount) const {
+bool Inventory::ContainsAtLeast(int32_t itemId, int32_t amount) const {
     auto iter = std::find_if(m_Items.begin(), m_Items.end(),
-                             [&](const std::pair<s32, Slot>& slot) {
+                             [&](const std::pair<int32_t, Slot>& slot) {
                                  const Slot& compare = slot.second;
 
                                  return compare.GetItemId() == itemId &&
@@ -61,9 +61,9 @@ bool Inventory::ContainsAtLeast(s32 itemId, s32 amount) const {
     return iter != m_Items.end();
 }
 
-bool Inventory::ContainsAtLeast(Slot item, s32 amount) const {
+bool Inventory::ContainsAtLeast(Slot item, int32_t amount) const {
     auto iter = std::find_if(
-        m_Items.begin(), m_Items.end(), [&](const std::pair<s32, Slot>& slot) {
+        m_Items.begin(), m_Items.end(), [&](const std::pair<int32_t, Slot>& slot) {
             const Slot& compare = slot.second;
 
             return compare.GetItemId() == item.GetItemId() &&
@@ -74,7 +74,7 @@ bool Inventory::ContainsAtLeast(Slot item, s32 amount) const {
     return iter != m_Items.end();
 }
 
-void Inventory::HandleTransaction(core::Connection& conn, u16 action,
+void Inventory::HandleTransaction(core::Connection& conn, uint16_t action,
                                   bool accepted) {
     if (!accepted) {
         // Confirm with server that the transaction failed.
@@ -84,7 +84,7 @@ void Inventory::HandleTransaction(core::Connection& conn, u16 action,
     }
 }
 
-bool Inventory::PickUp(core::Connection& conn, s32 index) {
+bool Inventory::PickUp(core::Connection& conn, int32_t index) {
     using namespace protocol::packets::out;
 
     if (m_Cursor.GetItemId() != -1) return false;
@@ -92,7 +92,7 @@ bool Inventory::PickUp(core::Connection& conn, s32 index) {
     auto iter = m_Items.find(index);
     if (iter == m_Items.end()) return false;
 
-    s32 windowId = m_WindowId;
+    int32_t windowId = m_WindowId;
     if (windowId == 0 && index < HOTBAR_SLOT_START) windowId = -2;
 
     ClickWindowPacket pickupPacket(windowId, index, 0, m_CurrentAction++, 0,
@@ -102,12 +102,12 @@ bool Inventory::PickUp(core::Connection& conn, s32 index) {
     return true;
 }
 
-bool Inventory::Place(core::Connection& conn, s32 index) {
+bool Inventory::Place(core::Connection& conn, int32_t index) {
     using namespace protocol::packets::out;
 
     if (m_Cursor.GetItemId() == -1) return false;
 
-    s32 windowId = m_WindowId;
+    int32_t windowId = m_WindowId;
     if (windowId == 0 && index < HOTBAR_SLOT_START) windowId = -2;
 
     ClickWindowPacket dropPacket(windowId, index, 0, m_CurrentAction++, 0,
@@ -132,7 +132,7 @@ InventoryManager::~InventoryManager() {
     GetDispatcher()->UnregisterHandler(this);
 }
 
-Inventory* InventoryManager::GetInventory(s32 windowId) {
+Inventory* InventoryManager::GetInventory(int32_t windowId) {
     auto iter = m_Inventories.find(windowId);
     if (iter == m_Inventories.end()) return nullptr;
     return iter->second.get();
@@ -142,7 +142,7 @@ Inventory* InventoryManager::GetPlayerInventory() {
     return GetInventory(Inventory::PLAYER_INVENTORY_ID);
 }
 
-void InventoryManager::SetSlot(s32 windowId, s32 slotIndex, const Slot& slot) {
+void InventoryManager::SetSlot(int32_t windowId, int32_t slotIndex, const Slot& slot) {
     auto iter = m_Inventories.find(windowId);
 
     Inventory* inventory = nullptr;
@@ -159,7 +159,7 @@ void InventoryManager::SetSlot(s32 windowId, s32 slotIndex, const Slot& slot) {
 
 void InventoryManager::HandlePacket(
     protocol::packets::in::SetSlotPacket* packet) {
-    s8 windowId = packet->GetWindowId();
+    int8_t windowId = packet->GetWindowId();
 
     if (windowId < 0 && packet->GetSlotIndex() == -1) {
         Inventory* inventory = nullptr;
@@ -190,7 +190,7 @@ void InventoryManager::HandlePacket(
 
 void InventoryManager::HandlePacket(
     protocol::packets::in::OpenWindowPacket* packet) {
-    m_Inventories.erase((s32)packet->GetWindowId());
+    m_Inventories.erase((int32_t)packet->GetWindowId());
     auto newInventory = std::make_unique<Inventory>(packet->GetWindowId());
     m_Inventories.insert(
         std::make_pair(packet->GetWindowId(), std::move(newInventory)));
@@ -199,7 +199,7 @@ void InventoryManager::HandlePacket(
 void InventoryManager::HandlePacket(
     protocol::packets::in::ConfirmTransactionPacket* packet) {
     uint8_t windowId = packet->GetWindowId();
-    s16 action = packet->GetAction();
+    int16_t action = packet->GetAction();
     bool accepted = packet->IsAccepted();
 
     auto iter = m_Inventories.find(windowId);

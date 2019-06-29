@@ -15,7 +15,7 @@ private:
     mc::util::PlayerController* m_PlayerController;
     mc::world::World* m_World;
     mc::Vector3i m_Target;
-    s64 m_LastUpdate;
+    int64_t m_LastUpdate;
     mc::inventory::Slot m_HeldItem;
 
 public:

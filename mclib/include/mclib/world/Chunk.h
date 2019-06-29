@@ -17,9 +17,9 @@ class DataBuffer;
 namespace world {
 
 struct ChunkColumnMetadata {
-    s32 x;
-    s32 z;
-    u16 sectionmask;
+    int32_t x;
+    int32_t z;
+    uint16_t sectionmask;
     bool continuous;
     bool skylight;
 };
@@ -29,10 +29,11 @@ struct ChunkColumnMetadata {
  */
 class Chunk {
 private:
-    std::vector<u32> m_Palette;
-    std::vector<u64> m_Data;
     uint8_t m_BitsPerBlock;
-
+    std::vector<uint32_t> m_Palette;
+    std::vector<uint64_t> m_Data;
+    // std::vector<uint8_t> m_BlockLight;  // TODO
+    // std::optional<std::vector<uint8_t>> m_SkyLight;  // TODO
 public:
     MCLIB_API Chunk();
 
@@ -52,10 +53,10 @@ public:
      * chunkIndex is the index (0-16) of this chunk in the ChunkColumn
      */
     void MCLIB_API Load(DataBuffer& in, ChunkColumnMetadata* meta,
-                        s32 chunkIndex);
+                        int32_t chunkIndex);
 };
 
-typedef std::shared_ptr<Chunk> ChunkPtr;
+using ChunkPtr = std::shared_ptr<Chunk>;
 
 /**
  * Stores a 16x256x16 area. Uses chunks (16x16x16) to store the data vertically.
@@ -65,12 +66,12 @@ class ChunkColumn {
 public:
     enum { ChunksPerColumn = 16 };
 
-    typedef std::array<ChunkPtr, ChunksPerColumn>::iterator iterator;
-    typedef std::array<ChunkPtr, ChunksPerColumn>::reference reference;
-    typedef std::array<ChunkPtr, ChunksPerColumn>::const_iterator
-        const_iterator;
-    typedef std::array<ChunkPtr, ChunksPerColumn>::const_reference
-        const_reference;
+    using iterator = std::array<ChunkPtr, ChunksPerColumn>::iterator;
+    using reference = std::array<ChunkPtr, ChunksPerColumn>::reference;
+    using const_iterator =
+        std::array<ChunkPtr, ChunksPerColumn>::const_iterator;
+    using const_reference =
+        std::array<ChunkPtr, ChunksPerColumn>::const_reference;
 
 private:
     std::array<ChunkPtr, ChunksPerColumn> m_Chunks;

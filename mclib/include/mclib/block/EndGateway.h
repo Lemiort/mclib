@@ -10,7 +10,7 @@ namespace block {
 
 class EndGateway : public BlockEntity {
 private:
-    s64 m_Age;
+    int64_t m_Age;
     bool m_ExactTeleport;
     Vector3i m_Exit;
 
@@ -19,7 +19,7 @@ public:
         : BlockEntity(type, position) {}
     MCLIB_API bool ImportNBT(nbt::NBT* nbt);
 
-    inline s64 GetAge() const noexcept { return m_Age; }
+    inline int64_t GetAge() const noexcept { return m_Age; }
     inline bool IsExactTeleport() const noexcept { return m_ExactTeleport; }
     inline Vector3i GetExit() const noexcept { return m_Exit; }
 };

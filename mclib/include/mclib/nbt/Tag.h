@@ -103,21 +103,21 @@ public:
 
 class TagIntArray : public Tag {
 private:
-    std::vector<s32> m_Value;
+    std::vector<int32_t> m_Value;
 
     void MCLIB_API Write(DataBuffer& buffer) const;
     void MCLIB_API Read(DataBuffer& buffer);
 
 public:
     MCLIB_API TagIntArray() : Tag(L"") {}
-    MCLIB_API TagIntArray(std::wstring name, std::vector<s32> val)
+    MCLIB_API TagIntArray(std::wstring name, std::vector<int32_t> val)
         : Tag(name), m_Value(val) {}
-    MCLIB_API TagIntArray(std::string name, std::vector<s32> val)
+    MCLIB_API TagIntArray(std::string name, std::vector<int32_t> val)
         : Tag(name), m_Value(val) {}
 
     TagType MCLIB_API GetType() const noexcept;
 
-    std::vector<s32> MCLIB_API GetValue() const noexcept { return m_Value; }
+    std::vector<int32_t> MCLIB_API GetValue() const noexcept { return m_Value; }
     friend MCLIB_API DataBuffer& operator<<(DataBuffer& out, const Tag& tag);
 };
 
@@ -236,57 +236,58 @@ public:
 
 class TagShort : public Tag {
 private:
-    s16 m_Value;
+    int16_t m_Value;
 
     void MCLIB_API Write(DataBuffer& buffer) const;
     void MCLIB_API Read(DataBuffer& buffer);
 
 public:
     MCLIB_API TagShort() : Tag(L""), m_Value(0) {}
-    MCLIB_API TagShort(std::wstring name, s16 value)
+    MCLIB_API TagShort(std::wstring name, int16_t value)
         : Tag(name), m_Value(value) {}
-    MCLIB_API TagShort(std::string name, s16 value)
+    MCLIB_API TagShort(std::string name, int16_t value)
         : Tag(name), m_Value(value) {}
     TagType MCLIB_API GetType() const noexcept;
 
-    s16 MCLIB_API GetValue() const noexcept { return m_Value; }
+    int16_t MCLIB_API GetValue() const noexcept { return m_Value; }
     friend MCLIB_API DataBuffer& operator<<(DataBuffer& out, const Tag& tag);
 };
 
 class TagInt : public Tag {
 private:
-    s32 m_Value;
+    int32_t m_Value;
 
     void MCLIB_API Write(DataBuffer& buffer) const;
     void MCLIB_API Read(DataBuffer& buffer);
 
 public:
     MCLIB_API TagInt() : Tag(L""), m_Value(0) {}
-    MCLIB_API TagInt(std::wstring name, s32 value)
+    MCLIB_API TagInt(std::wstring name, int32_t value)
         : Tag(name), m_Value(value) {}
-    MCLIB_API TagInt(std::string name, s32 value) : Tag(name), m_Value(value) {}
+    MCLIB_API TagInt(std::string name, int32_t value)
+        : Tag(name), m_Value(value) {}
     TagType MCLIB_API GetType() const noexcept;
 
-    s32 MCLIB_API GetValue() const noexcept { return m_Value; }
+    int32_t MCLIB_API GetValue() const noexcept { return m_Value; }
     friend MCLIB_API DataBuffer& operator<<(DataBuffer& out, const Tag& tag);
 };
 
 class TagLong : public Tag {
 private:
-    s64 m_Value;
+    int64_t m_Value;
 
     void MCLIB_API Write(DataBuffer& buffer) const;
     void MCLIB_API Read(DataBuffer& buffer);
 
 public:
     MCLIB_API TagLong() : Tag(L""), m_Value(0) {}
-    MCLIB_API TagLong(std::wstring name, s64 value)
+    MCLIB_API TagLong(std::wstring name, int64_t value)
         : Tag(name), m_Value(value) {}
-    MCLIB_API TagLong(std::string name, s64 value)
+    MCLIB_API TagLong(std::string name, int64_t value)
         : Tag(name), m_Value(value) {}
     TagType MCLIB_API GetType() const noexcept;
 
-    s64 MCLIB_API GetValue() const noexcept { return m_Value; }
+    int64_t MCLIB_API GetValue() const noexcept { return m_Value; }
     friend MCLIB_API DataBuffer& operator<<(DataBuffer& out, const Tag& tag);
 };
 

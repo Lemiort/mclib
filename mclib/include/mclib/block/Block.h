@@ -15,15 +15,16 @@ namespace block {
 class Block {
 protected:
     std::string m_Name;
-    u32 m_Data;
+    uint32_t m_Data;
     bool m_Solid;
     AABB m_BoundingBox;
 
 public:
-    Block(const std::string& name, u32 data, bool solid = true)
+    Block(const std::string& name, uint32_t data, bool solid = true)
         : m_Name(name), m_Data(data), m_Solid(solid) {}
 
-    Block(const std::string& name, u32 type, bool solid, const AABB& bounds)
+    Block(const std::string& name, uint32_t type, bool solid,
+          const AABB& bounds)
         : m_Name(name), m_Data(type), m_Solid(solid), m_BoundingBox(bounds) {}
     virtual ~Block() {}
 
@@ -38,7 +39,7 @@ public:
 
     virtual std::string GetName() const { return m_Name; }
 
-    u32 GetType() const noexcept { return m_Data; }
+    uint32_t GetType() const noexcept { return m_Data; }
 
     bool IsSolid() const noexcept { return m_Solid; }
 
@@ -81,7 +82,7 @@ typedef Block* BlockPtr;
 
 class BlockRegistry {
 private:
-    std::unordered_map<u32, BlockPtr> m_Blocks;
+    std::unordered_map<uint32_t, BlockPtr> m_Blocks;
     std::unordered_map<std::string, BlockPtr> m_BlockNames;
 
     BlockRegistry() {}
@@ -91,7 +92,7 @@ public:
 
     MCLIB_API ~BlockRegistry();
 
-    BlockPtr GetBlock(u32 data) const {
+    BlockPtr GetBlock(uint32_t data) const {
         auto iter = m_Blocks.find(data);
 
         if (iter == m_Blocks.end()) {
@@ -103,8 +104,8 @@ public:
         return iter->second;
     }
 
-    BlockPtr GetBlock(u16 type, u16 meta) const {
-        u16 data = (type << 4) | (meta & 15);
+    BlockPtr GetBlock(uint16_t type, uint16_t meta) const {
+        uint16_t data = (type << 4) | (meta & 15);
         return GetBlock(data);
     }
 

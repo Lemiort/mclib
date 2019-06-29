@@ -12,7 +12,7 @@ namespace network {
 /* IPv4 address */
 class IPAddress {
 private:
-    u32 m_Address;
+    uint32_t m_Address;
     bool m_Valid;
 
 public:

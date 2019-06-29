@@ -12,14 +12,14 @@ namespace block {
 
 class Hopper : public BlockEntity, public InventoryBlock, public Nameable {
 private:
-    s32 m_TransferCooldown;
+    int32_t m_TransferCooldown;
 
 public:
     MCLIB_API Hopper(BlockEntityType type, Vector3i position)
         : BlockEntity(type, position) {}
     MCLIB_API bool ImportNBT(nbt::NBT* nbt);
 
-    s32 GetTransferCooldown() const noexcept { return m_TransferCooldown; }
+    int32_t GetTransferCooldown() const noexcept { return m_TransferCooldown; }
 };
 
 }  // namespace block

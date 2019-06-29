@@ -11,124 +11,124 @@ public:
         : Protocol(version, inbound) {}
 
     // Handshake
-    virtual s32 GetPacketId(packets::out::HandshakePacket) override {
+    virtual int32_t GetPacketId(packets::out::HandshakePacket) override {
         return 0x00;
     }
 
     // Login
-    virtual s32 GetPacketId(packets::out::LoginStartPacket) override {
+    virtual int32_t GetPacketId(packets::out::LoginStartPacket) override {
         return 0x00;
     }
-    virtual s32 GetPacketId(packets::out::EncryptionResponsePacket) override {
+    virtual int32_t GetPacketId(packets::out::EncryptionResponsePacket) override {
         return 0x01;
     }
 
     // Status
-    virtual s32 GetPacketId(packets::out::status::RequestPacket) override {
+    virtual int32_t GetPacketId(packets::out::status::RequestPacket) override {
         return 0x00;
     }
-    virtual s32 GetPacketId(packets::out::status::PingPacket) override {
+    virtual int32_t GetPacketId(packets::out::status::PingPacket) override {
         return 0x01;
     }
 
     // Play
-    virtual s32 GetPacketId(packets::out::TeleportConfirmPacket) override {
+    virtual int32_t GetPacketId(packets::out::TeleportConfirmPacket) override {
         return 0x00;
     }
-    virtual s32 GetPacketId(packets::out::PrepareCraftingGridPacket) override {
+    virtual int32_t GetPacketId(packets::out::PrepareCraftingGridPacket) override {
         return 0x01;
     }
-    virtual s32 GetPacketId(packets::out::TabCompletePacket) override {
+    virtual int32_t GetPacketId(packets::out::TabCompletePacket) override {
         return 0x02;
     }
-    virtual s32 GetPacketId(packets::out::ChatPacket) override { return 0x03; }
-    virtual s32 GetPacketId(packets::out::ClientStatusPacket) override {
+    virtual int32_t GetPacketId(packets::out::ChatPacket) override { return 0x03; }
+    virtual int32_t GetPacketId(packets::out::ClientStatusPacket) override {
         return 0x04;
     }
-    virtual s32 GetPacketId(packets::out::ClientSettingsPacket) override {
+    virtual int32_t GetPacketId(packets::out::ClientSettingsPacket) override {
         return 0x05;
     }
-    virtual s32 GetPacketId(packets::out::ConfirmTransactionPacket) override {
+    virtual int32_t GetPacketId(packets::out::ConfirmTransactionPacket) override {
         return 0x06;
     }
-    virtual s32 GetPacketId(packets::out::EnchantItemPacket) override {
+    virtual int32_t GetPacketId(packets::out::EnchantItemPacket) override {
         return 0x07;
     }
-    virtual s32 GetPacketId(packets::out::ClickWindowPacket) override {
+    virtual int32_t GetPacketId(packets::out::ClickWindowPacket) override {
         return 0x08;
     }
-    virtual s32 GetPacketId(packets::out::CloseWindowPacket) override {
+    virtual int32_t GetPacketId(packets::out::CloseWindowPacket) override {
         return 0x09;
     }
-    virtual s32 GetPacketId(packets::out::PluginMessagePacket) override {
+    virtual int32_t GetPacketId(packets::out::PluginMessagePacket) override {
         return 0x0A;
     }
-    virtual s32 GetPacketId(packets::out::UseEntityPacket) override {
+    virtual int32_t GetPacketId(packets::out::UseEntityPacket) override {
         return 0x0B;
     }
-    virtual s32 GetPacketId(packets::out::KeepAlivePacket) override {
+    virtual int32_t GetPacketId(packets::out::KeepAlivePacket) override {
         return 0x0C;
     }
-    virtual s32 GetPacketId(packets::out::PlayerPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerPacket) override {
         return 0x0D;
     }
-    virtual s32 GetPacketId(packets::out::PlayerPositionPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerPositionPacket) override {
         return 0x0E;
     }
-    virtual s32 GetPacketId(
+    virtual int32_t GetPacketId(
         packets::out::PlayerPositionAndLookPacket) override {
         return 0x0F;
     }
-    virtual s32 GetPacketId(packets::out::PlayerLookPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerLookPacket) override {
         return 0x10;
     }
-    virtual s32 GetPacketId(packets::out::VehicleMovePacket) override {
+    virtual int32_t GetPacketId(packets::out::VehicleMovePacket) override {
         return 0x11;
     }
-    virtual s32 GetPacketId(packets::out::SteerBoatPacket) override {
+    virtual int32_t GetPacketId(packets::out::SteerBoatPacket) override {
         return 0x12;
     }
-    virtual s32 GetPacketId(packets::out::PlayerAbilitiesPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerAbilitiesPacket) override {
         return 0x13;
     }
-    virtual s32 GetPacketId(packets::out::PlayerDiggingPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerDiggingPacket) override {
         return 0x14;
     }
-    virtual s32 GetPacketId(packets::out::EntityActionPacket) override {
+    virtual int32_t GetPacketId(packets::out::EntityActionPacket) override {
         return 0x15;
     }
-    virtual s32 GetPacketId(packets::out::SteerVehiclePacket) override {
+    virtual int32_t GetPacketId(packets::out::SteerVehiclePacket) override {
         return 0x16;
     }
-    virtual s32 GetPacketId(packets::out::CraftingBookDataPacket) override {
+    virtual int32_t GetPacketId(packets::out::CraftingBookDataPacket) override {
         return 0x17;
     }
-    virtual s32 GetPacketId(packets::out::ResourcePackStatusPacket) override {
+    virtual int32_t GetPacketId(packets::out::ResourcePackStatusPacket) override {
         return 0x18;
     }
-    virtual s32 GetPacketId(packets::out::AdvancementTabPacket) override {
+    virtual int32_t GetPacketId(packets::out::AdvancementTabPacket) override {
         return 0x19;
     }
-    virtual s32 GetPacketId(packets::out::HeldItemChangePacket) override {
+    virtual int32_t GetPacketId(packets::out::HeldItemChangePacket) override {
         return 0x1A;
     }
-    virtual s32 GetPacketId(
+    virtual int32_t GetPacketId(
         packets::out::CreativeInventoryActionPacket) override {
         return 0x1B;
     }
-    virtual s32 GetPacketId(packets::out::UpdateSignPacket) override {
+    virtual int32_t GetPacketId(packets::out::UpdateSignPacket) override {
         return 0x1C;
     }
-    virtual s32 GetPacketId(packets::out::AnimationPacket) override {
+    virtual int32_t GetPacketId(packets::out::AnimationPacket) override {
         return 0x1D;
     }
-    virtual s32 GetPacketId(packets::out::SpectatePacket) override {
+    virtual int32_t GetPacketId(packets::out::SpectatePacket) override {
         return 0x1E;
     }
-    virtual s32 GetPacketId(packets::out::PlayerBlockPlacementPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerBlockPlacementPacket) override {
         return 0x1F;
     }
-    virtual s32 GetPacketId(packets::out::UseItemPacket) override {
+    virtual int32_t GetPacketId(packets::out::UseItemPacket) override {
         return 0x20;
     }
 };
@@ -139,128 +139,128 @@ public:
         : Protocol(version, inbound) {}
 
     // Handshake
-    virtual s32 GetPacketId(packets::out::HandshakePacket) override {
+    virtual int32_t GetPacketId(packets::out::HandshakePacket) override {
         return 0x00;
     }
 
     // Login
-    virtual s32 GetPacketId(packets::out::LoginStartPacket) override {
+    virtual int32_t GetPacketId(packets::out::LoginStartPacket) override {
         return 0x00;
     }
-    virtual s32 GetPacketId(packets::out::EncryptionResponsePacket) override {
+    virtual int32_t GetPacketId(packets::out::EncryptionResponsePacket) override {
         return 0x01;
     }
 
     // Status
-    virtual s32 GetPacketId(packets::out::status::RequestPacket) override {
+    virtual int32_t GetPacketId(packets::out::status::RequestPacket) override {
         return 0x00;
     }
-    virtual s32 GetPacketId(packets::out::status::PingPacket) override {
+    virtual int32_t GetPacketId(packets::out::status::PingPacket) override {
         return 0x01;
     }
 
     // Play
-    virtual s32 GetPacketId(packets::out::TeleportConfirmPacket) override {
+    virtual int32_t GetPacketId(packets::out::TeleportConfirmPacket) override {
         return 0x00;
     }
-    virtual s32 GetPacketId(packets::out::TabCompletePacket) override {
+    virtual int32_t GetPacketId(packets::out::TabCompletePacket) override {
         return 0x01;
     }
-    virtual s32 GetPacketId(packets::out::ChatPacket) override { return 0x02; }
-    virtual s32 GetPacketId(packets::out::ClientStatusPacket) override {
+    virtual int32_t GetPacketId(packets::out::ChatPacket) override { return 0x02; }
+    virtual int32_t GetPacketId(packets::out::ClientStatusPacket) override {
         return 0x03;
     }
-    virtual s32 GetPacketId(packets::out::ClientSettingsPacket) override {
+    virtual int32_t GetPacketId(packets::out::ClientSettingsPacket) override {
         return 0x04;
     }
-    virtual s32 GetPacketId(packets::out::ConfirmTransactionPacket) override {
+    virtual int32_t GetPacketId(packets::out::ConfirmTransactionPacket) override {
         return 0x05;
     }
-    virtual s32 GetPacketId(packets::out::EnchantItemPacket) override {
+    virtual int32_t GetPacketId(packets::out::EnchantItemPacket) override {
         return 0x06;
     }
-    virtual s32 GetPacketId(packets::out::ClickWindowPacket) override {
+    virtual int32_t GetPacketId(packets::out::ClickWindowPacket) override {
         return 0x07;
     }
-    virtual s32 GetPacketId(packets::out::CloseWindowPacket) override {
+    virtual int32_t GetPacketId(packets::out::CloseWindowPacket) override {
         return 0x08;
     }
-    virtual s32 GetPacketId(packets::out::PluginMessagePacket) override {
+    virtual int32_t GetPacketId(packets::out::PluginMessagePacket) override {
         return 0x09;
     }
-    virtual s32 GetPacketId(packets::out::UseEntityPacket) override {
+    virtual int32_t GetPacketId(packets::out::UseEntityPacket) override {
         return 0x0A;
     }
-    virtual s32 GetPacketId(packets::out::KeepAlivePacket) override {
+    virtual int32_t GetPacketId(packets::out::KeepAlivePacket) override {
         return 0x0B;
     }
-    virtual s32 GetPacketId(packets::out::PlayerPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerPacket) override {
         return 0x0C;
     }
-    virtual s32 GetPacketId(packets::out::PlayerPositionPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerPositionPacket) override {
         return 0x0D;
     }
-    virtual s32 GetPacketId(
+    virtual int32_t GetPacketId(
         packets::out::PlayerPositionAndLookPacket) override {
         return 0x0E;
     }
-    virtual s32 GetPacketId(packets::out::PlayerLookPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerLookPacket) override {
         return 0x0F;
     }
-    virtual s32 GetPacketId(packets::out::VehicleMovePacket) override {
+    virtual int32_t GetPacketId(packets::out::VehicleMovePacket) override {
         return 0x10;
     }
-    virtual s32 GetPacketId(packets::out::SteerBoatPacket) override {
+    virtual int32_t GetPacketId(packets::out::SteerBoatPacket) override {
         return 0x11;
     }
-    virtual s32 GetPacketId(packets::out::CraftRecipeRequestPacket) override {
+    virtual int32_t GetPacketId(packets::out::CraftRecipeRequestPacket) override {
         return 0x12;
     }
-    virtual s32 GetPacketId(packets::out::PlayerAbilitiesPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerAbilitiesPacket) override {
         return 0x13;
     }
-    virtual s32 GetPacketId(packets::out::PlayerDiggingPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerDiggingPacket) override {
         return 0x14;
     }
-    virtual s32 GetPacketId(packets::out::EntityActionPacket) override {
+    virtual int32_t GetPacketId(packets::out::EntityActionPacket) override {
         return 0x15;
     }
-    virtual s32 GetPacketId(packets::out::SteerVehiclePacket) override {
+    virtual int32_t GetPacketId(packets::out::SteerVehiclePacket) override {
         return 0x16;
     }
-    virtual s32 GetPacketId(packets::out::CraftingBookDataPacket) override {
+    virtual int32_t GetPacketId(packets::out::CraftingBookDataPacket) override {
         return 0x17;
     }
-    virtual s32 GetPacketId(packets::out::ResourcePackStatusPacket) override {
+    virtual int32_t GetPacketId(packets::out::ResourcePackStatusPacket) override {
         return 0x18;
     }
-    virtual s32 GetPacketId(packets::out::AdvancementTabPacket) override {
+    virtual int32_t GetPacketId(packets::out::AdvancementTabPacket) override {
         return 0x19;
     }
-    virtual s32 GetPacketId(packets::out::HeldItemChangePacket) override {
+    virtual int32_t GetPacketId(packets::out::HeldItemChangePacket) override {
         return 0x1A;
     }
-    virtual s32 GetPacketId(
+    virtual int32_t GetPacketId(
         packets::out::CreativeInventoryActionPacket) override {
         return 0x1B;
     }
-    virtual s32 GetPacketId(packets::out::UpdateSignPacket) override {
+    virtual int32_t GetPacketId(packets::out::UpdateSignPacket) override {
         return 0x1C;
     }
-    virtual s32 GetPacketId(packets::out::AnimationPacket) override {
+    virtual int32_t GetPacketId(packets::out::AnimationPacket) override {
         return 0x1D;
     }
-    virtual s32 GetPacketId(packets::out::SpectatePacket) override {
+    virtual int32_t GetPacketId(packets::out::SpectatePacket) override {
         return 0x1E;
     }
-    virtual s32 GetPacketId(packets::out::PlayerBlockPlacementPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerBlockPlacementPacket) override {
         return 0x1F;
     }
-    virtual s32 GetPacketId(packets::out::UseItemPacket) override {
+    virtual int32_t GetPacketId(packets::out::UseItemPacket) override {
         return 0x20;
     }
 
-    virtual s32 GetPacketId(packets::out::PrepareCraftingGridPacket) override {
+    virtual int32_t GetPacketId(packets::out::PrepareCraftingGridPacket) override {
         throw UnsupportedPacketException(
             "PrepareCraftingGridPacket does not work with protocol 1.12.1");
     }
@@ -272,138 +272,138 @@ public:
         : Protocol(version, inbound) {}
 
     // Handshake
-    virtual s32 GetPacketId(packets::out::HandshakePacket) override {
+    virtual int32_t GetPacketId(packets::out::HandshakePacket) override {
         return 0x00;
     }
 
     // Login
-    virtual s32 GetPacketId(packets::out::LoginStartPacket) override {
+    virtual int32_t GetPacketId(packets::out::LoginStartPacket) override {
         return 0x00;
     }
-    virtual s32 GetPacketId(packets::out::EncryptionResponsePacket) override {
+    virtual int32_t GetPacketId(packets::out::EncryptionResponsePacket) override {
         return 0x01;
     }
 
     // Status
-    virtual s32 GetPacketId(packets::out::status::RequestPacket) override {
+    virtual int32_t GetPacketId(packets::out::status::RequestPacket) override {
         return 0x00;
     }
-    virtual s32 GetPacketId(packets::out::status::PingPacket) override {
+    virtual int32_t GetPacketId(packets::out::status::PingPacket) override {
         return 0x01;
     }
 
     // Play
-    virtual s32 GetPacketId(packets::out::TeleportConfirmPacket) override {
+    virtual int32_t GetPacketId(packets::out::TeleportConfirmPacket) override {
         return 0x00;
     }
     // QueryBlockNBT = 0x01
-    virtual s32 GetPacketId(packets::out::ChatPacket) override { return 0x02; }
-    virtual s32 GetPacketId(packets::out::ClientStatusPacket) override {
+    virtual int32_t GetPacketId(packets::out::ChatPacket) override { return 0x02; }
+    virtual int32_t GetPacketId(packets::out::ClientStatusPacket) override {
         return 0x03;
     }
-    virtual s32 GetPacketId(packets::out::ClientSettingsPacket) override {
+    virtual int32_t GetPacketId(packets::out::ClientSettingsPacket) override {
         return 0x04;
     }
-    virtual s32 GetPacketId(packets::out::TabCompletePacket) override {
+    virtual int32_t GetPacketId(packets::out::TabCompletePacket) override {
         return 0x05;
     }
-    virtual s32 GetPacketId(packets::out::ConfirmTransactionPacket) override {
+    virtual int32_t GetPacketId(packets::out::ConfirmTransactionPacket) override {
         return 0x06;
     }
-    virtual s32 GetPacketId(packets::out::EnchantItemPacket) override {
+    virtual int32_t GetPacketId(packets::out::EnchantItemPacket) override {
         return 0x07;
     }
-    virtual s32 GetPacketId(packets::out::ClickWindowPacket) override {
+    virtual int32_t GetPacketId(packets::out::ClickWindowPacket) override {
         return 0x08;
     }
-    virtual s32 GetPacketId(packets::out::CloseWindowPacket) override {
+    virtual int32_t GetPacketId(packets::out::CloseWindowPacket) override {
         return 0x09;
     }
-    virtual s32 GetPacketId(packets::out::PluginMessagePacket) override {
+    virtual int32_t GetPacketId(packets::out::PluginMessagePacket) override {
         return 0x0A;
     }
     // EditBook = 0x0B
     // QueryEntityNBT = 0x0C
-    virtual s32 GetPacketId(packets::out::UseEntityPacket) override {
+    virtual int32_t GetPacketId(packets::out::UseEntityPacket) override {
         return 0x0D;
     }
-    virtual s32 GetPacketId(packets::out::KeepAlivePacket) override {
+    virtual int32_t GetPacketId(packets::out::KeepAlivePacket) override {
         return 0x0E;
     }
-    virtual s32 GetPacketId(packets::out::PlayerPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerPacket) override {
         return 0x0F;
     }
-    virtual s32 GetPacketId(packets::out::PlayerPositionPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerPositionPacket) override {
         return 0x10;
     }
-    virtual s32 GetPacketId(
+    virtual int32_t GetPacketId(
         packets::out::PlayerPositionAndLookPacket) override {
         return 0x11;
     }
-    virtual s32 GetPacketId(packets::out::PlayerLookPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerLookPacket) override {
         return 0x12;
     }
-    virtual s32 GetPacketId(packets::out::VehicleMovePacket) override {
+    virtual int32_t GetPacketId(packets::out::VehicleMovePacket) override {
         return 0x13;
     }
-    virtual s32 GetPacketId(packets::out::SteerBoatPacket) override {
+    virtual int32_t GetPacketId(packets::out::SteerBoatPacket) override {
         return 0x14;
     }
     // PickItem = 0x15
-    virtual s32 GetPacketId(packets::out::CraftRecipeRequestPacket) override {
+    virtual int32_t GetPacketId(packets::out::CraftRecipeRequestPacket) override {
         return 0x16;
     }
-    virtual s32 GetPacketId(packets::out::PlayerAbilitiesPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerAbilitiesPacket) override {
         return 0x17;
     }
-    virtual s32 GetPacketId(packets::out::PlayerDiggingPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerDiggingPacket) override {
         return 0x18;
     }
-    virtual s32 GetPacketId(packets::out::EntityActionPacket) override {
+    virtual int32_t GetPacketId(packets::out::EntityActionPacket) override {
         return 0x19;
     }
-    virtual s32 GetPacketId(packets::out::SteerVehiclePacket) override {
+    virtual int32_t GetPacketId(packets::out::SteerVehiclePacket) override {
         return 0x1A;
     }
-    virtual s32 GetPacketId(packets::out::CraftingBookDataPacket) override {
+    virtual int32_t GetPacketId(packets::out::CraftingBookDataPacket) override {
         return 0x1B;
     }
     // NameItem = 0x1C
-    virtual s32 GetPacketId(packets::out::ResourcePackStatusPacket) override {
+    virtual int32_t GetPacketId(packets::out::ResourcePackStatusPacket) override {
         return 0x1D;
     }
-    virtual s32 GetPacketId(packets::out::AdvancementTabPacket) override {
+    virtual int32_t GetPacketId(packets::out::AdvancementTabPacket) override {
         return 0x1E;
     }
     // SelectTrade = 0x1F
     // SetBeaconEffect = 0x20
-    virtual s32 GetPacketId(packets::out::HeldItemChangePacket) override {
+    virtual int32_t GetPacketId(packets::out::HeldItemChangePacket) override {
         return 0x21;
     }
     // UpdateCommandBlock = 0x22
     // UpdateCommandBlockMinecart = 0x23
-    virtual s32 GetPacketId(
+    virtual int32_t GetPacketId(
         packets::out::CreativeInventoryActionPacket) override {
         return 0x24;
     }
     // UpdateStructure = 0x25
-    virtual s32 GetPacketId(packets::out::UpdateSignPacket) override {
+    virtual int32_t GetPacketId(packets::out::UpdateSignPacket) override {
         return 0x26;
     }
-    virtual s32 GetPacketId(packets::out::AnimationPacket) override {
+    virtual int32_t GetPacketId(packets::out::AnimationPacket) override {
         return 0x27;
     }
-    virtual s32 GetPacketId(packets::out::SpectatePacket) override {
+    virtual int32_t GetPacketId(packets::out::SpectatePacket) override {
         return 0x28;
     }
-    virtual s32 GetPacketId(packets::out::PlayerBlockPlacementPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerBlockPlacementPacket) override {
         return 0x29;
     }
-    virtual s32 GetPacketId(packets::out::UseItemPacket) override {
+    virtual int32_t GetPacketId(packets::out::UseItemPacket) override {
         return 0x2A;
     }
 
-    virtual s32 GetPacketId(packets::out::PrepareCraftingGridPacket) override {
+    virtual int32_t GetPacketId(packets::out::PrepareCraftingGridPacket) override {
         throw UnsupportedPacketException(
             "PrepareCraftingGridPacket does not work with protocol 1.13.2");
     }
@@ -415,145 +415,145 @@ public:
         : Protocol(version, inbound) {}
 
     // Handshake
-    virtual s32 GetPacketId(packets::out::HandshakePacket) override {
+    virtual int32_t GetPacketId(packets::out::HandshakePacket) override {
         return 0x00;
     }
 
     // Login
-    virtual s32 GetPacketId(packets::out::LoginStartPacket) override {
+    virtual int32_t GetPacketId(packets::out::LoginStartPacket) override {
         return 0x00;
     }
-    virtual s32 GetPacketId(packets::out::EncryptionResponsePacket) override {
+    virtual int32_t GetPacketId(packets::out::EncryptionResponsePacket) override {
         return 0x01;
     }
 
     // Status
-    virtual s32 GetPacketId(packets::out::status::RequestPacket) override {
+    virtual int32_t GetPacketId(packets::out::status::RequestPacket) override {
         return 0x00;
     }
-    virtual s32 GetPacketId(packets::out::status::PingPacket) override {
+    virtual int32_t GetPacketId(packets::out::status::PingPacket) override {
         return 0x01;
     }
 
     // Play
-    virtual s32 GetPacketId(packets::out::TeleportConfirmPacket) override {
+    virtual int32_t GetPacketId(packets::out::TeleportConfirmPacket) override {
         return 0x00;
     }
     // QueryBlockNBT = 0x01
-    virtual s32 GetPacketId(packets::out::ChatPacket) override { return 0x02; }
-    virtual s32 GetPacketId(packets::out::ClientStatusPacket) override {
+    virtual int32_t GetPacketId(packets::out::ChatPacket) override { return 0x02; }
+    virtual int32_t GetPacketId(packets::out::ClientStatusPacket) override {
         return 0x03;
     }
-    virtual s32 GetPacketId(packets::out::ClientSettingsPacket) override {
+    virtual int32_t GetPacketId(packets::out::ClientSettingsPacket) override {
         return 0x04;
     }
-    virtual s32 GetPacketId(packets::out::TabCompletePacket) override {
+    virtual int32_t GetPacketId(packets::out::TabCompletePacket) override {
         return 0x05;
     }
-    virtual s32 GetPacketId(packets::out::ConfirmTransactionPacket) override {
+    virtual int32_t GetPacketId(packets::out::ConfirmTransactionPacket) override {
         return 0x06;
     }
-    virtual s32 GetPacketId(packets::out::EnchantItemPacket) override {
+    virtual int32_t GetPacketId(packets::out::EnchantItemPacket) override {
         return 0x07;
     }
-    virtual s32 GetPacketId(packets::out::ClickWindowPacket) override {
+    virtual int32_t GetPacketId(packets::out::ClickWindowPacket) override {
         return 0x08;
     }
-    virtual s32 GetPacketId(packets::out::CloseWindowPacket) override {
+    virtual int32_t GetPacketId(packets::out::CloseWindowPacket) override {
         return 0x09;
     }
-    virtual s32 GetPacketId(packets::out::PluginMessagePacket) override {
+    virtual int32_t GetPacketId(packets::out::PluginMessagePacket) override {
         return 0x0A;
     }
     // EditBook = 0x0B
     // QueryEntityNBT = 0x0C
-    virtual s32 GetPacketId(packets::out::UseEntityPacket) override {
+    virtual int32_t GetPacketId(packets::out::UseEntityPacket) override {
         return 0x0D;
     }
-    virtual s32 GetPacketId(packets::out::KeepAlivePacket) override {
+    virtual int32_t GetPacketId(packets::out::KeepAlivePacket) override {
         return 0x0E;
     }
-    virtual s32 GetPacketId(packets::out::PlayerPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerPacket) override {
         return 0x0F;
     }
-    virtual s32 GetPacketId(packets::out::PlayerPositionPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerPositionPacket) override {
         return 0x10;
     }
-    virtual s32 GetPacketId(
+    virtual int32_t GetPacketId(
         packets::out::PlayerPositionAndLookPacket) override {
         return 0x11;
     }
-    virtual s32 GetPacketId(packets::out::PlayerLookPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerLookPacket) override {
         return 0x12;
     }
-    virtual s32 GetPacketId(packets::out::VehicleMovePacket) override {
+    virtual int32_t GetPacketId(packets::out::VehicleMovePacket) override {
         return 0x13;
     }
-    virtual s32 GetPacketId(packets::out::SteerBoatPacket) override {
+    virtual int32_t GetPacketId(packets::out::SteerBoatPacket) override {
         return 0x14;
     }
     // PickItem = 0x15
-    virtual s32 GetPacketId(packets::out::CraftRecipeRequestPacket) override {
+    virtual int32_t GetPacketId(packets::out::CraftRecipeRequestPacket) override {
         return 0x16;
     }
-    virtual s32 GetPacketId(packets::out::PlayerAbilitiesPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerAbilitiesPacket) override {
         return 0x17;
     }
-    virtual s32 GetPacketId(packets::out::PlayerDiggingPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerDiggingPacket) override {
         return 0x18;
     }
-    virtual s32 GetPacketId(packets::out::EntityActionPacket) override {
+    virtual int32_t GetPacketId(packets::out::EntityActionPacket) override {
         return 0x19;
     }
-    virtual s32 GetPacketId(packets::out::SteerVehiclePacket) override {
+    virtual int32_t GetPacketId(packets::out::SteerVehiclePacket) override {
         return 0x1A;
     }
-    virtual s32 GetPacketId(packets::out::CraftingBookDataPacket) override {
+    virtual int32_t GetPacketId(packets::out::CraftingBookDataPacket) override {
         return 0x1B;
     }
     // NameItem = 0x1C
-    virtual s32 GetPacketId(packets::out::ResourcePackStatusPacket) override {
+    virtual int32_t GetPacketId(packets::out::ResourcePackStatusPacket) override {
         return 0x1D;
     }
-    virtual s32 GetPacketId(packets::out::AdvancementTabPacket) override {
+    virtual int32_t GetPacketId(packets::out::AdvancementTabPacket) override {
         return 0x1E;
     }
     // SelectTrade = 0x1F
     // SetBeaconEffect = 0x20
-    virtual s32 GetPacketId(packets::out::HeldItemChangePacket) override {
+    virtual int32_t GetPacketId(packets::out::HeldItemChangePacket) override {
         return 0x21;
     }
     // UpdateCommandBlock = 0x22
     // UpdateCommandBlockMinecart = 0x23
-    virtual s32 GetPacketId(
+    virtual int32_t GetPacketId(
         packets::out::CreativeInventoryActionPacket) override {
         return 0x24;
     }
     // UpdateStructure = 0x25
-    virtual s32 GetPacketId(packets::out::UpdateSignPacket) override {
+    virtual int32_t GetPacketId(packets::out::UpdateSignPacket) override {
         return 0x26;
     }
-    virtual s32 GetPacketId(packets::out::AnimationPacket) override {
+    virtual int32_t GetPacketId(packets::out::AnimationPacket) override {
         return 0x27;
     }
-    virtual s32 GetPacketId(packets::out::SpectatePacket) override {
+    virtual int32_t GetPacketId(packets::out::SpectatePacket) override {
         return 0x28;
     }
-    virtual s32 GetPacketId(packets::out::PlayerBlockPlacementPacket) override {
+    virtual int32_t GetPacketId(packets::out::PlayerBlockPlacementPacket) override {
         return 0x29;
     }
-    virtual s32 GetPacketId(packets::out::UseItemPacket) override {
+    virtual int32_t GetPacketId(packets::out::UseItemPacket) override {
         return 0x2A;
     }
 
-    virtual s32 GetPacketId(packets::out::PrepareCraftingGridPacket) override {
+    virtual int32_t GetPacketId(packets::out::PrepareCraftingGridPacket) override {
         throw UnsupportedPacketException(
             "PrepareCraftingGridPacket does not work with protocol 1.14.2");
     }  // TODO check the class
 };
 
 // Protocol agnostic protocol id to packet creators.
-std::unordered_map<State, std::unordered_map<s32, PacketCreator>>
+std::unordered_map<State, std::unordered_map<int32_t, PacketCreator>>
     agnosticStateMap = {
         {State::Login,
          {
@@ -1429,7 +1429,7 @@ const std::unordered_map<Version, std::shared_ptr<Protocol>> protocolMap = {
                                        inboundMap_1_14_2)},
 };
 
-bool Protocol::GetAgnosticId(State state, s32 protocolId, s32& agnosticId) {
+bool Protocol::GetAgnosticId(State state, int32_t protocolId, int32_t& agnosticId) {
     auto& packetMap = m_InboundMap[state];
     auto iter = packetMap.find(protocolId);
 
@@ -1441,8 +1441,8 @@ bool Protocol::GetAgnosticId(State state, s32 protocolId, s32& agnosticId) {
 }
 
 packets::InboundPacket* Protocol::CreateInboundPacket(State state,
-                                                      s32 protocolId) {
-    s32 agnosticId = 0;
+                                                      int32_t protocolId) {
+    int32_t agnosticId = 0;
 
     if (!GetAgnosticId(state, protocolId, agnosticId)) return nullptr;
 
@@ -1467,7 +1467,7 @@ Protocol& Protocol::GetProtocol(Version version) {
 
     if (iter == protocolMap.end()) {
         throw std::runtime_error(std::string("Unknown protocol version ") +
-                                 std::to_string((s32)version));
+                                 std::to_string((int32_t)version));
     }
 
     return *iter->second;

@@ -7,10 +7,10 @@
 namespace mc {
 
 VarInt::VarInt() noexcept : m_Value(0) {}
-VarInt::VarInt(s8 val) noexcept : m_Value(val) {}
-VarInt::VarInt(s16 val) noexcept : m_Value(val) {}
-VarInt::VarInt(s32 val) noexcept : m_Value(val) {}
-VarInt::VarInt(s64 val) noexcept : m_Value(val) {}
+VarInt::VarInt(int8_t val) noexcept : m_Value(val) {}
+VarInt::VarInt(int16_t val) noexcept : m_Value(val) {}
+VarInt::VarInt(int32_t val) noexcept : m_Value(val) {}
+VarInt::VarInt(int64_t val) noexcept : m_Value(val) {}
 
 std::size_t VarInt::GetSerializedLength() const {
     DataBuffer buffer;
@@ -19,15 +19,15 @@ std::size_t VarInt::GetSerializedLength() const {
 }
 
 DataBuffer& operator<<(DataBuffer& out, const VarInt& var) {
-    u64 uval = var.m_Value;
+    uint64_t uval = var.m_Value;
 
     int encoded = 0;
     char data[10];
 
     do {
-        uint8_t nextByte = uval & 0x7F;
+        uint8_t nextByte = uval & 0b01111111;
         uval >>= 7;
-        if (uval) nextByte |= 0x80;
+        if (uval) nextByte |= 0b10000000;
         data[encoded++] = nextByte;
     } while (uval);
     out << std::string(data, encoded);
@@ -36,7 +36,7 @@ DataBuffer& operator<<(DataBuffer& out, const VarInt& var) {
 }
 
 DataBuffer& operator>>(DataBuffer& in, VarInt& var) {
-    u64 value = 0;
+    uint64_t value = 0;
     int shift = 0;
 
     if (in.IsFinished()) {
@@ -49,9 +49,9 @@ DataBuffer& operator>>(DataBuffer& in, VarInt& var) {
     do {
         if (i >= in.GetSize())
             throw std::out_of_range("Failed reading VarInt from DataBuffer.");
-        value |= (u64)(in[i] & 0x7F) << shift;
+        value |= static_cast<uint64_t>((in[i] & 0b01111111) << shift);
         shift += 7;
-    } while ((in[i++] & 0x80) != 0);
+    } while ((in[i++] & 0b10000000) != 0);
 
     in.SetReadOffset(i);
 

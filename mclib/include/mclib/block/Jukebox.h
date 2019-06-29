@@ -10,7 +10,7 @@ namespace block {
 
 class Jukebox : public BlockEntity {
 private:
-    s32 m_RecordId;
+    int32_t m_RecordId;
     inventory::Slot m_RecordItem;
 
 public:
@@ -18,7 +18,7 @@ public:
         : BlockEntity(type, position) {}
     MCLIB_API bool ImportNBT(nbt::NBT* nbt);
 
-    inline s32 GetRecordId() const noexcept { return m_RecordId; }
+    inline int32_t GetRecordId() const noexcept { return m_RecordId; }
     inline inventory::Slot GetItem() const noexcept { return m_RecordItem; }
 };
 

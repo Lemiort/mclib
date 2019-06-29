@@ -60,7 +60,7 @@ enum class HandshakeServerPhase {
 struct ServerHelloPacket {
     uint8_t discriminator;
     uint8_t version;
-    s32 dimension;
+    int32_t dimension;
 
     void Deserialize(DataBuffer buffer) {
         buffer >> discriminator >> version;
@@ -93,7 +93,7 @@ struct ModListPacket {
     DataBuffer Serialize() {
         DataBuffer buffer;
 
-        VarInt count((s32)mods.size());
+        VarInt count((int32_t)mods.size());
 
         buffer << discriminator << count;
 

@@ -13,9 +13,9 @@ namespace block {
 class Piston : public BlockEntity {
 private:
     // Id of the block being moved.
-    s32 m_BlockId;
+    int32_t m_BlockId;
     // Data of the block being moved.
-    s32 m_BlockData;
+    int32_t m_BlockData;
     // Direction that the block will be pushed.
     Face m_Facing;
     // How far the block has been moved.
@@ -30,8 +30,8 @@ public:
         : BlockEntity(type, position) {}
     MCLIB_API bool ImportNBT(nbt::NBT* nbt);
 
-    inline s32 GetBlockId() const noexcept { return m_BlockId; }
-    inline s32 GetBlockData() const noexcept { return m_BlockData; }
+    inline int32_t GetBlockId() const noexcept { return m_BlockId; }
+    inline int32_t GetBlockData() const noexcept { return m_BlockData; }
     inline Face GetFacing() const noexcept { return m_Facing; }
     inline float GetProgress() const noexcept { return m_Progress; }
     inline bool IsExtending() const noexcept { return m_Extending; }

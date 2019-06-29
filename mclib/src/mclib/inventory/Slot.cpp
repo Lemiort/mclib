@@ -7,8 +7,8 @@ namespace inventory {
 
 Slot Slot::FromNBT(nbt::TagCompound& compound) {
     uint8_t count = 0;
-    s16 id = -1;
-    s16 damage = 0;
+    int16_t id = -1;
+    int16_t damage = 0;
     nbt::NBT nbt;
 
     for (auto iter = compound.begin(); iter != compound.end(); ++iter) {
@@ -80,7 +80,7 @@ void Slot::Deserialize(DataBuffer& in, protocol::Version version) {
 
         m_ItemId = itemId.GetInt();
     } else {
-        s16 id;
+        int16_t id;
 
         in >> id;
 

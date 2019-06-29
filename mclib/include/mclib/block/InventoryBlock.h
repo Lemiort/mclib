@@ -21,7 +21,7 @@ private:
     std::wstring m_Lock;
     ItemMap m_Items;
     std::wstring m_LootTable;
-    s64 m_LootTableSeed;
+    int64_t m_LootTableSeed;
 
 public:
     MCLIB_API bool ImportNBT(nbt::NBT* nbt);
@@ -29,7 +29,7 @@ public:
     const std::wstring& GetLock() const noexcept { return m_Lock; }
     const ItemMap& GetItems() const noexcept { return m_Items; }
     const std::wstring& GetLootTable() const noexcept { return m_LootTable; }
-    s64 GetLootTableSeed() const noexcept { return m_LootTableSeed; }
+    int64_t GetLootTableSeed() const noexcept { return m_LootTableSeed; }
 };
 
 }  // namespace block

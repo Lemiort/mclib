@@ -14,7 +14,7 @@ class Hotbar : public protocol::packets::PacketHandler {
 private:
     core::Connection* m_Connection;
     InventoryManager* m_InventoryManager;
-    s32 m_SelectedSlot;
+    int32_t m_SelectedSlot;
 
 public:
     MCLIB_API Hotbar(protocol::packets::PacketDispatcher* dispatcher,
@@ -32,12 +32,12 @@ public:
 
     // Sends a packet telling the server that the client is changing slots.
     // Slot should be between 0 and 8.
-    MCLIB_API void SelectSlot(s32 hotbarIndex);
-    MCLIB_API s32 GetSelectedSlot() const noexcept { return m_SelectedSlot; }
+    MCLIB_API void SelectSlot(int32_t hotbarIndex);
+    MCLIB_API int32_t GetSelectedSlot() const noexcept { return m_SelectedSlot; }
 
     MCLIB_API Slot GetCurrentItem();
     // Index should be between 0 and 8.
-    MCLIB_API Slot GetItem(s32 hotbarIndex);
+    MCLIB_API Slot GetItem(int32_t hotbarIndex);
 };
 
 }  // namespace inventory
